@@ -32,6 +32,8 @@
 	import { Chat } from '@ai-sdk/svelte';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
+	import Navigation from '../../components/navigation.svelte';
+	import { Toaster } from 'svelte-sonner';
 
 	// svelte-ignore non_reactive_update
 	let input = '';
@@ -62,9 +64,16 @@
 	});
 </script>
 
-<main>
+<svelte:head>
+	<title>ScholarXIV | Chat</title>
+</svelte:head>
+
+<!-- <div class="m-auto w-full px-3 md:w-2/3 lg:w-2/4 lg:px-0 xl:w-2/5 xl:px-0 2xl:w-2/5 2xl:px-0"> -->
+<div>
+	<!-- Title and Profile -->
+	<Navigation researchMode={true} />
 	<!-- list models -->
-	<!-- {availableModels} -->
+	{availableModels.length}
 	<!-- <ul>
 		<li>models: {availableModels.length}</li>
 		{#each availableModels as model, i}
@@ -93,4 +102,12 @@
 		<input bind:value={input} />
 		<button type="submit">Send</button>
 	</form>
-</main>
+
+	<!-- Toaster -->
+	<div class="block md:hidden lg:hidden xl:hidden 2xl:hidden">
+		<Toaster position="top-right" expand={true} />
+	</div>
+	<div class="hidden md:block lg:block xl:block 2xl:block">
+		<Toaster expand={true} />
+	</div>
+</div>

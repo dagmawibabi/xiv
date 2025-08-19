@@ -1,5 +1,4 @@
 <script lang="ts">
-	let { isCommentMode = false } = $props();
 	import { MessageCircle, Search, Settings2, Sparkles } from 'lucide-svelte';
 	import { inputState } from '../../state/input_state.svelte';
 	import axios from 'axios';
@@ -87,33 +86,19 @@
 	function handleEnter(event: KeyboardEvent) {
 		if (event.key === 'Enter') {
 			event.preventDefault();
-			if (isAIMode == true) {
-				chatWithAI();
-			} else if (isCommentMode == true) {
-				commentOnPaper();
-			} else {
-				searchPaper();
-			}
+			chatWithAI();
 		}
 	}
-
-	let isAIMode = $state(false);
 
 	// const isCommentMode = $state(page.url.pathname.split('/')[1] == 'comments');
 	let session = authClient.useSession();
 </script>
 
-<!-- <div
-	class="no-scrollbar sticky bottom-0 left-0 right-0 m-auto h-fit w-full rounded-tl-xl rounded-tr-xl border-t border-zinc-200 pb-4
-	backdrop-blur-lg md:w-2/3 lg:w-2/4 xl:w-2/5 2xl:w-2/5"
-> -->
 <div
-	class="no-scrollbar sticky bottom-0 left-0 right-0 m-auto h-fit w-3/5 rounded-tl-xl rounded-tr-xl border-t border-zinc-200 pb-4
-backdrop-blur-lg"
+	class="no-scrollbar absolute bottom-0 left-0 right-0 m-auto h-fit w-full rounded-tl-xl rounded-tr-xl border-t border-zinc-200 pb-4
+	backdrop-blur-lg md:w-2/3 lg:w-2/4 xl:w-2/5 2xl:w-2/5"
 >
-	{#if isAIMode == true}
-		<AiChat />
-	{/if}
+	<AiChat />
 
 	<!-- Main Input Box -->
 	<div class="no-scrollbar flex flex-col bg-transparent px-2 pt-2">
@@ -121,74 +106,20 @@ backdrop-blur-lg"
 		<div class="group flex overflow-clip rounded-3xl border border-zinc-400 bg-white">
 			<!-- Input Box -->
 			<div class="flex w-full items-center gap-x-2 px-3 py-2">
-				{#if isAIMode == true}
-					<Sparkles size={18} class="text-zinc-400" />
-					<input
-						type="text"
-						class="w-full items-center bg-white pb-0 outline-none md:pb-1 lg:pb-1 xl:pb-1 2xl:pb-1"
-						placeholder={`Chat with ${aiConversationState.currentModel.name} ...`}
-						bind:value={inputState.aiInput}
-						onkeydown={handleEnter}
-					/>
-				{:else if isCommentMode == true}
-					<MessageCircle size={18} class="text-zinc-400" />
-					<input
-						type="text"
-						class="w-full items-center bg-white pb-0 outline-none md:pb-1 lg:pb-1 xl:pb-1 2xl:pb-1"
-						placeholder="Comment ..."
-						bind:value={commentState.comment}
-						onkeydown={handleEnter}
-					/>
-				{:else}
-					<Search size={18} class="text-zinc-400" />
-					<input
-						type="text"
-						class="w-full items-center bg-white pb-0 outline-none md:pb-1 lg:pb-1 xl:pb-1 2xl:pb-1"
-						placeholder="Search ..."
-						bind:value={inputState.searchContent}
-						onkeydown={handleEnter}
-					/>
-				{/if}
+				<Sparkles size={18} class="text-zinc-400" />
+				<input
+					type="text"
+					class="w-full items-center bg-white pb-0 outline-none md:pb-1 lg:pb-1 xl:pb-1 2xl:pb-1"
+					placeholder={`Chat with ${aiConversationState.currentModel.name} ...`}
+					bind:value={inputState.aiInput}
+					onkeydown={handleEnter}
+				/>
 			</div>
 
 			<!-- Settings and AI Toggle -->
 			<!-- svelte-ignore a11y_no_static_element_interactions -->
 			<div class="m-auto flex items-center pr-1">
-				<InputSettings {isAIMode} {isCommentMode} />
-				{#if isAIMode}
-					<div
-						class="cursor-pointer rounded-full p-2 text-zinc-600 hover:bg-zinc-100 hover:text-black"
-						onclick={() => (isAIMode = !isAIMode)}
-					>
-						{#if isCommentMode == false}
-							<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
-								<Search size={14} />
-							</div>
-							<div class="flex md:hidden lg:hidden xl:hidden 2xl:hidden">
-								<Search size={17} />
-							</div>
-						{:else}
-							<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
-								<MessageCircle size={14} />
-							</div>
-							<div class="flex md:hidden lg:hidden xl:hidden 2xl:hidden">
-								<MessageCircle size={17} />
-							</div>
-						{/if}
-					</div>
-				{:else if $session.data}
-					<div
-						class="cursor-pointer rounded-full p-2 text-zinc-600 hover:bg-zinc-100 hover:text-black"
-						onclick={() => (isAIMode = !isAIMode)}
-					>
-						<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
-							<Sparkles size={14} />
-						</div>
-						<div class="flex md:hidden lg:hidden xl:hidden 2xl:hidden">
-							<Sparkles size={17} />
-						</div>
-					</div>
-				{/if}
+				<InputSettings isAIMode={true} isCommentMode={false} />
 			</div>
 
 			<!-- Search Button -->
@@ -203,21 +134,13 @@ backdrop-blur-lg"
 				<div
 					class="group/search group-hover:bg-zinc-200"
 					onclick={async () => {
-						if (isAIMode == true) {
-							await chatWithAI();
-						} else if (isCommentMode == true) {
-							await commentOnPaper();
-						} else {
-							await searchPaper();
-						}
+						await chatWithAI();
 					}}
 				>
 					<div
 						class="flex h-full w-24 cursor-pointer items-center justify-center border-l group-hover/search:bg-black group-hover/search:text-white"
 					>
-						<span>
-							{isAIMode == true ? 'Send' : isCommentMode == true ? 'Comment' : 'Search'}
-						</span>
+						<span> Send </span>
 					</div>
 				</div>
 			{/if}

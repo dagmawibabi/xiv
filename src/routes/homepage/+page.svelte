@@ -133,9 +133,11 @@
 	<meta property="twitter:description" content="Open-source & AI powered research paper explorer" />
 </svelte:head>
 
-<div class="m-auto w-full px-3 md:w-2/3 lg:w-2/4 lg:px-0 xl:w-2/5 xl:px-0 2xl:w-2/5 2xl:px-0">
+<!-- <div class="m-auto w-full px-3 md:w-2/3 lg:w-2/4 lg:px-0 xl:w-2/5 xl:px-0 2xl:w-2/5 2xl:px-0"> -->
+<!-- <div class="m-auto w-3/5"> -->
+<div>
 	<!-- Title and Profile -->
-	<Navigation />
+	<!-- <Navigation /> -->
 
 	<!-- Paper List -->
 	<div>

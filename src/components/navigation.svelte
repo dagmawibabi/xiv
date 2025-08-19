@@ -1,4 +1,6 @@
 <script lang="ts">
+	let { researchMode = false } = $props();
+
 	import ProfileAvatar from './profile_avatar.svelte';
 	import Title from './title.svelte';
 
