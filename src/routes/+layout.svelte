@@ -14,10 +14,10 @@
 		<AppSidebar />
 		<main class="relative flex min-h-screen w-full flex-col">
 			<Sidebar.Trigger />
-			<div class="m-auto w-3/5 flex-1">
+			<div class="ml-[15%] w-3/5 flex-1">
 				{@render children?.()}
 			</div>
-			<div class="sticky bottom-0 left-0 right-0 m-auto w-3/5">
+			<div class="sticky bottom-0 left-0 right-0 ml-[15%] w-3/5">
 				{#if page.url.pathname == '/ai'}
 					<ChatBox />
 				{:else}

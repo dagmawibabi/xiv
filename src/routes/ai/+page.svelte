@@ -33,58 +33,64 @@
 	import axios from 'axios';
 	import Navigation from '../../components/navigation.svelte';
 	import { Toaster } from 'svelte-sonner';
-	import { EachResearch } from '../../state/research_state.svelte';
+	import { researchState } from '../../state/research_state.svelte';
 
 	// svelte-ignore non_reactive_update
-	let input = '';
-	const chat = new Chat({});
+	// let input = '';
+	// const chat = new Chat({});
 
-	function handleSubmit(event: SubmitEvent) {
-		event.preventDefault();
-		chat.sendMessage({ text: input });
-		input = '';
-	}
-
-	let eachResearch = new EachResearch();
+	// function handleSubmit(event: SubmitEvent) {
+	// 	event.preventDefault();
+	// 	chat.sendMessage({ text: input });
+	// 	input = '';
+	// }
 </script>
 
 <svelte:head>
 	<title>ScholarXIV | Chat</title>
 </svelte:head>
 
-<!-- <div class="m-auto w-full px-3 md:w-2/3 lg:w-2/4 lg:px-0 xl:w-2/5 xl:px-0 2xl:w-2/5 2xl:px-0"> -->
 <div>
-	<!-- list models -->
-	<!-- {availableModels.length} -->
-	<!-- <ul>
-		<li>models: {availableModels.length}</li>
-		{#each availableModels as model, i}
-			<li>{i + 1}: {model.id} — {model.name}</li>
-		{/each}
-	</ul> -->
-
 	<!-- CHAT -->
-	{eachResearch.userInput}
-	<ul>
-		{#each chat.messages as message, messageIndex (messageIndex)}
-			<li>
-				<div>{message.role}</div>
-				<div>
-					{#each message.parts as part, partIndex (partIndex)}
-						{#if part.type === 'text'}
-							<div>{part.text}</div>
-						{:else if part.type === 'tool-weather' || part.type === 'tool-convertFahrenheitToCelsius' || part.type === 'tool-searchResearchPapers'}
-							<pre>{JSON.stringify(part, null, 2)}</pre>
-						{/if}
-					{/each}
-				</div>
-			</li>
-		{/each}
-	</ul>
-	<form onsubmit={handleSubmit}>
-		<!-- <input bind:value={eachResearch.userInput} /> -->
-		<button type="submit">Send</button>
-	</form>
+	<div class="w-full">
+		<ul class="space-y-2">
+			{#each researchState.chat.messages as message, messageIndex (messageIndex)}
+				{#if message.role === 'user'}
+					<div class="flex justify-end">
+						{#each message.parts as part, partIndex (partIndex)}
+							{#if part.type === 'text'}
+								<div class="w-fit max-w-2xl rounded-lg border bg-blue-100 px-4 py-2 text-sm">
+									{part.text}
+								</div>
+							{/if}
+						{/each}
+					</div>
+				{:else}
+					<div class="flex flex-col justify-start">
+						{#each message.parts as part, partIndex (partIndex)}
+							{#if part.type === 'text'}
+								<div class="w-fit max-w-2xl rounded-lg border bg-zinc-100 px-4 py-2 text-sm">
+									{part.text}
+								</div>
+							{:else if part.type === 'tool-weather' || part.type === 'tool-convertFahrenheitToCelsius' || part.type === 'tool-searchResearchPapers'}
+								<div class="mb-2 w-fit rounded-full border px-4 py-2 text-xs text-red-400">
+									<!-- {part.type} -->
+									{part.input && typeof part.input === 'object' && 'action' in part.input
+										? part.input.action
+										: ''}
+								</div>
+								<!-- <pre class="whitespace-pre-wrap">
+									{JSON.stringify(part, null, 2)}
+								</pre> -->
+							{/if}
+						{/each}
+					</div>
+				{/if}
+			{/each}
+		</ul>
+	</div>
+
+	<div class="h-96"></div>
 
 	<!-- Toaster -->
 	<div class="block md:hidden lg:hidden xl:hidden 2xl:hidden">

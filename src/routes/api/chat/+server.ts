@@ -24,6 +24,7 @@ export async function POST({ request }) {
 			weather: tool({
 				description: 'Get the weather in a location (fahrenheit)',
 				inputSchema: z.object({
+					action: z.string().describe('a phrase to describe what you are doing'),
 					location: z.string().describe('The location to get the weather for')
 				}),
 				execute: async ({ location }) => {
@@ -37,6 +38,7 @@ export async function POST({ request }) {
 			convertFahrenheitToCelsius: tool({
 				description: 'Convert a temperature in fahrenheit to celsius',
 				inputSchema: z.object({
+					action: z.string().describe('a phrase to describe what you are doing'),
 					temperature: z.number().describe('The temperature in fahrenheit to convert')
 				}),
 				execute: async ({ temperature }) => {

@@ -3,11 +3,10 @@
 	import SelectModel from './select_model.svelte';
 	import SelectedPapers from './selected_papers.svelte';
 	import { aiConversationState } from '../../state/ai_conversation_state.svelte';
-	import { SettingsState } from '../../state/settings_state.svelte';
+	import { settingsState } from '../../state/settings_state.svelte';
+	import { researchState } from '../../state/research_state.svelte';
 
 	let { showMaxMinButton = true } = $props();
-
-	let settingsState = new SettingsState();
 </script>
 
 <div class="flex w-full items-center justify-between p-3 pb-2">
@@ -25,14 +24,18 @@
 			<Trash2
 				size={14}
 				class="hover:text-black"
-				onclick={() => (aiConversationState.conversation = [])}
+				onclick={() =>
+					// (aiConversationState.conversation = [])
+					researchState.clearChat()}
 			/>
 		</div>
 		<div class="flex md:hidden lg:hidden xl:hidden 2xl:hidden">
 			<Trash2
 				size={16}
 				class="hover:text-black"
-				onclick={() => (aiConversationState.conversation = [])}
+				onclick={() =>
+					// (aiConversationState.conversation = [])
+					researchState.clearChat()}
 			/>
 		</div>
 		{#if showMaxMinButton}

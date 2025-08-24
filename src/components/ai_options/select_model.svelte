@@ -1,12 +1,11 @@
 <script lang="ts">
 	import { ChevronDown, RefreshCcwIcon, RotateCcw } from 'lucide-svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import { ModelsState } from '../../state/models_state.svelte';
+	import { modelsState } from '../../state/models_state.svelte';
 	import { onMount } from 'svelte';
 
-	let models = new ModelsState();
 	onMount(async () => {
-		await models.getAllModels();
+		await modelsState.getAllModels();
 	});
 </script>
 
@@ -17,7 +16,7 @@
 				class="group/models flex items-center gap-x-1 rounded-full border border-zinc-100 bg-zinc-100 py-1 pl-3 pr-2 hover:border-zinc-200"
 			>
 				<span class="text-xs text-zinc-500 group-hover/models:text-black"
-					>{models.currentModelID}</span
+					>{modelsState.currentModelID}</span
 				>
 				<ChevronDown size={16} class="text-zinc-500 group-hover/models:text-black" />
 			</div>
@@ -26,19 +25,22 @@
 			<DropdownMenu.Group>
 				<DropdownMenu.Label>Choose a Model</DropdownMenu.Label>
 				<DropdownMenu.Separator />
-				{#each models.allModels as model, i}
-					<DropdownMenu.Item class="text-xs" onclick={() => (models.currentModelID = model.id)}>
+				{#each modelsState.allModels as model, i}
+					<DropdownMenu.Item
+						class="text-xs"
+						onclick={() => (modelsState.currentModelID = model.id)}
+					>
 						<span class="text-sm">{model.name}</span>
 					</DropdownMenu.Item>
 				{/each}
 			</DropdownMenu.Group>
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
-	{#if models.currentModelID != models.defaultModelID}
+	{#if modelsState.currentModelID != modelsState.defaultModelID}
 		<RotateCcw
 			size={15}
 			class="text-zinc-400 hover:text-black"
-			onclick={() => (models.currentModelID = models.defaultModelID)}
+			onclick={() => (modelsState.currentModelID = modelsState.defaultModelID)}
 		/>
 	{/if}
 </div>

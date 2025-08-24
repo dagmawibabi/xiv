@@ -3,7 +3,7 @@ export interface Model {
 	name: string;
 }
 
-export class ModelsState {
+class ModelsState {
 	// Models
 	allModels = $state<Model[]>([]);
 	availableModels = $state<Model[]>([]);
@@ -29,3 +29,5 @@ export class ModelsState {
 		}
 	}
 }
+
+export const modelsState = new ModelsState();

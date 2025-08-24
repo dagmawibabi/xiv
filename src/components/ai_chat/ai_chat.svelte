@@ -7,7 +7,7 @@
 	import { aiConversationState } from '../../state/ai_conversation_state.svelte';
 	import SelectedPapers from '../ai_options/selected_papers.svelte';
 	import axios from 'axios';
-	import { SettingsState } from '../../state/settings_state.svelte';
+	import { settingsState } from '../../state/settings_state.svelte';
 	import AiOptions from '../ai_options/ai_options.svelte';
 
 	let examplePrompts = [
@@ -43,19 +43,15 @@
 			content: response.data
 		});
 	}
-
-	let settingsState = new SettingsState();
 </script>
 
 <div
 	class={settingsState.minimizeAIConversation == true
-		? 'no-scrollbar max-h-10 min-h-10 overflow-clip p-3'
-		: 'no-scrollbar max-h-[600px] min-h-10 overflow-clip p-3'}
+		? 'no-scrollbar max-h-10 min-h-10 overflow-clip'
+		: 'no-scrollbar max-h-[600px] min-h-10 overflow-clip'}
 >
 	<!-- AI Options -->
 	<AiOptions />
-
-	{settingsState.minimizeAIConversation}
 
 	<!-- Chats -->
 	<div
