@@ -8,7 +8,7 @@
 	import AiChat from '../ai_chat/ai_chat.svelte';
 	import { aiConversationState } from '../../state/ai_conversation_state.svelte';
 	import InputSettings from './input_settings.svelte';
-	import SelectedPapers from '../ai_chat/selected_papers.svelte';
+	import SelectedPapers from '../ai_options/selected_papers.svelte';
 	import { authClient } from '$lib/auth_client';
 	import { page } from '$app/state';
 	import { commentState } from '../../state/comment_state.svelte';
@@ -108,7 +108,7 @@
 	backdrop-blur-lg md:w-2/3 lg:w-2/4 xl:w-2/5 2xl:w-2/5"
 > -->
 <div
-	class="no-scrollbar sticky bottom-0 left-0 right-0 m-auto h-fit w-3/5 rounded-tl-xl rounded-tr-xl border-t border-zinc-200 pb-4
+	class="no-scrollbar h-fit w-full rounded-tl-xl rounded-tr-xl border-t border-zinc-200 pb-4
 backdrop-blur-lg"
 >
 	{#if isAIMode == true}

@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { MessageCircle, Search, Settings2, Sparkles } from 'lucide-svelte';
+	import {
+		ChevronDown,
+		ChevronUp,
+		MessageCircle,
+		Search,
+		Settings2,
+		Sparkles
+	} from 'lucide-svelte';
 	import { inputState } from '../../state/input_state.svelte';
 	import axios from 'axios';
 	import { paperListState } from '../../state/papers_list.svelte';
@@ -7,10 +14,20 @@
 	import AiChat from '../ai_chat/ai_chat.svelte';
 	import { aiConversationState } from '../../state/ai_conversation_state.svelte';
 	import InputSettings from './input_settings.svelte';
-	import SelectedPapers from '../ai_chat/selected_papers.svelte';
+	import SelectedPapers from '../ai_options/selected_papers.svelte';
 	import { authClient } from '$lib/auth_client';
 	import { page } from '$app/state';
 	import { commentState } from '../../state/comment_state.svelte';
+	import { Trash2, Minimize, Maximize } from 'lucide-svelte';
+	import { onMount } from 'svelte';
+	import SelectModel from '../ai_options/select_model.svelte';
+	import { ModelsState } from '../../state/models_state.svelte';
+	import { EachResearch } from '../../state/research_state.svelte';
+	import AiOptions from '../ai_options/ai_options.svelte';
+
+	let models = new ModelsState();
+
+	let minimizeConversation = $state(false);
 
 	async function searchPaper() {
 		if (inputState.searchContent.trim().length > 0) {
@@ -90,15 +107,22 @@
 		}
 	}
 
+	onMount(async () => {
+		await models.getAllModels();
+	});
+
 	// const isCommentMode = $state(page.url.pathname.split('/')[1] == 'comments');
 	let session = authClient.useSession();
+
+	let eachResearch = new EachResearch();
 </script>
 
 <div
-	class="no-scrollbar absolute bottom-0 left-0 right-0 m-auto h-fit w-full rounded-tl-xl rounded-tr-xl border-t border-zinc-200 pb-4
-	backdrop-blur-lg md:w-2/3 lg:w-2/4 xl:w-2/5 2xl:w-2/5"
+	class="no-scrollbar h-fit w-full rounded-tl-xl rounded-tr-xl border-t border-zinc-200 pb-4
+	backdrop-blur-lg"
 >
-	<AiChat />
+	<!-- AI Options -->
+	<AiOptions showMaxMinButton={false} />
 
 	<!-- Main Input Box -->
 	<div class="no-scrollbar flex flex-col bg-transparent px-2 pt-2">
@@ -110,20 +134,14 @@
 				<input
 					type="text"
 					class="w-full items-center bg-white pb-0 outline-none md:pb-1 lg:pb-1 xl:pb-1 2xl:pb-1"
-					placeholder={`Chat with ${aiConversationState.currentModel.name} ...`}
-					bind:value={inputState.aiInput}
+					placeholder={`ask any question ...`}
+					bind:value={eachResearch.userInput}
 					onkeydown={handleEnter}
 				/>
 			</div>
 
-			<!-- Settings and AI Toggle -->
-			<!-- svelte-ignore a11y_no_static_element_interactions -->
-			<div class="m-auto flex items-center pr-1">
-				<InputSettings isAIMode={true} isCommentMode={false} />
-			</div>
-
 			<!-- Search Button -->
-			{#if inputState.isSearching == true || commentState.isCommenting == true}
+			{#if commentState.isCommenting == true}
 				<div>
 					<div class="flex h-full w-20 items-center justify-center border-l">
 						<Circle size="22" color="#000000" duration="1s" />

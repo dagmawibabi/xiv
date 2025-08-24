@@ -74,29 +74,27 @@
 				{#if $session.data}
 					<DropdownMenu.Root>
 						<DropdownMenu.Trigger>
-							<ProfileAvatar session={$session} />
+							<ProfileAvatar />
 						</DropdownMenu.Trigger>
 						<DropdownMenu.Content>
 							<DropdownMenu.Group>
 								<!-- Profile -->
-								<DropdownMenu.Item
-									><ProfileAvatar session={$session} fullInfo={true} /></DropdownMenu.Item
-								>
+								<DropdownMenu.Item><ProfileAvatar fullInfo={true} /></DropdownMenu.Item>
 
 								<div class="py-1">
 									<Separator />
 								</div>
 								<!-- Logout -->
-								<!-- svelte-ignore a11y-click-events-have-key-events -->
-								<!-- svelte-ignore a11y-no-static-element-interactions -->
-								<DropdownMenu.Item
-									><div
+								<DropdownMenu.Item>
+									<!-- svelte-ignore a11y_click_events_have_key_events -->
+									<!-- svelte-ignore a11y_no_static_element_interactions -->
+									<div
 										class="w-full cursor-pointer text-center hover:text-red-500"
 										onclick={() => handleSignOut()}
 									>
 										Logout
-									</div></DropdownMenu.Item
-								>
+									</div>
+								</DropdownMenu.Item>
 							</DropdownMenu.Group>
 						</DropdownMenu.Content>
 					</DropdownMenu.Root>

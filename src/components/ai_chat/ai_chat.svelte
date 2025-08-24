@@ -5,10 +5,11 @@
 	import { gfmPlugin } from 'svelte-exmarkdown/gfm';
 	const plugins = [gfmPlugin()];
 	import { aiConversationState } from '../../state/ai_conversation_state.svelte';
-	import SelectedPapers from './selected_papers.svelte';
+	import SelectedPapers from '../ai_options/selected_papers.svelte';
 	import axios from 'axios';
+	import { SettingsState } from '../../state/settings_state.svelte';
+	import AiOptions from '../ai_options/ai_options.svelte';
 
-	let minimizeConversation = $state(false);
 	let examplePrompts = [
 		'Summarize this paper for me?',
 		'When was this paper published?',
@@ -42,67 +43,19 @@
 			content: response.data
 		});
 	}
+
+	let settingsState = new SettingsState();
 </script>
 
 <div
-	class={minimizeConversation == true
-		? 'no-scrollbar max-h-8 min-h-8 overflow-clip p-3'
+	class={settingsState.minimizeAIConversation == true
+		? 'no-scrollbar max-h-10 min-h-10 overflow-clip p-3'
 		: 'no-scrollbar max-h-[600px] min-h-10 overflow-clip p-3'}
 >
 	<!-- AI Options -->
-	<div class="flex w-full items-center justify-between pb-2">
-		<!-- Selected Papers -->
-		<SelectedPapers />
+	<AiOptions />
 
-		<!-- Clear / Minimize Conversation -->
-		<div class="flex cursor-pointer items-center gap-2 pr-2 text-zinc-500">
-			<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
-				<Trash2
-					size={14}
-					class="hover:text-black"
-					onclick={() => (aiConversationState.conversation = [])}
-				/>
-			</div>
-			<div class="flex md:hidden lg:hidden xl:hidden 2xl:hidden">
-				<Trash2
-					size={16}
-					class="hover:text-black"
-					onclick={() => (aiConversationState.conversation = [])}
-				/>
-			</div>
-			{#if minimizeConversation == true}
-				<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
-					<Maximize
-						size={14}
-						class="hover:text-black"
-						onclick={() => (minimizeConversation = !minimizeConversation)}
-					/>
-				</div>
-				<div class="flex md:hidden lg:hidden xl:hidden 2xl:hidden">
-					<Maximize
-						size={16}
-						class="hover:text-black"
-						onclick={() => (minimizeConversation = !minimizeConversation)}
-					/>
-				</div>
-			{:else}
-				<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
-					<Minimize
-						size={14}
-						class="hover:text-black"
-						onclick={() => (minimizeConversation = !minimizeConversation)}
-					/>
-				</div>
-				<div class="flex md:hidden lg:hidden xl:hidden 2xl:hidden">
-					<Minimize
-						size={16}
-						class="hover:text-black"
-						onclick={() => (minimizeConversation = !minimizeConversation)}
-					/>
-				</div>
-			{/if}
-		</div>
-	</div>
+	{settingsState.minimizeAIConversation}
 
 	<!-- Chats -->
 	<div

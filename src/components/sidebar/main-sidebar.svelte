@@ -16,11 +16,6 @@
 			url: '/ai',
 			icon: CircleDot
 		},
-		// {
-		// 	title: 'Search',
-		// 	url: '#',
-		// 	icon: SearchIcon
-		// },
 		{
 			title: 'Liked Papers',
 			url: '/liked_papers_page',
@@ -31,6 +26,12 @@
 			url: '/bookmarks_page',
 			icon: Bookmark
 		},
+		// {
+		// 	title: 'Search',
+		// 	url: '#',
+		// 	icon: SearchIcon
+		// },
+
 		{
 			title: 'Settings',
 			url: '#',
@@ -40,7 +41,6 @@
 
 	import { authClient } from '$lib/auth_client';
 	import { handleSignOut } from '$lib/auth_functions';
-	const session = authClient.useSession();
 </script>
 
 <!-- <Sidebar.Root> -->
@@ -56,32 +56,18 @@
 				<Sidebar.Menu>
 					{#each items as item (item.title)}
 						<Sidebar.MenuItem>
-							<Sidebar.MenuButton>
+							<Sidebar.MenuButton
+								class="flex w-full items-center justify-start gap-x-2 rounded-full px-3 hover:bg-zinc-100"
+							>
 								{#snippet child({ props })}
 									<a href={item.url} {...props}>
-										<item.icon />
-										<span>{item.title}</span>
+										<item.icon size={18} />
+										<span class="text-base">{item.title}</span>
 									</a>
 								{/snippet}
 							</Sidebar.MenuButton>
 						</Sidebar.MenuItem>
 					{/each}
-					<!-- Logout -->
-					<Sidebar.MenuItem>
-						<div class="group/logout">
-							<Sidebar.MenuButton>
-								<LogOut class="group-hover/logout:text-red-500" />
-								<!-- svelte-ignore a11y_click_events_have_key_events -->
-								<!-- svelte-ignore a11y_no_static_element_interactions -->
-								<div
-									class="cursor-pointer text-center group-hover/logout:text-red-500"
-									onclick={() => handleSignOut()}
-								>
-									Logout
-								</div>
-							</Sidebar.MenuButton>
-						</div>
-					</Sidebar.MenuItem>
 				</Sidebar.Menu>
 			</Sidebar.GroupContent>
 		</Sidebar.Group>
@@ -90,9 +76,10 @@
 	<Sidebar.Footer>
 		<Sidebar.Menu>
 			<Sidebar.MenuItem>
-				{#if $session.data}
-					<ProfileAvatar session={$session} fullInfo={true} />
-				{/if}
+				<Sidebar.MenuButton class="flex h-full w-full rounded-full bg-zinc-100">
+					<ProfileAvatar fullInfo={true} showLogoutBtn={true} />
+					<Sidebar.MenuSkeleton />
+				</Sidebar.MenuButton>
 			</Sidebar.MenuItem>
 		</Sidebar.Menu>
 	</Sidebar.Footer>

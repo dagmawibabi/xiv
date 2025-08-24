@@ -31,9 +31,9 @@
 <script lang="ts">
 	import { Chat } from '@ai-sdk/svelte';
 	import axios from 'axios';
-	import { onMount } from 'svelte';
 	import Navigation from '../../components/navigation.svelte';
 	import { Toaster } from 'svelte-sonner';
+	import { EachResearch } from '../../state/research_state.svelte';
 
 	// svelte-ignore non_reactive_update
 	let input = '';
@@ -45,23 +45,7 @@
 		input = '';
 	}
 
-	let availableModels: any[] = [];
-	async function getModels() {
-		const response = await fetch('/api/chat');
-		const data = await response.json();
-		console.log('Raw data from API:', data);
-
-		// Extract the array from the object
-		if (Array.isArray(data.models)) {
-			availableModels = [...data.models]; // spread to ensure reactivity
-		} else {
-			availableModels = [];
-			console.warn('No models array found in API response');
-		}
-	}
-	onMount(async () => {
-		getModels();
-	});
+	let eachResearch = new EachResearch();
 </script>
 
 <svelte:head>
@@ -70,10 +54,8 @@
 
 <!-- <div class="m-auto w-full px-3 md:w-2/3 lg:w-2/4 lg:px-0 xl:w-2/5 xl:px-0 2xl:w-2/5 2xl:px-0"> -->
 <div>
-	<!-- Title and Profile -->
-	<Navigation researchMode={true} />
 	<!-- list models -->
-	{availableModels.length}
+	<!-- {availableModels.length} -->
 	<!-- <ul>
 		<li>models: {availableModels.length}</li>
 		{#each availableModels as model, i}
@@ -82,6 +64,7 @@
 	</ul> -->
 
 	<!-- CHAT -->
+	{eachResearch.userInput}
 	<ul>
 		{#each chat.messages as message, messageIndex (messageIndex)}
 			<li>
@@ -99,7 +82,7 @@
 		{/each}
 	</ul>
 	<form onsubmit={handleSubmit}>
-		<input bind:value={input} />
+		<!-- <input bind:value={eachResearch.userInput} /> -->
 		<button type="submit">Send</button>
 	</form>
 
