@@ -40,7 +40,7 @@
 	<!-- Paper List -->
 	<div>
 		<!-- STATUS TEXTS AND FEED AND SELECT ALL-->
-		<div class="flex justify-between pb-2 pr-2 pt-6">
+		<div class="flex justify-between pb-2 pr-2">
 			<!-- Status -->
 			<div class="pl-2 font-semibold">Liked Papers</div>
 

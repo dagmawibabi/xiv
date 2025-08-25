@@ -83,12 +83,7 @@
 				</div>
 			{:else}
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<div
-					class="group/search group-hover:bg-zinc-200"
-					onclick={async () => {
-						await chatWithAI();
-					}}
-				>
+				<div class="group/search group-hover:bg-zinc-200" onclick={() => researchState.sendToAI()}>
 					<div
 						class="flex h-full w-24 cursor-pointer items-center justify-center border-l group-hover/search:bg-black group-hover/search:text-white"
 					>

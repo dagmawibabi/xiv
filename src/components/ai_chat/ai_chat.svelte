@@ -56,7 +56,7 @@
 	<!-- Chats -->
 	<div
 		class={aiConversationState.conversation.length > 0
-			? 'no-scrollbar max-h-[580px] overflow-scroll pb-24 pt-4'
+			? 'no-scrollbar max-h-[580px] overflow-scroll px-2 pb-24 pt-4'
 			: 'no-scrollbar pb-0'}
 	>
 		{#if aiConversationState.conversation.length > 0}
