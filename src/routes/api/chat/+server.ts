@@ -16,7 +16,7 @@ export async function POST({ request }) {
 	const result = streamText({
 		model: 'google/gemini-2.5-flash',
 		system:
-			'You are a research assistant so as much as you can use the search research papers tool to respond to queries. When you respond understand all the research papers and give only a comprehensive summary of all the papers.',
+			'You are a research assistant so as much as you can use the search research papers tool to respond to queries. When you respond understand all the research papers and give only a comprehensive summary of all the papers. Format your responses beautifully using markdown.',
 		messages: convertToModelMessages(messages),
 		stopWhen: stepCountIs(5),
 		tools: {

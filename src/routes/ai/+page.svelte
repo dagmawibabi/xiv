@@ -38,15 +38,10 @@
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import EachPaper from '../../components/each_paper/each_paper.svelte';
 	import Markdown from 'svelte-exmarkdown';
-	// svelte-ignore non_reactive_update
-	// let input = '';
-	// const chat = new Chat({});
+	import { aiConversationState } from '../../state/ai_conversation_state.svelte';
 
-	// function handleSubmit(event: SubmitEvent) {
-	// 	event.preventDefault();
-	// 	chat.sendMessage({ text: input });
-	// 	input = '';
-	// }
+	import { gfmPlugin } from 'svelte-exmarkdown/gfm';
+	const plugins = [gfmPlugin()];
 </script>
 
 <svelte:head>
@@ -59,8 +54,6 @@
 		<ul class="space-y-2">
 			{#each researchState.chat.messages as message, messageIndex (messageIndex)}
 				{#if message.role === 'user'}
-					{message.metadata}
-
 					<div class="flex justify-end">
 						{#each message.parts as part, partIndex (partIndex)}
 							{#if part.type === 'text'}
@@ -75,14 +68,14 @@
 						{#each message.parts as part, partIndex (partIndex)}
 							{#if part.type === 'text'}
 								<div
-									class="w-fit max-w-2xl overflow-scroll rounded-lg border bg-zinc-100 px-4 py-2 text-sm"
+									class="w-fit max-w-2xl overflow-scroll rounded-lg border bg-zinc-100 px-3 py-2 text-sm"
 								>
-									<Markdown md={part.text} />
+									<Markdown md={part.text} {plugins} />
 								</div>
 							{:else if part.type === 'tool-weather' || part.type === 'tool-convertFahrenheitToCelsius' || part.type === 'tool-searchResearchPapers'}
 								<div>
 									<!-- Tool Call -->
-									<div class="mb-2 w-fit rounded-full border bg-zinc-100 px-4 py-2 text-xs">
+									<div class="mb-2 w-fit rounded-full bg-zinc-100 px-4 py-2 text-xs text-zinc-500">
 										{part.input && typeof part.input === 'object' && 'action' in part.input
 											? part.input.action
 											: ''}
@@ -92,7 +85,7 @@
 									{#if part.output && typeof part.output === 'object' && 'papers' in part.output}
 										<div class="grid w-4/5 grid-cols-5 gap-1 pb-2">
 											{#each (part.output as { papers: any }).papers as eachPaper}
-												<Dialog.Root>
+												<!-- <Dialog.Root>
 													<Dialog.Trigger>
 														<div
 															class="cursor-pointer truncate rounded-full border bg-zinc-100 px-2 py-1 text-xs hover:border-zinc-400"
@@ -105,19 +98,25 @@
 													>
 														<EachPaper paper={eachPaper} />
 													</Dialog.Content>
-												</Dialog.Root>
-												<!-- <Popover.Root>
+												</Dialog.Root> -->
+												<Popover.Root>
 													<Popover.Trigger>
 														<div
-															class="cursor-pointer truncate rounded-full border bg-zinc-100 px-2 py-1 text-xs hover:border-zinc-400"
+															class={aiConversationState.selectedPapersIDList.includes(
+																eachPaper.extractedID
+															) == true
+																? 'cursor-pointer truncate rounded-full border border-zinc-400 bg-emerald-400 px-2 py-1 text-xs font-semibold text-black'
+																: 'cursor-pointer truncate rounded-full border border-zinc-100 bg-zinc-100 px-2 py-1 text-xs text-zinc-500 hover:border-zinc-400 hover:text-black'}
 														>
 															{eachPaper.title}
 														</div>
 													</Popover.Trigger>
-													<Popover.Content class="w-fit p-0 outline-none">
+													<Popover.Content
+														class="min-w-fit border-none bg-transparent p-0 outline-none"
+													>
 														<EachPaper paper={eachPaper} />
 													</Popover.Content>
-												</Popover.Root> -->
+												</Popover.Root>
 											{/each}
 										</div>
 									{/if}
