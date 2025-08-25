@@ -41,6 +41,7 @@
 	import { aiConversationState } from '../../state/ai_conversation_state.svelte';
 
 	import { gfmPlugin } from 'svelte-exmarkdown/gfm';
+	import { LibraryBig, Search } from 'lucide-svelte';
 	const plugins = [gfmPlugin()];
 </script>
 
@@ -75,10 +76,15 @@
 							{:else if part.type === 'tool-weather' || part.type === 'tool-convertFahrenheitToCelsius' || part.type === 'tool-searchResearchPapers'}
 								<div>
 									<!-- Tool Call -->
-									<div class="mb-2 w-fit rounded-full bg-zinc-100 px-4 py-2 text-xs text-zinc-500">
-										{part.input && typeof part.input === 'object' && 'action' in part.input
-											? part.input.action
-											: ''}
+									<div
+										class="mb-2 flex w-fit items-center gap-x-1 rounded-full bg-zinc-50 px-3 py-1"
+									>
+										<Search size={12} class="text-zinc-500" />
+										<div class="text-xs text-zinc-500">
+											{part.input && typeof part.input === 'object' && 'action' in part.input
+												? part.input.action
+												: ''}
+										</div>
 									</div>
 									<!-- References -->
 									<!-- {JSON.stringify(part.output)} -->
