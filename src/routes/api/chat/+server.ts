@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { z } from 'zod';
 import { streamText, type UIMessage, convertToModelMessages, tool, stepCountIs } from 'ai';
 import { gateway } from '@ai-sdk/gateway';
@@ -51,6 +50,9 @@ export async function POST({ request }) {
 			searchResearchPapers: tool({
 				description: 'Search for research papers to be accurate. ALWAYS USE THIS TOOL.',
 				inputSchema: z.object({
+					action: z
+						.string()
+						.describe('describe what you are searching for in a one short sentence'),
 					topic: z.string().describe('The topic to get research papers for')
 				}),
 				execute: async ({ topic }) => {

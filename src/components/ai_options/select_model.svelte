@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ChevronDown, RefreshCcwIcon, RotateCcw } from 'lucide-svelte';
+	import { ChevronDown, RefreshCcw, RefreshCcwIcon, RotateCcw } from 'lucide-svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import { modelsState } from '../../state/models_state.svelte';
 	import { onMount } from 'svelte';
@@ -23,7 +23,16 @@
 		</DropdownMenu.Trigger>
 		<DropdownMenu.Content class="h-80 w-72 overflow-scroll">
 			<DropdownMenu.Group>
-				<DropdownMenu.Label>Choose a Model</DropdownMenu.Label>
+				<DropdownMenu.Label>
+					<div class="flex items-center justify-between gap-x-2">
+						Choose a Model
+						<RefreshCcw
+							class="cursor-pointer"
+							size={16}
+							onclick={() => modelsState.getAllModels()}
+						/>
+					</div>
+				</DropdownMenu.Label>
 				<DropdownMenu.Separator />
 				{#each modelsState.allModels as model, i}
 					<DropdownMenu.Item

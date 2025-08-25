@@ -14,7 +14,7 @@ class ModelsState {
 		try {
 			const response = await fetch('/api/chat');
 			const data = await response.json();
-			// console.log('Raw data from API:', data);
+			console.log('Raw data from API:', data);
 
 			// Extract the array from the object
 			if (Array.isArray(data.models)) {
