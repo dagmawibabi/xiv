@@ -105,7 +105,7 @@
 											<!-- svelte-ignore a11y_click_events_have_key_events -->
 											<!-- svelte-ignore a11y_no_static_element_interactions -->
 											<div
-												class="hidden w-fit cursor-pointer rounded-md p-1 hover:bg-neutral-100 group-hover/aiResponse:flex"
+												class="flex w-fit cursor-pointer rounded-md p-1 hover:bg-neutral-100 group-hover/aiResponse:flex md:hidden"
 												onclick={(event) => {
 													event.stopPropagation();
 													copyToClipboard(part.text);
@@ -114,7 +114,7 @@
 												<Copy size={14} />
 											</div>
 											<div
-												class="hidden w-fit cursor-pointer rounded-md p-1 hover:bg-neutral-100 group-hover/aiResponse:flex"
+												class="flex w-fit cursor-pointer rounded-md p-1 hover:bg-neutral-100 group-hover/aiResponse:flex md:hidden"
 											>
 												<Download size={14} />
 											</div>
@@ -122,7 +122,7 @@
 												<!-- svelte-ignore a11y_click_events_have_key_events -->
 												<!-- svelte-ignore a11y_no_static_element_interactions -->
 												<div
-													class="hidden w-fit cursor-pointer rounded-md p-1 hover:bg-neutral-100 group-hover/aiResponse:flex"
+													class="flex w-fit cursor-pointer rounded-md p-1 hover:bg-neutral-100 group-hover/aiResponse:flex md:hidden"
 													onclick={() => researchState.retry()}
 												>
 													<RefreshCw size={14} />
@@ -146,7 +146,7 @@
 										<!-- References -->
 										<!-- {JSON.stringify(part.output)} -->
 										{#if part.output && typeof part.output === 'object' && 'papers' in part.output}
-											<div class="grid w-4/5 grid-cols-5 gap-1 pt-2">
+											<div class="grid w-full grid-cols-5 gap-1 pt-2 md:w-4/5">
 												{#each (part.output as { papers: any }).papers as eachPaper}
 													<References eachReference={eachPaper} />
 													<!-- <Dialog.Root>

@@ -156,7 +156,7 @@
 									<!-- References -->
 									<!-- {JSON.stringify(part.output)} -->
 									{#if part.output && typeof part.output === 'object' && 'papers' in part.output}
-										<div class="grid w-4/5 grid-cols-5 gap-1 pt-2">
+										<div class="grid w-full grid-cols-5 gap-1 pt-2 md:w-4/5">
 											{#each (part.output as { papers: any }).papers as eachPaper}
 												<References eachReference={eachPaper} />
 												<!-- <Dialog.Root>

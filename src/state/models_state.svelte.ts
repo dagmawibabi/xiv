@@ -8,7 +8,9 @@ class ModelsState {
 	allModels = $state<Model[]>([]);
 	availableModels = $state<Model[]>([]);
 	currentModelID: string = $state('google/gemini-2.0-flash');
+	currentModelName: string = $state('Gemini 2.0 Flash');
 	defaultModelID: string = $state('google/gemini-2.0-flash');
+	defaultModelName: string = $state('Gemini 2.0 Flash');
 
 	async getAllModels() {
 		try {
@@ -27,6 +29,16 @@ class ModelsState {
 			console.error('Failed to fetch models:', error);
 			this.allModels = [];
 		}
+	}
+
+	async resetModel() {
+		this.currentModelID = this.defaultModelID;
+		this.currentModelName = this.defaultModelName;
+	}
+
+	async setModel(modelID: string, modelName: string) {
+		this.currentModelID = modelID;
+		this.currentModelName = modelName;
 	}
 }
 

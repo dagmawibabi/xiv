@@ -31,6 +31,7 @@
 	import { goto } from '$app/navigation';
 	import SelectPapersTutorial from '../tutorials/select_papers_tutorial.svelte';
 	import ReferencedPapersTutorial from '../tutorials/referenced_papers_tutorial.svelte';
+	import { onMount } from 'svelte';
 
 	function unselectPaper(paper: any) {
 		aiConversationState.selectedPapersList = aiConversationState.selectedPapersList.filter(
@@ -40,53 +41,87 @@
 			(eachPaperID) => eachPaperID != paper.extractedID
 		);
 	}
+	// check if we're on mobile
+	let isMobile = $state(false);
+	let currentWindowWidth = $state(window.innerWidth);
+	onMount(() => {
+		isMobile = window.innerWidth < 768;
+		currentWindowWidth = window.innerWidth;
+		window.addEventListener('resize', () => {
+			currentWindowWidth = window.innerWidth;
+			isMobile = window.innerWidth < 768;
+		});
+	});
 </script>
 
-<!-- <Sidebar.Root> -->
-<Sidebar.Root
-	variant={aiConversationState.selectedPapersList.length > 0 || researchState.references.length > 0
-		? 'floating'
-		: 'inset'}
-	collapsible="icon"
-	side="right"
->
-	<Sidebar.Content class="rounded-lg bg-neutral-100">
-		<!-- References -->
-		<Collapsible.Root open class="group/collapsible">
-			<Sidebar.Group>
-				<Sidebar.GroupLabel>
-					{#snippet child({ props })}
-						<Collapsible.Trigger {...props}>
-							<span class="font-lg font-semibold">Referenced Papers</span>
-							<!-- <ChevronDown
+{#if !isMobile}
+	<Sidebar.Root
+		variant={aiConversationState.selectedPapersList.length > 0 ||
+		researchState.references.length > 0
+			? 'floating'
+			: 'inset'}
+		collapsible="icon"
+		side="right"
+		class="hidden"
+	>
+		<Sidebar.Content class="rounded-lg bg-neutral-100">
+			<!-- References -->
+			<Collapsible.Root open class="group/collapsible">
+				<Sidebar.Group>
+					<Sidebar.GroupLabel>
+						{#snippet child({ props })}
+							<Collapsible.Trigger {...props}>
+								<span class="font-lg font-semibold">Referenced Papers</span>
+								<!-- <ChevronDown
 										class="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180"
 									/> -->
-						</Collapsible.Trigger>
-					{/snippet}
-				</Sidebar.GroupLabel>
-				<Sidebar.GroupAction
-					title="Clear References"
-					onclick={() => (researchState.references = [])}
-				>
-					<ListX size={14} />
-				</Sidebar.GroupAction>
-				<Collapsible.Content>
-					<Sidebar.GroupContent>
-						<Sidebar.Menu class="py-0">
-							{#each researchState.references as eachReference}
-								<Sidebar.MenuItem>
-									<Sidebar.MenuButton class="h-fit w-full px-0 py-0">
-										{#if sidebar.state == 'collapsed'}
+							</Collapsible.Trigger>
+						{/snippet}
+					</Sidebar.GroupLabel>
+					<Sidebar.GroupAction
+						title="Clear References"
+						onclick={() => (researchState.references = [])}
+					>
+						<ListX size={14} />
+					</Sidebar.GroupAction>
+					<Collapsible.Content>
+						<Sidebar.GroupContent>
+							<Sidebar.Menu class="py-0">
+								{#each researchState.references as eachReference}
+									<Sidebar.MenuItem>
+										<Sidebar.MenuButton class="h-fit w-full px-0 py-0">
+											{#if sidebar.state == 'collapsed'}
+												<Popover.Root>
+													<Popover.Trigger>
+														<Library
+															size={15}
+															class={aiConversationState.selectedPapersIDList.includes(
+																eachReference.extractedID
+															)
+																? 'text-emerald-500'
+																: 'text-zinc-400'}
+														/>
+													</Popover.Trigger>
+													<Popover.Content
+														class="min-w-fit border-none bg-transparent p-0 outline-none"
+													>
+														<EachPaper paper={eachReference} />
+													</Popover.Content>
+												</Popover.Root>
+											{/if}
 											<Popover.Root>
-												<Popover.Trigger>
-													<Library
-														size={15}
+												<Popover.Trigger class="w-full">
+													<div
 														class={aiConversationState.selectedPapersIDList.includes(
 															eachReference.extractedID
 														)
-															? 'text-emerald-500'
-															: 'text-zinc-400'}
-													/>
+															? 'flex w-full cursor-pointer items-center overflow-clip rounded-lg border border-emerald-400 bg-emerald-50 px-2 py-1 text-left text-xs text-black '
+															: 'flex w-full cursor-pointer items-center overflow-clip rounded-lg border border-zinc-300 bg-white px-2 py-1 text-left text-xs hover:border-zinc-500'}
+													>
+														<div class="line-clamp-2 w-full">
+															<MarkdownRender content={eachReference['title']} />
+														</div>
+													</div>
 												</Popover.Trigger>
 												<Popover.Content
 													class="min-w-fit border-none bg-transparent p-0 outline-none"
@@ -94,101 +129,81 @@
 													<EachPaper paper={eachReference} />
 												</Popover.Content>
 											</Popover.Root>
-										{/if}
-										<Popover.Root>
-											<Popover.Trigger class="w-full">
-												<div
+										</Sidebar.MenuButton>
+									</Sidebar.MenuItem>
+								{/each}
+								{#if researchState.references.length == 0}
+									<ReferencedPapersTutorial />
+								{/if}
+							</Sidebar.Menu>
+						</Sidebar.GroupContent>
+					</Collapsible.Content>
+				</Sidebar.Group>
+			</Collapsible.Root>
+
+			<!-- Selected Papers -->
+			<Collapsible.Root open class="group/collapsible">
+				<Sidebar.Group>
+					<Sidebar.GroupLabel>
+						{#snippet child({ props })}
+							<Collapsible.Trigger {...props}>
+								<span class="font-lg font-semibold">Selected Papers</span>
+							</Collapsible.Trigger>
+						{/snippet}
+					</Sidebar.GroupLabel>
+					<Sidebar.GroupAction
+						title="Clear Selected"
+						onclick={() => {
+							aiConversationState.selectedPapersList = [];
+							aiConversationState.selectedPapersIDList = [];
+						}}
+					>
+						<ListMinus size={14} />
+					</Sidebar.GroupAction>
+					<Collapsible.Content>
+						<Sidebar.GroupContent>
+							<Sidebar.Menu>
+								{#each aiConversationState.selectedPapersList as eachSelectedPaper}
+									<Sidebar.MenuItem>
+										<Sidebar.MenuButton class="h-fit px-0 py-0">
+											{#if sidebar.state == 'collapsed'}
+												<CircleCheck
+													size={15}
 													class={aiConversationState.selectedPapersIDList.includes(
-														eachReference.extractedID
+														eachSelectedPaper.extractedID
 													)
-														? 'flex w-full cursor-pointer items-center overflow-clip rounded-lg border border-emerald-400 bg-emerald-50 px-2 py-1 text-left text-xs text-black '
-														: 'flex w-full cursor-pointer items-center overflow-clip rounded-lg border border-zinc-300 bg-white px-2 py-1 text-left text-xs hover:border-zinc-500'}
-												>
-													<div class="line-clamp-2 w-full">
-														<MarkdownRender content={eachReference['title']} />
-													</div>
-												</div>
-											</Popover.Trigger>
-											<Popover.Content
-												class="min-w-fit border-none bg-transparent p-0 outline-none"
-											>
-												<EachPaper paper={eachReference} />
-											</Popover.Content>
-										</Popover.Root>
-									</Sidebar.MenuButton>
-								</Sidebar.MenuItem>
-							{/each}
-							{#if researchState.references.length == 0}
-								<ReferencedPapersTutorial />
-							{/if}
-						</Sidebar.Menu>
-					</Sidebar.GroupContent>
-				</Collapsible.Content>
-			</Sidebar.Group>
-		</Collapsible.Root>
+														? 'text-emerald-500'
+														: 'text-zinc-400'}
+												/>
+											{/if}
 
-		<!-- Selected Papers -->
-		<Collapsible.Root open class="group/collapsible">
-			<Sidebar.Group>
-				<Sidebar.GroupLabel>
-					{#snippet child({ props })}
-						<Collapsible.Trigger {...props}>
-							<span class="font-lg font-semibold">Selected Papers</span>
-						</Collapsible.Trigger>
-					{/snippet}
-				</Sidebar.GroupLabel>
-				<Sidebar.GroupAction
-					title="Clear Selected"
-					onclick={() => {
-						aiConversationState.selectedPapersList = [];
-						aiConversationState.selectedPapersIDList = [];
-					}}
-				>
-					<ListMinus size={14} />
-				</Sidebar.GroupAction>
-				<Collapsible.Content>
-					<Sidebar.GroupContent>
-						<Sidebar.Menu>
-							{#each aiConversationState.selectedPapersList as eachSelectedPaper}
-								<Sidebar.MenuItem>
-									<Sidebar.MenuButton class="h-fit px-0 py-0">
-										{#if sidebar.state == 'collapsed'}
-											<CircleCheck
-												size={15}
-												class={aiConversationState.selectedPapersIDList.includes(
-													eachSelectedPaper.extractedID
-												)
-													? 'text-emerald-500'
-													: 'text-zinc-400'}
-											/>
-										{/if}
-
-										<div
-											class="flex w-full cursor-default items-center overflow-clip rounded-lg border border-t border-emerald-400 bg-emerald-50 hover:border-black"
-										>
-											<div class="line-clamp-2 w-full px-2 py-1 text-xs">
-												<span> {eachSelectedPaper['title']} </span>
-											</div>
-											<!-- svelte-ignore a11y_click_events_have_key_events -->
-											<!-- svelte-ignore a11y_no_static_element_interactions -->
 											<div
-												class="flex w-10 cursor-pointer items-center border-l px-3 py-3 text-zinc-500 hover:bg-zinc-100 hover:text-red-500"
-												onclick={() => unselectPaper(eachSelectedPaper)}
+												class="flex w-full cursor-default items-center overflow-clip rounded-lg border border-t border-emerald-400 bg-emerald-50 hover:border-black"
 											>
-												<CircleX size={15} />
+												<div class="line-clamp-2 w-full px-2 py-1 text-xs">
+													<span> {eachSelectedPaper['title']} </span>
+												</div>
+												<!-- svelte-ignore a11y_click_events_have_key_events -->
+												<!-- svelte-ignore a11y_no_static_element_interactions -->
+												<div
+													class="flex w-10 cursor-pointer items-center border-l px-3 py-3 text-zinc-500 hover:bg-zinc-100 hover:text-red-500"
+													onclick={() => unselectPaper(eachSelectedPaper)}
+												>
+													<CircleX size={15} />
+												</div>
 											</div>
-										</div>
-										<!-- <item.icon size={18} />
+											<!-- <item.icon size={18} />
 								<span class="text-base">{item}</span> -->
-									</Sidebar.MenuButton>
-								</Sidebar.MenuItem>
-							{/each}
-							<SelectPapersTutorial />
-						</Sidebar.Menu>
-					</Sidebar.GroupContent>
-				</Collapsible.Content>
-			</Sidebar.Group>
-		</Collapsible.Root>
-	</Sidebar.Content>
-	<Sidebar.Rail />
-</Sidebar.Root>
+										</Sidebar.MenuButton>
+									</Sidebar.MenuItem>
+								{/each}
+								<SelectPapersTutorial />
+							</Sidebar.Menu>
+						</Sidebar.GroupContent>
+					</Collapsible.Content>
+				</Sidebar.Group>
+			</Collapsible.Root>
+		</Sidebar.Content>
+		<Sidebar.Rail />
+	</Sidebar.Root>
+{/if}

@@ -23,7 +23,7 @@
 				: 'group/title font-semibold text-zinc-500 transition-all duration-300 ease-in-out group-hover:text-black'}
 >
 	<div
-		class="inline-flex items-center gap-x-2 decoration-zinc-400 decoration-1 underline-offset-4 hover:underline"
+		class="inline-flex items-center gap-x-2 text-sm decoration-zinc-400 decoration-1 underline-offset-4 hover:underline"
 	>
 		<MarkdownRender content={paperState.paper['title']} />
 

@@ -20,13 +20,16 @@
 
 		<!-- Goto Research -->
 		{#if gotoResearchButton}
-			<div class="flex cursor-pointer items-center gap-2 pr-2 text-zinc-500">
+			<div class="hidden cursor-pointer items-center gap-2 pr-2 text-zinc-500 md:flex">
 				<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
+					<ExternalLink size={14} class="hover:text-black" onclick={() => goto('/research')} />
+				</div>
+				<!-- <div class="hidden md:flex lg:flex xl:flex 2xl:flex">
 					<ExternalLink size={14} class="hover:text-black" onclick={() => goto('/research')} />
 				</div>
 				<div class="flex md:hidden lg:hidden xl:hidden 2xl:hidden">
 					<ExternalLink size={16} class="hover:text-black" onclick={() => goto('/research')} />
-				</div>
+				</div> -->
 			</div>
 		{/if}
 	</div>
@@ -44,7 +47,7 @@
 		</div>
 		<div class="flex md:hidden lg:hidden xl:hidden 2xl:hidden">
 			<Trash2
-				size={16}
+				size={14}
 				class="hover:text-black"
 				onclick={() =>
 					// (aiConversationState.conversation = [])
@@ -63,7 +66,7 @@
 				</div>
 				<div class="flex md:hidden lg:hidden xl:hidden 2xl:hidden">
 					<Maximize
-						size={16}
+						size={14}
 						class="hover:text-black"
 						onclick={() => settingsState.toggleMinimizeAIConversation()}
 					/>

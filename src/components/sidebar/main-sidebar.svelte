@@ -50,7 +50,20 @@
 	import LogoutButton from '../profile_avatar/logout_button.svelte';
 	import { paperListState } from '../../state/papers_list.svelte';
 	import { useSidebar } from '$lib/components/ui/sidebar/index.js';
+	import { onMount } from 'svelte';
 	const sidebar = useSidebar();
+
+	// check if we're on mobile
+	let isMobile = $state(false);
+	let currentWindowWidth = $state(window.innerWidth);
+	onMount(() => {
+		isMobile = window.innerWidth < 768;
+		currentWindowWidth = window.innerWidth;
+		window.addEventListener('resize', () => {
+			currentWindowWidth = window.innerWidth;
+			isMobile = window.innerWidth < 768;
+		});
+	});
 </script>
 
 <Sidebar.Root variant="floating" collapsible="icon">
@@ -78,6 +91,7 @@
 				<Sidebar.MenuItem>
 					<Sidebar.MenuButton
 						class="flex w-full items-center justify-start gap-x-2 rounded-full px-3 hover:bg-white"
+						onclick={() => (isMobile ? sidebar.toggle() : null)}
 					>
 						{#snippet child({ props })}
 							<a href={item.url} {...props}>
