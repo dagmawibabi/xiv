@@ -12,6 +12,8 @@
 	import { authClient } from '$lib/auth_client';
 	import { page } from '$app/state';
 	import { commentState } from '../../state/comment_state.svelte';
+	import SendToAiBtn from '../research_input/send_to_ai_btn.svelte';
+	import { researchState } from '../../state/research_state.svelte';
 
 	async function searchPaper() {
 		if (inputState.searchContent.trim().length > 0) {
@@ -88,7 +90,7 @@
 		if (event.key === 'Enter') {
 			event.preventDefault();
 			if (isAIMode == true) {
-				chatWithAI();
+				researchState.sendToAI();
 			} else if (isCommentMode == true) {
 				commentOnPaper();
 			} else {
@@ -126,8 +128,8 @@ backdrop-blur-lg"
 					<input
 						type="text"
 						class="w-full items-center bg-white pb-0 outline-none md:pb-1 lg:pb-1 xl:pb-1 2xl:pb-1"
-						placeholder={`Chat with ${aiConversationState.currentModel.name} ...`}
-						bind:value={inputState.aiInput}
+						placeholder={`ask any question ...`}
+						bind:value={researchState.userInput}
 						onkeydown={handleEnter}
 					/>
 				{:else if isCommentMode == true}
@@ -191,35 +193,39 @@ backdrop-blur-lg"
 				{/if}
 			</div>
 
-			<!-- Search Button -->
-			{#if inputState.isSearching == true || commentState.isCommenting == true}
-				<div>
-					<div class="flex h-full w-20 items-center justify-center border-l">
-						<Circle size="22" color="#000000" duration="1s" />
-					</div>
-				</div>
+			{#if isAIMode}
+				<SendToAiBtn />
 			{:else}
-				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<div
-					class="group/search group-hover:bg-zinc-200"
-					onclick={async () => {
-						if (isAIMode == true) {
-							await chatWithAI();
-						} else if (isCommentMode == true) {
-							await commentOnPaper();
-						} else {
-							await searchPaper();
-						}
-					}}
-				>
-					<div
-						class="flex h-full w-24 cursor-pointer items-center justify-center border-l group-hover/search:bg-black group-hover/search:text-white"
-					>
-						<span>
-							{isAIMode == true ? 'Send' : isCommentMode == true ? 'Comment' : 'Search'}
-						</span>
+				<!-- Search Button -->
+				{#if inputState.isSearching == true || commentState.isCommenting == true}
+					<div>
+						<div class="flex h-full w-20 items-center justify-center border-l">
+							<Circle size="22" color="#000000" duration="1s" />
+						</div>
 					</div>
-				</div>
+				{:else}
+					<!-- svelte-ignore a11y_no_static_element_interactions -->
+					<div
+						class="group/search group-hover:bg-zinc-200"
+						onclick={async () => {
+							if (isAIMode == true) {
+								await chatWithAI();
+							} else if (isCommentMode == true) {
+								await commentOnPaper();
+							} else {
+								await searchPaper();
+							}
+						}}
+					>
+						<div
+							class="flex h-full w-24 cursor-pointer items-center justify-center border-l group-hover/search:bg-black group-hover/search:text-white"
+						>
+							<span>
+								{isCommentMode == true ? 'Comment' : 'Search'}
+							</span>
+						</div>
+					</div>
+				{/if}
 			{/if}
 		</div>
 	</div>

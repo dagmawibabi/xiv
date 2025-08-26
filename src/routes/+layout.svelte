@@ -27,8 +27,10 @@
 			<div class="sticky bottom-0 left-0 right-0 mx-auto w-4/6">
 				{#if page.url.pathname == '/research'}
 					<ChatBox />
-				{:else}
+				{:else if page.url.pathname == '/bookmarks_page' || page.url.pathname == '/liked_papers_page' || page.url.pathname == '/homepage'}
 					<MainInput />
+				{:else}
+					<MainInput isCommentMode={true} />
 				{/if}
 			</div>
 		</main>

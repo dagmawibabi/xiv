@@ -76,9 +76,7 @@
 									class="group/aiResponse prose w-fit max-w-2xl overflow-scroll rounded-lg px-3 text-sm"
 								>
 									{#key part.text}
-										<div class="">
-											<MarkdownRender content={part.text} />
-										</div>
+										<MarkdownRender content={part.text} />
 									{/key}
 									<div class="flex h-8 gap-x-1">
 										<!-- svelte-ignore a11y_click_events_have_key_events -->

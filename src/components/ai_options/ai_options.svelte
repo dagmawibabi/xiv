@@ -1,12 +1,13 @@
 <script>
-	import { Maximize, Minimize, Trash2 } from 'lucide-svelte';
+	import { ExternalLink, Maximize, Minimize, SquareArrowUpRight, Trash2 } from 'lucide-svelte';
 	import SelectModel from './select_model.svelte';
 	import SelectedPapers from './selected_papers.svelte';
 	import { aiConversationState } from '../../state/ai_conversation_state.svelte';
 	import { settingsState } from '../../state/settings_state.svelte';
 	import { researchState } from '../../state/research_state.svelte';
+	import { goto } from '$app/navigation';
 
-	let { showMaxMinButton = true } = $props();
+	let { showMaxMinButton = true, gotoResearchButton = false } = $props();
 </script>
 
 <div class="flex w-full items-center justify-between p-3 pb-2">
@@ -16,6 +17,18 @@
 
 		<!-- Model Selection -->
 		<SelectModel />
+
+		<!-- Goto Research -->
+		{#if gotoResearchButton}
+			<div class="flex cursor-pointer items-center gap-2 pr-2 text-zinc-500">
+				<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
+					<ExternalLink size={14} class="hover:text-black" onclick={() => goto('/research')} />
+				</div>
+				<div class="flex md:hidden lg:hidden xl:hidden 2xl:hidden">
+					<ExternalLink size={16} class="hover:text-black" onclick={() => goto('/research')} />
+				</div>
+			</div>
+		{/if}
 	</div>
 
 	<!-- Clear / Minimize Conversation -->
@@ -38,6 +51,7 @@
 					researchState.clearChat()}
 			/>
 		</div>
+
 		{#if showMaxMinButton}
 			{#if settingsState.minimizeAIConversation == true}
 				<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
