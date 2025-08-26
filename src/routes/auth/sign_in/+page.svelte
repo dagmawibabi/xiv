@@ -19,6 +19,18 @@
 	let isLogingInWithHuggingFace = $state(false);
 	let isLogingInWithTwitter = $state(false);
 	let isLogingInWithAnonymous = $state(false);
+
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
+	const session = authClient.useSession();
+
+	onMount(() => {
+		if ($session.data) {
+			goto('/homepage');
+		} else {
+			goto('/auth/sign_in');
+		}
+	});
 </script>
 
 <svelte:head>

@@ -31,27 +31,20 @@
 <script lang="ts">
 	import { Toaster } from 'svelte-sonner';
 	import { researchState } from '../../state/research_state.svelte';
-	import * as Popover from '$lib/components/ui/popover/index.js';
-	import EachPaper from '../../components/each_paper/each_paper.svelte';
-	import { aiConversationState } from '../../state/ai_conversation_state.svelte';
 
-	import { LibraryBig, Search } from 'lucide-svelte';
-	// import { marked } from 'marked';
+	import { Copy, Download, RefreshCw, Search } from 'lucide-svelte';
+	import MarkdownRender from '../../components/markdown_render.svelte';
+	import References from '../../components/research/references.svelte';
+	import { toast } from 'svelte-sonner';
 
-	import { Carta, Markdown } from 'carta-md';
-	import { math } from '@cartamd/plugin-math';
-	import { code } from '@cartamd/plugin-code';
-	import DOMPurify from 'isomorphic-dompurify';
-	import 'katex/dist/katex.css';
-	const carta = new Carta({
-		sanitizer: DOMPurify.sanitize,
-		extensions: [
-			math(),
-			code({
-				theme: 'ayu-light'
-			})
-		]
-	});
+	// Function to copy to clipboard
+	function copyToClipboard(content: any) {
+		// Copy to Clipboard
+		navigator.clipboard.writeText(content);
+
+		// Show Toast
+		toast.success(`Copied Successfully!`);
+	}
 </script>
 
 <svelte:head>
@@ -68,10 +61,8 @@
 						{#each message.parts as part, partIndex (partIndex)}
 							{#if part.type === 'text'}
 								<div class="w-fit max-w-2xl rounded-xl bg-zinc-100 px-4 py-1 text-sm">
-									<!-- {part.text} -->
 									{#key part.text}
-										<Markdown {carta} value={part.text} />
-										<!-- {marked(part.text)} -->
+										<MarkdownRender content={part.text} />
 									{/key}
 								</div>
 							{/if}
@@ -81,17 +72,48 @@
 					<div class="flex flex-col justify-start">
 						{#each message.parts as part, partIndex (partIndex)}
 							{#if part.type === 'text'}
-								<div class="prose w-fit max-w-2xl overflow-scroll rounded-lg px-3 py-2 text-sm">
+								<div
+									class="group/aiResponse prose w-fit max-w-2xl overflow-scroll rounded-lg px-3 text-sm"
+								>
 									{#key part.text}
-										<!-- {@html marked(part.text)} -->
-										<Markdown {carta} value={part.text} />
+										<div class="">
+											<MarkdownRender content={part.text} />
+										</div>
 									{/key}
+									<div class="flex h-8 gap-x-1">
+										<!-- svelte-ignore a11y_click_events_have_key_events -->
+										<!-- svelte-ignore a11y_no_static_element_interactions -->
+										<div
+											class="hidden w-fit cursor-pointer rounded-md p-2 hover:bg-neutral-100 group-hover/aiResponse:flex"
+											onclick={(event) => {
+												event.stopPropagation();
+												copyToClipboard(part.text);
+											}}
+										>
+											<Copy size={16} />
+										</div>
+										<div
+											class="hidden w-fit cursor-pointer rounded-md p-2 hover:bg-neutral-100 group-hover/aiResponse:flex"
+										>
+											<Download size={16} />
+										</div>
+										{#if researchState.chat.lastMessage?.id == message.id}
+											<!-- svelte-ignore a11y_click_events_have_key_events -->
+											<!-- svelte-ignore a11y_no_static_element_interactions -->
+											<div
+												class="hidden w-fit cursor-pointer rounded-md p-2 hover:bg-neutral-100 group-hover/aiResponse:flex"
+												onclick={() => researchState.retry()}
+											>
+												<RefreshCw size={16} />
+											</div>
+										{/if}
+									</div>
 								</div>
-							{:else if part.type === 'tool-weather' || part.type === 'tool-convertFahrenheitToCelsius' || part.type === 'tool-searchResearchPapers'}
+							{:else if part.type === 'tool-weather' || part.type === 'tool-convertFahrenheitToCelsius' || part.type === 'tool-searchResearchPapers' || part.type === 'tool-getSelectedPapers'}
 								<div>
 									<!-- Tool Call -->
 									<div
-										class="my-2 flex w-fit items-center gap-x-1 rounded-full bg-zinc-50 px-3 py-1"
+										class="mt-2 flex w-fit items-center gap-x-1 rounded-full bg-neutral-50 px-3 py-1"
 									>
 										<Search size={12} class="text-zinc-500" />
 										<div class="text-xs text-zinc-500">
@@ -103,8 +125,9 @@
 									<!-- References -->
 									<!-- {JSON.stringify(part.output)} -->
 									{#if part.output && typeof part.output === 'object' && 'papers' in part.output}
-										<div class="grid w-4/5 grid-cols-5 gap-1">
+										<div class="grid w-4/5 grid-cols-5 gap-1 pt-2">
 											{#each (part.output as { papers: any }).papers as eachPaper}
+												<References eachReference={eachPaper} />
 												<!-- <Dialog.Root>
 													<Dialog.Trigger>
 														<div
@@ -119,24 +142,6 @@
 														<EachPaper paper={eachPaper} />
 													</Dialog.Content>
 												</Dialog.Root> -->
-												<Popover.Root>
-													<Popover.Trigger>
-														<div
-															class={aiConversationState.selectedPapersIDList.includes(
-																eachPaper.extractedID
-															) == true
-																? 'cursor-pointer truncate rounded-full border border-zinc-400 bg-emerald-400 px-2 py-1 text-xs text-black'
-																: 'cursor-pointer truncate rounded-full border border-zinc-100 bg-zinc-100 px-2 py-1 text-xs text-zinc-500 hover:border-zinc-400 hover:text-black'}
-														>
-															{eachPaper.title}
-														</div>
-													</Popover.Trigger>
-													<Popover.Content
-														class="min-w-fit border-none bg-transparent p-0 outline-none"
-													>
-														<EachPaper paper={eachPaper} />
-													</Popover.Content>
-												</Popover.Root>
 											{/each}
 										</div>
 									{/if}

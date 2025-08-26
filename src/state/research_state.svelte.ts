@@ -1,24 +1,41 @@
 import { Chat } from '@ai-sdk/svelte';
 import { aiConversationState } from './ai_conversation_state.svelte';
+
+interface Reference {
+	extractedID: string;
+	title: string;
+	authors: string[];
+	published: string;
+	summary: string;
+	pdfLink: string;
+}
+
 class ResearchState {
 	// Chat
 	chat = new Chat({});
 	userInput = $state('');
 	// State
-	isRsearching = $state(false);
+	references = $state<Reference[]>([]);
 
 	async sendToAI() {
 		this.chat.sendMessage({
 			text: this.userInput,
-			metadata:
-				'Here are currently selected research papers if the user asks something related to them: ' +
-				JSON.stringify(aiConversationState.selectedPapersList)
+			metadata: JSON.stringify(aiConversationState.selectedPapersList)
 		});
 		this.userInput = '';
 	}
 
+	async retry() {
+		this.chat.regenerate();
+	}
+
+	async stop() {
+		this.chat.stop();
+	}
+
 	async clearChat() {
 		this.chat.messages = [];
+		this.references = [];
 	}
 }
 

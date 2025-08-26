@@ -1,9 +1,16 @@
 <script lang="ts">
-	import SignIn from './auth/sign_in/+page.svelte';
+	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	import { authClient } from '$lib/auth_client';
-	import HomePage from './homepage/+page.svelte';
-
 	const session = authClient.useSession();
+
+	onMount(() => {
+		if ($session.data) {
+			goto('/homepage');
+		} else {
+			goto('/auth/sign_in');
+		}
+	});
 </script>
 
 <svelte:head>
@@ -27,11 +34,3 @@
 	<meta property="twitter:title" content="ScholarXIV" />
 	<meta property="twitter:description" content="Open-source & AI powered research paper explorer" />
 </svelte:head>
-
-{#if $session.data}
-	<HomePage />
-{:else}
-	<div class="m-auto w-full px-3 md:w-2/3 lg:w-2/4 lg:px-0 xl:w-2/5 xl:px-0 2xl:w-2/5 2xl:px-0">
-		<SignIn />
-	</div>
-{/if}

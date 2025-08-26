@@ -103,12 +103,15 @@
 
 	let isfeedControlsOn = $state(false);
 
-	aiConversationState.selectedPapersList = [];
-	aiConversationState.selectedPapersIDList = [];
+	// aiConversationState.selectedPapersList = [];
+	// aiConversationState.selectedPapersIDList = [];
 
 	randomSearch();
 
 	const session = authClient.getSession();
+
+	import { page } from '$app/state';
+	const path = page.url.pathname.split('/').pop();
 </script>
 
 <svelte:head>

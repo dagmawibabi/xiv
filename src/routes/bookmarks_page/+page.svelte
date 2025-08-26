@@ -21,8 +21,8 @@
 	}
 
 	let isAllSelected = $state(false);
-	aiConversationState.selectedPapersList = [];
-	aiConversationState.selectedPapersIDList = [];
+	// aiConversationState.selectedPapersList = [];
+	// aiConversationState.selectedPapersIDList = [];
 
 	try {
 		getBookmarkedPapers();

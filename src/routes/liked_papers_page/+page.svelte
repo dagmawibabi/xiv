@@ -22,8 +22,8 @@
 	}
 
 	let isAllSelected = $state(false);
-	aiConversationState.selectedPapersList = [];
-	aiConversationState.selectedPapersIDList = [];
+	// aiConversationState.selectedPapersList = [];
+	// aiConversationState.selectedPapersIDList = [];
 
 	getLikedPapers();
 </script>

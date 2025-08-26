@@ -13,10 +13,13 @@ export async function POST({ request }) {
 	// CHAT
 	const { messages }: { messages: UIMessage[] } = await request.json();
 
+	// Get User's Selected Papers
+	const selectedPapers = messages[messages.length - 1].metadata;
+
+	// Sent to AI
 	const result = streamText({
 		model: 'google/gemini-2.5-flash',
-		system:
-			'You are a research assistant so as much as you can use the search research papers tool to respond to queries. When you respond understand all the research papers and give only a comprehensive summary of all the papers. Format your responses beautifully using markdown. You can write code if the user asks you. When researching feel free to use the search research papers tool multiple times until your response is comprehensive and complete.',
+		system: `You are a research assistant so as much as you can use the search research papers tool to respond to queries. When you respond understand all the research papers and give only a comprehensive summary of all the papers. Format your responses beautifully using markdown. You can write code if the user asks you. When researching feel free to use the search research papers tool multiple times until your response is comprehensive and complete. Keep in mind that the user might have selected some papers so remember to call the getSelectedPapers tool to get the papers user has selected. These selected papers might differ for every new message so when relevant don't forget to update yourself.`,
 		messages: convertToModelMessages(messages),
 		stopWhen: stepCountIs(5),
 		tools: {
@@ -44,6 +47,17 @@ export async function POST({ request }) {
 					const celsius = Math.round((temperature - 32) * (5 / 9));
 					return {
 						celsius
+					};
+				}
+			}),
+			getSelectedPapers: tool({
+				description: 'Get the papers user has currently selected',
+				inputSchema: z.object({
+					action: z.string().describe('describe what you are searching for in a one short sentence')
+				}),
+				execute: async () => {
+					return {
+						selectedPapers
 					};
 				}
 			}),

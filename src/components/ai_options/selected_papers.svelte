@@ -17,8 +17,8 @@
 	<Popover.Trigger class="bg-transparent outline-none"
 		><div
 			class={aiConversationState.selectedPapersList.length > 0
-				? 'flex cursor-pointer items-center gap-x-2 rounded-full border border-zinc-100 bg-zinc-100 py-1 pl-3 pr-2 text-xs text-emerald-600 hover:border-zinc-200 hover:text-black'
-				: 'flex cursor-pointer items-center gap-x-2 rounded-full border border-zinc-100 bg-zinc-100 py-1 pl-3 pr-2 text-xs text-zinc-500 hover:border-zinc-200 hover:text-black'}
+				? 'flex cursor-pointer items-center gap-x-2 rounded-full border border-zinc-100 bg-neutral-100 py-1 pl-3 pr-2 text-xs text-emerald-600 hover:border-zinc-200 hover:text-black'
+				: 'flex cursor-pointer items-center gap-x-2 rounded-full border border-zinc-100 bg-neutral-100 py-1 pl-3 pr-2 text-xs text-zinc-500 hover:border-zinc-200 hover:text-black'}
 		>
 			<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
 				<Layers size={14} />

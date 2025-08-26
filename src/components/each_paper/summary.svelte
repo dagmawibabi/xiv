@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { Scroll } from 'lucide-svelte';
+	import MarkdownRender from '../markdown_render.svelte';
 
 	// Props
 	let { paperState } = $props();
@@ -26,7 +27,7 @@
 					<span class="pb-[2.5px]"> Summary </span>
 				</div>
 				<span class="text-zinc-800">
-					{paperState.paper['summary']},
+					<MarkdownRender content={paperState.paper['summary']} />
 				</span>
 			</div>
 		</div>

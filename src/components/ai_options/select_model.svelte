@@ -13,7 +13,7 @@
 	<DropdownMenu.Root>
 		<DropdownMenu.Trigger>
 			<div
-				class="group/models flex items-center gap-x-1 rounded-full border border-zinc-100 bg-zinc-100 py-1 pl-3 pr-2 hover:border-zinc-200"
+				class="group/models flex items-center gap-x-1 rounded-full border border-zinc-100 bg-neutral-100 py-1 pl-3 pr-2 hover:border-zinc-200"
 			>
 				<span class="text-xs text-zinc-500 group-hover/models:text-black"
 					>{modelsState.currentModelID}</span

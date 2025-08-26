@@ -1,44 +1,9 @@
 <script lang="ts">
-	import {
-		ChevronDown,
-		ChevronUp,
-		MessageCircle,
-		Search,
-		Settings2,
-		Sparkles
-	} from 'lucide-svelte';
-	import { inputState } from '../../state/input_state.svelte';
-	import axios from 'axios';
+	import { CircleStop, RotateCcw, Sparkles } from 'lucide-svelte';
 	import { Circle } from 'svelte-loading-spinners';
-	import { aiConversationState } from '../../state/ai_conversation_state.svelte';
 	import { authClient } from '$lib/auth_client';
 	import { researchState } from '../../state/research_state.svelte';
 	import AiOptions from '../ai_options/ai_options.svelte';
-
-	async function chatWithAI() {
-		if (inputState.aiInput.trim().length > 0) {
-			aiConversationState.conversation.push({
-				from: 'user',
-				content: inputState.aiInput
-			});
-			inputState.aiInput = '';
-			aiConversationState.conversation.push({
-				from: 'system',
-				content: 'thinking ...'
-			});
-			const response = await axios.post('/api/ai_chat', {
-				selectedPapers: JSON.stringify(aiConversationState.selectedPapersList),
-				conversation: JSON.stringify(aiConversationState.conversation),
-				prompt:
-					aiConversationState.conversation[aiConversationState.conversation.length - 2].content
-			});
-			aiConversationState.conversation.pop();
-			aiConversationState.conversation.push({
-				from: 'ai',
-				content: response.data
-			});
-		}
-	}
 
 	function handleEnter(event: KeyboardEvent) {
 		if (event.key === 'Enter') {
@@ -74,18 +39,44 @@
 				/>
 			</div>
 
-			<!-- Search Button -->
-			{#if researchState.isRsearching == true}
+			<!-- Send Button -->
+			{#if researchState.chat.status == 'submitted'}
 				<div>
-					<div class="flex h-full w-20 items-center justify-center border-l">
+					<div
+						class="flex h-full w-24 cursor-pointer items-center justify-center border-l group-hover/send:bg-black group-hover/send:text-white"
+					>
 						<Circle size="22" color="#000000" duration="1s" />
+					</div>
+				</div>
+			{:else if researchState.chat.status == 'streaming'}
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
+				<div class="group/streaming group-hover:bg-zinc-200" onclick={() => researchState.stop()}>
+					<div
+						class="flex h-full w-24 cursor-pointer items-center justify-center border-l group-hover/streaming:bg-red-100 group-hover/streaming:text-white"
+					>
+						<CircleStop
+							size="22"
+							class="cursor-pointer text-neutral-500 group-hover/streaming:text-red-400"
+						/>
+					</div>
+				</div>
+			{:else if researchState.chat.status == 'error'}
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
+				<div class="group/error group-hover:bg-zinc-200" onclick={() => researchState.retry()}>
+					<div
+						class="flex h-full w-24 cursor-pointer items-center justify-center border-l group-hover/error:bg-blue-100 group-hover/error:text-white"
+					>
+						<RotateCcw
+							size="22"
+							class="cursor-pointer text-neutral-500 group-hover/error:text-blue-400"
+						/>
 					</div>
 				</div>
 			{:else}
 				<!-- svelte-ignore a11y_no_static_element_interactions -->
-				<div class="group/search group-hover:bg-zinc-200" onclick={() => researchState.sendToAI()}>
+				<div class="group/send group-hover:bg-zinc-200" onclick={() => researchState.sendToAI()}>
 					<div
-						class="flex h-full w-24 cursor-pointer items-center justify-center border-l group-hover/search:bg-black group-hover/search:text-white"
+						class="flex h-full w-24 cursor-pointer items-center justify-center border-l group-hover/send:bg-black group-hover/send:text-white"
 					>
 						<span> Send </span>
 					</div>

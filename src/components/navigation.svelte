@@ -1,7 +1,7 @@
 <script lang="ts">
 	let { researchMode = false } = $props();
 
-	import ProfileAvatar from './profile_avatar.svelte';
+	import ProfileAvatar from './profile_avatar/profile_avatar.svelte';
 	import Title from './title.svelte';
 
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
