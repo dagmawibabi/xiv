@@ -35,6 +35,7 @@
 	import { Copy, Download, RefreshCw, Search } from 'lucide-svelte';
 	import MarkdownRender from '../../components/markdown_render.svelte';
 	import References from '../../components/research/references.svelte';
+	import * as Accordion from '$lib/components/ui/accordion/index.js';
 	import { toast } from 'svelte-sonner';
 
 	// Function to copy to clipboard
@@ -45,6 +46,18 @@
 		// Show Toast
 		toast.success(`Copied Successfully!`);
 	}
+
+	// Sample Prompts shuffled and 10
+	let samplePrompts: any[] = [];
+	onMount(() => {
+		samplePrompts = [...promptSuggestions].sort(() => Math.random() - 0.5).slice(0, 10);
+		// .sort((a, b) => a.title.length - b.title.length);
+	});
+
+	import { authClient } from '$lib/auth_client';
+	import { onMount } from 'svelte';
+	import { promptSuggestions } from '$lib/sample_prompts';
+	const session = authClient.useSession();
 </script>
 
 <svelte:head>
@@ -52,6 +65,26 @@
 </svelte:head>
 
 <div>
+	{#if researchState.chat.messages.length == 0}
+		<div class="pt-10">
+			{#each samplePrompts as prompt}
+				<div class="pb-2">
+					<!-- svelte-ignore a11y_click_events_have_key_events -->
+					<!-- svelte-ignore a11y_no_static_element_interactions -->
+					<div
+						class="w-fit cursor-pointer rounded-full border border-neutral-200 bg-neutral-50 px-3 py-2 text-sm text-zinc-600 hover:border-zinc-500 hover:text-black"
+						onclick={() => {
+							researchState.userInput = prompt.prompt;
+							researchState.sendToAI();
+						}}
+					>
+						{prompt.title}
+					</div>
+				</div>
+			{/each}
+		</div>
+	{/if}
+
 	<!-- CHAT -->
 	<div class="w-full">
 		<ul class="space-y-2">
