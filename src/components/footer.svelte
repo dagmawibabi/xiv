@@ -5,7 +5,7 @@
 
 <div class="flex flex-col text-center text-xs">
 	<!-- Demo and Source-->
-	<span class="pb-5 pt-2">
+	<!-- <span class="pb-5 pt-2">
 		Checkout the
 		<a
 			href="https://youtu.be/-GlxZRCfxYA"
@@ -19,9 +19,9 @@
 			class="underline underline-offset-4 hover:text-blue-500">Star the Project</a
 		>
 		✨
-	</span>
+	</span> -->
 
 	<!-- Remarks -->
 	<ArxivRemark />
-	<span> Made with 🖤 by Dream Intelligence </span>
+	<!-- <span> Made with 🖤 by Dream Intelligence </span> -->
 </div>
