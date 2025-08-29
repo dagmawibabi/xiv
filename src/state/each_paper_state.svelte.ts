@@ -18,7 +18,10 @@ export class EachPaper {
 		this.isLiked = this.paper.isLiked;
 		this.isBookmarked = this.paper.isBookmarked;
 		// this.isReadingSummary = paperListState.paperList[0]['extractedID'] == this.paper['extractedID'];
-		this.isFirstInList = paperListState.paperList[0]['extractedID'] == this.paper['extractedID'];
+		this.isFirstInList =
+			paperListState.paperList.length > 0
+				? paperListState.paperList[0]['extractedID'] == this.paper['extractedID']
+				: false;
 	}
 
 	async toggleLike(userID: any, paperID: any) {

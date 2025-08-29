@@ -8,15 +8,17 @@
 	let { eachReference } = $props();
 
 	onMount(() => {
-		// Check if a reference with the same title already exists
-		const referenceExists = researchState.references.some(
-			(ref) => ref.title === eachReference.title
-		);
+		setTimeout(() => {
+			// Check if a reference with the same title already exists
+			const referenceExists = researchState.references.some(
+				(ref) => ref.title === eachReference.title
+			);
 
-		// Only add the reference if it doesn't already exist
-		if (!referenceExists) {
-			researchState.references = [...researchState.references, eachReference];
-		}
+			// Only add the reference if it doesn't already exist
+			if (!referenceExists) {
+				researchState.references = [...researchState.references, eachReference];
+			}
+		}, 0);
 	});
 </script>
 

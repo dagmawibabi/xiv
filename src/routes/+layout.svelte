@@ -21,7 +21,7 @@
 			<div class="pt-4">
 				<Sidebar.Trigger />
 			</div>
-			<div class="mx-auto w-11/12 flex-1 pt-0 md:w-4/5">
+			<div class="mx-auto w-11/12 flex-1 pt-0 md:w-3/4">
 				{@render children?.()}
 			</div>
 			<div class="sticky bottom-0 left-0 right-0 mx-auto w-full md:w-4/5">

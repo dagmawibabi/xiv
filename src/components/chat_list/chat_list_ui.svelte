@@ -70,6 +70,7 @@
 											: part.text}
 
 									{#if cleanedText}
+										<div class="h-4"></div>
 										<MarkdownRender content={cleanedText} />
 										<ChatActions content={cleanedText} messageID={message.id} />
 									{/if}
