@@ -17,4 +17,6 @@
 	let { content } = $props();
 </script>
 
-<Markdown {carta} value={content} />
+<div class="w-full">
+	<Markdown {carta} value={content} />
+</div>

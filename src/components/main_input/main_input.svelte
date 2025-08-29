@@ -5,7 +5,7 @@
 	import axios from 'axios';
 	import { paperListState } from '../../state/papers_list.svelte';
 	import { Circle } from 'svelte-loading-spinners';
-	import AiChat from '../ai_chat/ai_chat.svelte';
+	import AiChat from './ai_chat.svelte';
 	import { aiConversationState } from '../../state/ai_conversation_state.svelte';
 	import InputSettings from './input_settings.svelte';
 	import SelectedPapers from '../ai_options/selected_papers.svelte';

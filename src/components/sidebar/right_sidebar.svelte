@@ -71,7 +71,16 @@
 					<Sidebar.GroupLabel>
 						{#snippet child({ props })}
 							<Collapsible.Trigger {...props}>
-								<span class="font-lg font-semibold">Referenced Papers</span>
+								<div class="font-lg flex items-center gap-x-2 font-semibold">
+									<span> Referenced Papers </span>
+									{#if researchState.references.length > 0}
+										<div class="rounded-full bg-neutral-200 p-1 px-2 text-neutral-600">
+											{researchState.references.length > 0
+												? `${researchState.references.length}`
+												: ''}
+										</div>
+									{/if}
+								</div>
 								<!-- <ChevronDown
 										class="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180"
 									/> -->
@@ -147,7 +156,16 @@
 					<Sidebar.GroupLabel>
 						{#snippet child({ props })}
 							<Collapsible.Trigger {...props}>
-								<span class="font-lg font-semibold">Selected Papers</span>
+								<div class="font-lg flex items-center gap-x-2 font-semibold">
+									<span> Selected Papers </span>
+									{#if aiConversationState.selectedPapersList.length > 0}
+										<div class="rounded-full bg-neutral-200 p-1 px-2 text-neutral-600">
+											{aiConversationState.selectedPapersList.length > 0
+												? `${aiConversationState.selectedPapersList.length}`
+												: ''}
+										</div>
+									{/if}
+								</div>
 							</Collapsible.Trigger>
 						{/snippet}
 					</Sidebar.GroupLabel>

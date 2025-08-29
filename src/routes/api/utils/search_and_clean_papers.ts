@@ -22,7 +22,7 @@ export async function arxivAPICall(
 	const createdSearchString = createSearchString(searchFilterString);
 
 	const responseXML = await axios.get(
-		`${baseURL}${createdSearchString}&start=${startIndex}&max_results=${maxResults}&sortBy=${sortBy}&sortOrder=${sortOrder}`
+		`${baseURL}${createdSearchString}&start=${parseInt(startIndex) > 0 ? parseInt(startIndex) + parseInt(maxResults) - 1 : startIndex}&max_results=${maxResults}&sortBy=${sortBy}&sortOrder=${sortOrder}`
 	);
 
 	const jsObj = parseXMLToJS(responseXML.data);

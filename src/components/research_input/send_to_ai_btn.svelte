@@ -4,15 +4,14 @@
 	import { Circle } from 'svelte-loading-spinners';
 </script>
 
-{#if researchState.chat.status == 'submitted'}
-	<div>
+<!-- <div>
 		<div
 			class="flex h-full w-24 cursor-pointer items-center justify-center border-l group-hover/send:bg-black group-hover/send:text-white"
 		>
 			<Circle size="22" color="#000000" duration="1s" />
 		</div>
-	</div>
-{:else if researchState.chat.status == 'streaming'}
+	</div> -->
+{#if researchState.chat.status == 'submitted' || researchState.chat.status == 'streaming'}
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<div class="group/streaming group-hover:bg-zinc-200" onclick={() => researchState.stop()}>

@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { streamText, type UIMessage, convertToModelMessages, tool, stepCountIs } from 'ai';
 import { gateway } from '@ai-sdk/gateway';
 import { arxivAPICall } from '../utils/search_and_clean_papers';
+import { old_system_prompt } from '$lib/system_prompt';
 // import type { searchStringOBJI } from '../types/types';
 
 export async function GET() {
@@ -9,47 +10,27 @@ export async function GET() {
 	return new Response(JSON.stringify(availableModels));
 }
 
+type Metadata = {
+	context: string;
+	currentModel: string;
+};
+
 export async function POST({ request }) {
 	// CHAT
 	const { messages }: { messages: UIMessage[] } = await request.json();
 
 	// Get User's Selected Papers
-	const selectedPapers = messages[messages.length - 1].metadata;
+	const selectedPapers = (messages[messages.length - 1].metadata as Metadata)?.context;
+	const currentModel =
+		(messages[messages.length - 1].metadata as Metadata)?.currentModel || 'google/gemini-2.5-flash';
 
 	// Sent to AI
 	const result = streamText({
-		model: 'google/gemini-2.5-flash',
-		system: `You are a research assistant so as much as you can use the search research papers tool to respond to queries. When you respond understand all the research papers and give only a comprehensive summary of all the papers. Format your responses beautifully using markdown. You can write code if the user asks you. When researching feel free to use the search research papers tool multiple times until your response is comprehensive and complete. Keep in mind that the user might have selected some papers so remember to call the getSelectedPapers tool to get the papers user has selected. These selected papers might differ for every new message so when relevant don't forget to update yourself.`,
+		model: currentModel,
+		system: old_system_prompt + `You are using ${currentModel}`,
 		messages: convertToModelMessages(messages),
 		stopWhen: stepCountIs(5),
 		tools: {
-			weather: tool({
-				description: 'Get the weather in a location (fahrenheit)',
-				inputSchema: z.object({
-					action: z.string().describe('a phrase to describe what you are doing'),
-					location: z.string().describe('The location to get the weather for')
-				}),
-				execute: async ({ location }) => {
-					const temperature = Math.round(Math.random() * (90 - 32) + 32);
-					return {
-						location,
-						temperature
-					};
-				}
-			}),
-			convertFahrenheitToCelsius: tool({
-				description: 'Convert a temperature in fahrenheit to celsius',
-				inputSchema: z.object({
-					action: z.string().describe('a phrase to describe what you are doing'),
-					temperature: z.number().describe('The temperature in fahrenheit to convert')
-				}),
-				execute: async ({ temperature }) => {
-					const celsius = Math.round((temperature - 32) * (5 / 9));
-					return {
-						celsius
-					};
-				}
-			}),
 			getSelectedPapers: tool({
 				description: 'Get the papers user has currently selected',
 				inputSchema: z.object({
@@ -67,10 +48,17 @@ export async function POST({ request }) {
 					action: z
 						.string()
 						.describe('describe what you are searching for in a one short sentence'),
-					topic: z.string().describe('The topic to get research papers for')
+					topic: z.string().describe('The topic to get research papers for'),
+					startIndex: z.string().describe('The start index for the search')
 				}),
-				execute: async ({ topic }) => {
-					const papers = await arxivAPICall('0', '10', { all: topic }, 'relevance', 'ascending');
+				execute: async ({ topic, startIndex }) => {
+					const papers = await arxivAPICall(
+						startIndex,
+						'10',
+						{ all: topic },
+						'relevance',
+						'ascending'
+					);
 					return {
 						topic,
 						papers

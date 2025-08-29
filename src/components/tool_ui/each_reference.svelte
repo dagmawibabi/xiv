@@ -1,7 +1,6 @@
-<script>
+<script lang="ts">
 	import * as Popover from '$lib/components/ui/popover/index';
 	import { onMount } from 'svelte';
-
 	import { aiConversationState } from '../../state/ai_conversation_state.svelte';
 	import EachPaper from '../each_paper/each_paper.svelte';
 	import { researchState } from '../../state/research_state.svelte';

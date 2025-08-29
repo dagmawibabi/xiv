@@ -21,10 +21,10 @@
 			<div class="pt-4">
 				<Sidebar.Trigger />
 			</div>
-			<div class="mx-auto w-11/12 flex-1 pt-0 md:w-4/6">
+			<div class="mx-auto w-11/12 flex-1 pt-0 md:w-4/5">
 				{@render children?.()}
 			</div>
-			<div class="sticky bottom-0 left-0 right-0 mx-auto w-full md:w-4/6">
+			<div class="sticky bottom-0 left-0 right-0 mx-auto w-full md:w-4/5">
 				{#if page.url.pathname == '/research'}
 					<ChatBox />
 				{:else if page.url.pathname == '/bookmarks_page' || page.url.pathname == '/liked_papers_page' || page.url.pathname == '/homepage'}

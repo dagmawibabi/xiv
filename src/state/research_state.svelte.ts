@@ -1,5 +1,6 @@
 import { Chat } from '@ai-sdk/svelte';
 import { aiConversationState } from './ai_conversation_state.svelte';
+import { modelsState } from './models_state.svelte';
 
 interface Reference {
 	extractedID: string;
@@ -20,7 +21,10 @@ class ResearchState {
 	async sendToAI() {
 		this.chat.sendMessage({
 			text: this.userInput,
-			metadata: JSON.stringify(aiConversationState.selectedPapersList)
+			metadata: {
+				context: JSON.stringify(aiConversationState.selectedPapersList),
+				currentModel: modelsState.currentModelID
+			}
 		});
 		this.userInput = '';
 	}
