@@ -2,10 +2,23 @@
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import Header from './header.svelte';
 	import ProfileAvatar from '../profile_avatar/profile_avatar.svelte';
-	import { HouseIcon, Heart, Bookmark, LogOut, SearchIcon, Bolt, CircleDot } from 'lucide-svelte';
+	import {
+		HouseIcon,
+		Heart,
+		Bookmark,
+		LogOut,
+		SearchIcon,
+		Bolt,
+		CircleDot,
+		Plus,
+		MessageCirclePlus,
+		Map,
+		Logs,
+		ScrollText
+	} from 'lucide-svelte';
 
-	// Menu items.
-	const items = [
+	// Navigation Items.
+	const navigationItems = [
 		{
 			title: 'Home',
 			url: '/homepage',
@@ -29,17 +42,36 @@
 			url: '/bookmarks_page',
 			icon: Bookmark,
 			badge: paperListState.bookmarkList.length
-		},
+		}
 		// {
 		// 	title: 'Search',
 		// 	url: '#',
 		// 	icon: SearchIcon
 		// },
+		// {
+		// 	title: 'Settings',
+		// 	url: '#',
+		// 	icon: Bolt,
+		// 	badge: 0
+		// }
+	];
+
+	// Development Items.
+	const developmentItems = [
 		{
-			title: 'Settings',
-			url: '#',
-			icon: Bolt,
-			badge: 0
+			title: 'Feedback',
+			url: 'https://scholarxiv.featurebase.app/',
+			icon: MessageCirclePlus
+		},
+		{
+			title: 'Roadmap',
+			url: 'https://scholarxiv.featurebase.app/roadmap',
+			icon: Map
+		},
+		{
+			title: 'Changelog',
+			url: 'https://scholarxiv.featurebase.app/changelog',
+			icon: ScrollText
 		}
 	];
 
@@ -75,7 +107,7 @@
 		<!-- <Header /> -->
 		{#if sidebar.state == 'expanded'}
 			<div class="flex w-full items-center justify-center">
-				<img src={logo} alt=" " class="-ml-2 h-10 w-11" />
+				<img src={logo} alt=" " class="-ml-6 h-10 w-11" />
 				<div class="text-lg font-semibold">ScholarXIV</div>
 			</div>
 		{:else}
@@ -86,33 +118,59 @@
 	</Sidebar.Header>
 
 	<Sidebar.Content class="bg-neutral-100 pt-4">
-		<Sidebar.Menu class="px-2">
-			{#each items as item (item.title)}
-				<Sidebar.MenuItem>
-					<Sidebar.MenuButton
-						class="flex w-full items-center justify-start gap-x-2 rounded-full px-3 hover:bg-white"
-						onclick={() => (isMobile ? sidebar.toggle() : null)}
+		<Sidebar.Group>
+			<Sidebar.GroupLabel>Navigation</Sidebar.GroupLabel>
+
+			<Sidebar.GroupContent>
+				{#each navigationItems as eachNavigationItem (eachNavigationItem.title)}
+					<Sidebar.MenuItem
+						class="flex w-full items-center justify-start rounded-full hover:bg-white"
 					>
-						{#snippet child({ props })}
-							<a href={item.url} {...props}>
-								<item.icon size={18} />
-								<span class="text-base">{item.title}</span>
-							</a>
-						{/snippet}
-					</Sidebar.MenuButton>
-					{#if item.badge > 0}
-						<Sidebar.MenuBadge class="rounded-full bg-neutral-200 text-zinc-500"
-							>{item.badge}</Sidebar.MenuBadge
-						>
-					{/if}
-				</Sidebar.MenuItem>
-			{/each}
-		</Sidebar.Menu>
+						<Sidebar.MenuButton onclick={() => (isMobile ? sidebar.toggle() : null)}>
+							{#snippet child({ props })}
+								<a href={eachNavigationItem.url} {...props}>
+									<eachNavigationItem.icon size={16} />
+									<span>{eachNavigationItem.title}</span>
+								</a>
+							{/snippet}
+						</Sidebar.MenuButton>
+						{#if eachNavigationItem.badge > 0}
+							<Sidebar.MenuBadge class="rounded-full bg-neutral-200 text-zinc-500"
+								>{eachNavigationItem.badge}</Sidebar.MenuBadge
+							>
+						{/if}
+					</Sidebar.MenuItem>
+				{/each}
+			</Sidebar.GroupContent>
+		</Sidebar.Group>
+
+		<Sidebar.Group>
+			<Sidebar.GroupLabel>Development</Sidebar.GroupLabel>
+
+			<!-- developmentItems -->
+
+			<Sidebar.GroupContent>
+				{#each developmentItems as eachDevelopmentItem (eachDevelopmentItem.title)}
+					<Sidebar.MenuItem
+						class="flex w-full items-center justify-start rounded-full hover:bg-white"
+					>
+						<Sidebar.MenuButton onclick={() => (isMobile ? sidebar.toggle() : null)}>
+							{#snippet child({ props })}
+								<a href={eachDevelopmentItem.url} {...props} target="_blank">
+									<eachDevelopmentItem.icon size={16} />
+									<span>{eachDevelopmentItem.title}</span>
+								</a>
+							{/snippet}
+						</Sidebar.MenuButton>
+					</Sidebar.MenuItem>
+				{/each}
+			</Sidebar.GroupContent>
+		</Sidebar.Group>
 	</Sidebar.Content>
 
 	<Sidebar.Footer class="rounded-bl-lg rounded-br-lg border-t bg-neutral-100">
 		<Sidebar.Menu>
-			<Sidebar.MenuItem class="">
+			<Sidebar.MenuItem>
 				<Sidebar.MenuButton
 					class={sidebar.state == 'expanded'
 						? 'h-full rounded-full border bg-white hover:border-zinc-400'
