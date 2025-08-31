@@ -26,7 +26,7 @@
 
 	<!-- CTA -->
 	<div class="flex gap-x-2">
-		<Button>Start Exploring</Button>
+		<Button class="px-10 font-semibold">Start Exploring</Button>
 		<Button variant="secondary" class="border">View Demo</Button>
 	</div>
 </div>

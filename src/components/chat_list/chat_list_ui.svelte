@@ -101,6 +101,13 @@
 			{/if}
 		{/each}
 	</ul>
+	<!-- Error -->
+	{#if researchState.chat.error}
+		<div class="w-fit max-w-2xl rounded-xl bg-zinc-100 px-4 py-1 text-sm text-red-600">
+			<MarkdownRender content={researchState.chat.error.message} />
+		</div>
+	{/if}
+	<!-- Streaming Indicator -->
 	{#if researchState.chat.status == 'submitted' || researchState.chat.status == 'streaming'}
 		<div>
 			<div class="flex h-full w-fit items-center justify-center p-5">
