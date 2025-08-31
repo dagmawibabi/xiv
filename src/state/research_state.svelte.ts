@@ -40,6 +40,11 @@ class ResearchState {
 	async clearChat() {
 		this.chat.messages = [];
 		this.references = [];
+		this.clearError();
+	}
+
+	async clearError() {
+		this.chat.clearError();
 	}
 }
 

@@ -9,6 +9,8 @@
 	import { marked } from 'marked';
 	import logo from '$lib/assets/logo/logo.png';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index';
+	import katex from 'katex';
+	import 'katex/dist/katex.min.css';
 
 	let { content, messageID } = $props();
 
@@ -34,7 +36,26 @@
 	async function downloadAsPDF() {
 		const html2pdf = (await import('html2pdf.js')).default;
 
-		const htmlContent = await marked(content);
+		let htmlContent = await marked(content);
+
+		// Replace LaTeX expressions with KaTeX-rendered HTML
+		// Inline math: $...$
+		htmlContent = htmlContent.replace(/\$(.+?)\$/g, (_, expr) => {
+			try {
+				return katex.renderToString(expr, { throwOnError: false });
+			} catch {
+				return `$${expr}$`;
+			}
+		});
+
+		// Block math: $$...$$
+		htmlContent = htmlContent.replace(/\$\$(.+?)\$\$/gs, (_, expr) => {
+			try {
+				return `<div style="text-align:center; margin: 1em 0;">${katex.renderToString(expr, { displayMode: true, throwOnError: false })}</div>`;
+			} catch {
+				return `$$${expr}$$`;
+			}
+		});
 
 		const element = document.createElement('div');
 		element.innerHTML = `
@@ -120,6 +141,7 @@
 							<!-- <DropdownMenu.Label>Download</DropdownMenu.Label>
 							<DropdownMenu.Separator /> -->
 							<DropdownMenu.Item
+								class="cursor-pointer"
 								onclick={(event) => {
 									event.stopPropagation();
 									downloadAsPDF();
@@ -129,6 +151,7 @@
 								Download as PDF</DropdownMenu.Item
 							>
 							<DropdownMenu.Item
+								class="cursor-pointer"
 								onclick={(event) => {
 									event.stopPropagation();
 									downloadAsMarkdown();

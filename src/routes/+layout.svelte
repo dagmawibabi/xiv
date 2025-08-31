@@ -9,6 +9,7 @@
 	import { aiConversationState } from '../state/ai_conversation_state.svelte';
 	let { children } = $props();
 	const path = page.url.pathname.split('/').pop();
+	import 'katex/dist/katex.min.css';
 
 	import { authClient } from '$lib/auth_client';
 	const session = authClient.useSession();
