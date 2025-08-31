@@ -41,6 +41,10 @@
 	];
 </script>
 
+<svelte:head>
+	<title>ScholarXIV</title>
+</svelte:head>
+
 <div class="mx-auto w-[80%]">
 	<!-- Nav Bar -->
 	<NavBar />
