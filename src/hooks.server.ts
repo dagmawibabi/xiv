@@ -52,7 +52,8 @@ export async function handle({ event, resolve }) {
 		'/auth/sign_in',
 		'/auth/sign_up',
 		'/api/auth/sign-in/social',
-		'/api/auth/get-session'
+		'/api/auth/get-session',
+		'/landing'
 	];
 
 	if (

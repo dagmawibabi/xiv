@@ -95,6 +95,10 @@
 			currentWindowWidth = window.innerWidth;
 			isMobile = window.innerWidth < 768;
 		});
+		setTimeout(() => {
+			navigationItems[2].badge = paperListState.likedPapersList.length;
+			navigationItems[3].badge = paperListState.bookmarkList.length;
+		}, 0);
 	});
 </script>
 

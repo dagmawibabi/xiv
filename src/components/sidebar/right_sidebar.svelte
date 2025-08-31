@@ -133,7 +133,7 @@
 													</div>
 												</Popover.Trigger>
 												<Popover.Content
-													class="min-w-fit border-none bg-transparent p-0 outline-none"
+													class="mr-10 min-w-fit border-none bg-transparent p-0 outline-none"
 												>
 													<EachPaper paper={eachReference} />
 												</Popover.Content>
@@ -195,21 +195,30 @@
 												/>
 											{/if}
 
-											<div
-												class="flex w-full cursor-default items-center overflow-clip rounded-lg border border-t border-emerald-400 bg-emerald-50 hover:border-black"
-											>
-												<div class="line-clamp-2 w-full px-2 py-1 text-xs">
-													<span> {eachSelectedPaper['title']} </span>
-												</div>
-												<!-- svelte-ignore a11y_click_events_have_key_events -->
-												<!-- svelte-ignore a11y_no_static_element_interactions -->
-												<div
-													class="flex w-10 cursor-pointer items-center border-l px-3 py-3 text-zinc-500 hover:bg-zinc-100 hover:text-red-500"
-													onclick={() => unselectPaper(eachSelectedPaper)}
+											<Popover.Root>
+												<Popover.Trigger class="w-full">
+													<div
+														class="flex w-full cursor-default items-center overflow-clip rounded-lg border border-t border-emerald-400 bg-emerald-50 text-start hover:border-black"
+													>
+														<div class="line-clamp-2 w-full px-2 py-1 text-xs">
+															<span> {eachSelectedPaper['title']} </span>
+														</div>
+														<!-- svelte-ignore a11y_click_events_have_key_events -->
+														<!-- svelte-ignore a11y_no_static_element_interactions -->
+														<div
+															class="flex w-10 cursor-pointer items-center border-l px-3 py-3 text-zinc-500 hover:bg-zinc-100 hover:text-red-500"
+															onclick={() => unselectPaper(eachSelectedPaper)}
+														>
+															<CircleX size={15} />
+														</div>
+													</div>
+												</Popover.Trigger>
+												<Popover.Content
+													class="mr-10 min-w-fit border-none bg-transparent p-0 outline-none"
 												>
-													<CircleX size={15} />
-												</div>
-											</div>
+													<EachPaper paper={eachSelectedPaper} />
+												</Popover.Content>
+											</Popover.Root>
 											<!-- <item.icon size={18} />
 								<span class="text-base">{item}</span> -->
 										</Sidebar.MenuButton>

@@ -14,7 +14,11 @@
 	const session = authClient.useSession();
 </script>
 
-{#if page.url.pathname !== '/' && page.url.pathname !== '/auth/sign_in' && $session.data}
+{#if page.url.pathname == '/landing'}
+	<div class="no-scrollbar m-auto h-screen w-full overflow-scroll pt-6">
+		{@render children()}
+	</div>
+{:else if page.url.pathname !== '/' && page.url.pathname !== '/auth/sign_in' && $session.data}
 	<Sidebar.Provider>
 		<AppSidebar />
 		<main class="relative flex min-h-screen w-full flex-col">

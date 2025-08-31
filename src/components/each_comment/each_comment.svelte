@@ -75,7 +75,7 @@
 		<DropdownMenu.Trigger>
 			<div class="flex cursor-pointer items-center gap-x-2">
 				<Avatar.Root class="border border-zinc-300 drop-shadow-md hover:shadow-lg">
-					<Avatar.Image src="" />
+					<Avatar.Image src={comment.commenter.image} />
 					<Avatar.Fallback>
 						{comment.commenter.name.includes(' ')
 							? comment.commenter.name
