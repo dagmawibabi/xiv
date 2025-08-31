@@ -60,7 +60,7 @@
 						</p>
 					</div>
 				</div>
-				<div class="prose text-sm">
+				<div class="prose text-sm" style="max-width: 700px; margin: 0 auto;">
 					${htmlContent}
 				</div>
 			</div>
@@ -141,7 +141,7 @@
 					</DropdownMenu.Content>
 				</DropdownMenu.Root>
 			</Tooltip.Trigger>
-			<Tooltip.Content>Download as PDF</Tooltip.Content>
+			<Tooltip.Content>Download</Tooltip.Content>
 		</Tooltip.Root>
 	</Tooltip.Provider>
 
