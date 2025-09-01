@@ -129,7 +129,7 @@
 	</div>
 
 	<!-- Auth -->
-	<Button class="hidden font-semibold md:flex" onclick={() => goto('/auth/sign_in')}
+	<Button class="hidden font-semibold md:flex" onclick={() => goto('#pricing')}
 		>Start Researching</Button
 	>
 </div>

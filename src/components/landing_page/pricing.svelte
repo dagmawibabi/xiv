@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Table from '$lib/components/ui/table/index';
 	import { Check } from 'lucide-svelte';
@@ -181,7 +182,7 @@
 					<Button
 						class="mt-6 w-full rounded-lg border "
 						variant={eachPackage.name == 'Free' ? 'secondary' : 'default'}
-						>{eachPackage.buttonText}</Button
+						onclick={() => goto('/auth/sign_in')}>{eachPackage.buttonText}</Button
 					>
 				</div>
 				<!-- Package Features -->

@@ -27,9 +27,7 @@
 
 	<!-- CTA -->
 	<div class="flex w-full items-center justify-start gap-x-2 md:justify-center">
-		<Button class="px-10 font-semibold" onclick={() => goto('/auth/sign_in')}
-			>Start Exploring</Button
-		>
+		<Button class="px-10 font-semibold" onclick={() => goto('#pricing')}>Start Exploring</Button>
 		<Button variant="secondary" class="border">View Demo</Button>
 	</div>
 </div>
