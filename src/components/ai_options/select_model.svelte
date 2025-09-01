@@ -24,7 +24,7 @@
 				<ChevronDown size={16} class="text-zinc-500 group-hover/models:text-black" />
 			</div>
 		</DropdownMenu.Trigger>
-		<DropdownMenu.Content class="h-80 w-72 overflow-scroll">
+		<DropdownMenu.Content class="no-scrollbar h-80 w-72 overflow-scroll">
 			<DropdownMenu.Group>
 				<DropdownMenu.Label>
 					<div class="flex items-center justify-between gap-x-2">

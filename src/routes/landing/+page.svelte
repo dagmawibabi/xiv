@@ -13,7 +13,7 @@
 	<title>ScholarXIV</title>
 </svelte:head>
 
-<div class="mx-auto w-[90%] md:w-[80%]">
+<div class="mx-auto w-[90%] pt-10 md:w-[80%] md:pt-0">
 	<!-- Nav Bar -->
 	<NavBar />
 	<NavBarMobile />

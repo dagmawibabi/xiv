@@ -14,6 +14,7 @@
 	import { commentState } from '../../state/comment_state.svelte';
 	import SendToAiBtn from '../research_input/send_to_ai_btn.svelte';
 	import { researchState } from '../../state/research_state.svelte';
+	import { settingsState } from '../../state/settings_state.svelte';
 
 	async function searchPaper() {
 		if (inputState.searchContent.trim().length > 0) {
@@ -110,8 +111,10 @@
 	backdrop-blur-lg md:w-2/3 lg:w-2/4 xl:w-2/5 2xl:w-2/5"
 > -->
 <div
-	class="no-scrollbar h-fit w-full rounded-tl-xl rounded-tr-xl border-t border-zinc-200 pb-4
+	class="no-scrollbar h-fit w-full rounded-tl-xl rounded-tr-xl border-zinc-200 pb-4
 backdrop-blur-lg"
+	class:border-t={settingsState.minimizeAIConversation || !settingsState.minimizeAIConversation}
+	class:border={!settingsState.minimizeAIConversation && researchState.chat.messages.length > 0}
 >
 	{#if isAIMode == true}
 		<AiChat />

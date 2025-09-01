@@ -64,7 +64,7 @@
 		side="right"
 		class="hidden"
 	>
-		<Sidebar.Content class="rounded-lg bg-neutral-100">
+		<Sidebar.Content class="no-scrollbar rounded-lg bg-neutral-100">
 			<!-- References -->
 			<Collapsible.Root open class="group/collapsible">
 				<Sidebar.Group>

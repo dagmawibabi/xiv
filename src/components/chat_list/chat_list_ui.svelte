@@ -21,8 +21,8 @@
 	});
 </script>
 
-<div class="w-full">
-	<ul class="space-y-2">
+<div class="no-scrollbar w-full">
+	<ul class="no-scrollbar space-y-2">
 		{#each researchState.chat.messages as message, messageIndex (messageIndex)}
 			{#if message.role === 'user'}
 				<div class="flex justify-end">
@@ -43,7 +43,7 @@
 
 						{#if part.type === 'text'}
 							<div
-								class="group/aiResponse prose max-w-[45rem] overflow-scroll rounded-lg text-sm prose-h1:font-semibold prose-h2:mb-2 prose-h2:mt-4 prose-h2:font-medium prose-strong:font-semibold prose-hr:m-5"
+								class="group/aiResponse no-scrollbar prose max-w-[45rem] overflow-scroll rounded-lg text-sm prose-h1:font-semibold prose-h2:mb-2 prose-h2:mt-4 prose-h2:font-medium prose-strong:font-semibold prose-hr:m-5"
 							>
 								{#key part.text}
 									<!-- Thinking Block -->
