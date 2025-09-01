@@ -28,10 +28,10 @@
 		{/if}
 		{#if fullInfo == true}
 			<div class="flex flex-col">
-				<span class="text-xs font-semibold">
+				<span class="line-clamp-1 text-xs font-semibold">
 					{$session.data?.user.name}
 				</span>
-				<span class="text-xs">
+				<span class="line-clamp-1 text-xs">
 					{$session.data?.user.email}
 				</span>
 			</div>

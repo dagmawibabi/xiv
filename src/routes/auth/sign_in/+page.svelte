@@ -111,7 +111,9 @@
 						</div>
 					{/if}
 				</Button>
+			</div>
 
+			<div class="flex space-x-2">
 				<!-- Twitter Login -->
 				<Button
 					type="button"
@@ -133,9 +135,6 @@
 						</div>
 					{/if}
 				</Button>
-			</div>
-
-			<div class="flex space-x-2">
 				<!-- HuggingFace Login -->
 				<Button
 					type="button"
@@ -161,7 +160,7 @@
 				</Button>
 
 				<!-- Anonymous Login -->
-				<Button
+				<!-- <Button
 					type="button"
 					class="group/anonymous w-full"
 					onclick={async () => {
@@ -174,17 +173,16 @@
 					{:else}
 						<div class="flex items-center gap-x-2">
 							<Drama size={17} />
-							<!-- <img src={huggingface} alt="" class="h-4 w-4" /> -->
 							<span class="font-semibold"> Guest Mode </span>
 						</div>
 					{/if}
-				</Button>
+				</Button> -->
 			</div>
 		</div>
 	</Card.Root>
 
 	<!-- Better Auth Remark -->
-	<BetterAuthRemark />
+	<!-- <BetterAuthRemark /> -->
 
 	<!-- Demo -->
 	<div class="flex items-center gap-x-2 pb-2 pt-10">
