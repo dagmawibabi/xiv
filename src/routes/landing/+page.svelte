@@ -5,6 +5,8 @@
 	import ResearchFeatures from '../../components/landing_page/research_features.svelte';
 	import Pricing from '../../components/landing_page/pricing.svelte';
 	import Faq from '../../components/landing_page/faq.svelte';
+	import Footer from '../../components/landing_page/footer.svelte';
+	import NavBarMobile from '../../components/landing_page/nav_bar_mobile.svelte';
 </script>
 
 <svelte:head>
@@ -14,6 +16,7 @@
 <div class="mx-auto w-[90%] md:w-[80%]">
 	<!-- Nav Bar -->
 	<NavBar />
+	<NavBarMobile />
 
 	<!-- Banner -->
 	<Banner />
@@ -33,8 +36,6 @@
 	<!-- Space -->
 	<!-- <div class="h-96"></div> -->
 
-	<!-- Nav Bar | Footer -->
-	<div class="pb-5 pt-36">
-		<NavBar showHeader={false} showDropdownOptions={false} />
-	</div>
+	<!-- Footer -->
+	<Footer />
 </div>
