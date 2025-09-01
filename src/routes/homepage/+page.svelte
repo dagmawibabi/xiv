@@ -66,7 +66,7 @@
 						? availableTopics[Math.floor(Math.random() * availableTopics.length)]
 						: suggestedPaperTitles[Math.floor(Math.random() * suggestedPaperTitles.length)];
 				inputState.searchContent = randomTopic;
-				inputState.lastSearch = inputState.searchContent;
+				inputState.lastSearch = randomTopic;
 				inputState.isSearching = true;
 
 				// Ensure we're in the browser before accessing window
@@ -106,7 +106,11 @@
 	// aiConversationState.selectedPapersList = [];
 	// aiConversationState.selectedPapersIDList = [];
 
-	randomSearch();
+	onMount(() => {
+		try {
+			randomSearch();
+		} catch (error) {}
+	});
 
 	const session = authClient.getSession();
 

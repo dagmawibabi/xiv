@@ -25,7 +25,11 @@
 	// aiConversationState.selectedPapersList = [];
 	// aiConversationState.selectedPapersIDList = [];
 
-	getLikedPapers();
+	onMount(() => {
+		try {
+			getLikedPapers();
+		} catch (error) {}
+	});
 </script>
 
 <svelte:head>
