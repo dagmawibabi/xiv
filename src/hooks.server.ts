@@ -63,7 +63,7 @@ export async function handle({ event, resolve }) {
 		!publicRoutes.includes(event.url.pathname) &&
 		!event.url.pathname.startsWith('/api/auth/callback/')
 	) {
-		throw redirect(303, '/auth/sign_in');
+		throw redirect(303, '/landing');
 	}
 
 	return response;
