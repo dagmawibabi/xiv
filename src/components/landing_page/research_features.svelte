@@ -40,8 +40,10 @@
 <div>
 	<!-- Research -->
 	<div id="research" class="pt-10 md:pb-28">
-		<div class="pb-5 text-center text-2xl font-semibold md:text-4xl">AI Powered Research</div>
-		<div class="mx-auto w-full pb-10 text-center md:w-3/4 md:text-lg">
+		<div class="pb-5 text-start text-2xl font-semibold md:text-center md:text-4xl">
+			AI Powered Research
+		</div>
+		<div class="mx-auto w-full pb-2 text-start md:w-3/4 md:pb-10 md:text-center md:text-lg">
 			The research tab is your blank canvas to explore and dive deeper into your research and
 			queries. Responses are backed with research papers and powered by a 100+ AI models for you to
 			choose from.

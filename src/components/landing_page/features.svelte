@@ -66,7 +66,7 @@
 </script>
 
 <div id="features" class="pb-14 pt-8 md:pb-40">
-	<div class="text-center text-2xl font-semibold">
+	<div class="text-start text-lg font-semibold md:text-center md:text-2xl">
 		Expore all the powerful features of ScholarXIV
 	</div>
 
@@ -97,10 +97,10 @@
 	</div>
 
 	<!-- Mobile -->
-	<div class=" items-center justify-center text-center md:hidden">
+	<div class="flex-row items-center justify-start text-center md:hidden">
 		<Tabs.Root value={featureForMobile[0].value} class="">
 			<!-- Tabs -->
-			<Tabs.List class="mt-5 drop-shadow-lg hover:drop-shadow-md">
+			<Tabs.List class="mt-5 flex w-fit justify-start drop-shadow-lg hover:drop-shadow-md">
 				{#each featureForMobile as eachFeature}
 					<Tabs.Trigger value={eachFeature.value}>{eachFeature.label}</Tabs.Trigger>
 				{/each}
@@ -115,7 +115,7 @@
 
 			<!-- Descriptions -->
 			{#each featureForMobile as eachFeature}
-				<Tabs.Content value={eachFeature.value} class="mx-auto text-center text-sm"
+				<Tabs.Content value={eachFeature.value} class="mx-auto text-start text-sm"
 					>{eachFeature.description}</Tabs.Content
 				>
 			{/each}
@@ -123,7 +123,7 @@
 
 		<Tabs.Root value={featureForMobile2[0].value} class="pt-10">
 			<!-- Tabs -->
-			<Tabs.List class="mt-5 drop-shadow-lg hover:drop-shadow-md">
+			<Tabs.List class="mt-5 flex w-fit justify-start drop-shadow-lg hover:drop-shadow-md">
 				{#each featureForMobile2 as eachFeature}
 					<Tabs.Trigger value={eachFeature.value}>{eachFeature.label}</Tabs.Trigger>
 				{/each}
@@ -138,7 +138,7 @@
 
 			<!-- Descriptions -->
 			{#each featureForMobile2 as eachFeature}
-				<Tabs.Content value={eachFeature.value} class="mx-auto text-center text-sm"
+				<Tabs.Content value={eachFeature.value} class="mx-auto text-start text-sm"
 					>{eachFeature.description}</Tabs.Content
 				>
 			{/each}

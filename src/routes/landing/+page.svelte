@@ -35,6 +35,6 @@
 
 	<!-- Nav Bar | Footer -->
 	<div class="pb-5 pt-36">
-		<NavBar showDropdownOptions={false} />
+		<NavBar showHeader={false} showDropdownOptions={false} />
 	</div>
 </div>

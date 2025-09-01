@@ -6,7 +6,7 @@
 	import { Mail, Twitter } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 
-	let { showDropdownOptions = true } = $props();
+	let { showHeader = true, showDropdownOptions = true } = $props();
 
 	const navItems = [
 		{
@@ -46,12 +46,14 @@
 	];
 </script>
 
-<div class="flex flex-col items-center justify-between md:flex-row">
+<div class="flex flex-col items-start justify-between md:flex-row">
 	<!-- Logo -->
-	<Header />
+	{#if showHeader}
+		<Header />
+	{/if}
 
 	<!-- Items -->
-	<div class="flex flex-col md:flex-row">
+	<div class="flex flex-col items-start md:flex-row">
 		<!-- Basic Navs -->
 		<NavigationMenu.Root>
 			<NavigationMenu.List>

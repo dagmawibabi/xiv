@@ -35,13 +35,13 @@
 	];
 </script>
 
-<div id="faq" class="pb-28 pt-10">
-	<div class="pb-5 text-center text-2xl font-semibold md:text-4xl">FAQ</div>
-	<div class="mx-auto w-full pb-10 text-center md:w-3/4 md:text-lg">
+<div id="faq" class="pb-28 md:pt-10">
+	<div class="pb-5 text-start text-2xl font-semibold md:text-center md:text-4xl">FAQ</div>
+	<div class="mx-auto w-full pb-10 text-start md:w-3/4 md:text-center md:text-lg">
 		Everything you need to know about the product and billing
 	</div>
 
-	<div class="mx-auto w-full gap-x-10 pt-12 md:w-2/3">
+	<div class="mx-auto w-full gap-x-10 md:w-2/3 md:pt-12">
 		<Accordion.Root type="multiple">
 			{#each faq as eachFaq, index}
 				<Accordion.Item value={index.toString()}>
