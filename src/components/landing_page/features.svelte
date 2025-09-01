@@ -60,13 +60,18 @@
 			image: select
 		}
 	];
+
+	const featureForMobile = features.slice(0, 3);
+	const featureForMobile2 = features.slice(4, features.length);
 </script>
 
 <div id="features" class="pb-40 pt-8">
 	<div class="text-center text-2xl font-semibold">
 		Expore all the powerful features of ScholarXIV
 	</div>
-	<div class="flex items-center justify-center text-center">
+
+	<!-- PC -->
+	<div class="hidden items-center justify-center text-center md:flex">
 		<Tabs.Root value="discover" class="">
 			<!-- Descriptions -->
 			{#each features as eachFeature}
@@ -87,6 +92,63 @@
 				<Tabs.Content value={eachFeature.value}>
 					<img src={eachFeature.image} alt=" " class="h-full w-full rounded-lg drop-shadow-2xl" />
 				</Tabs.Content>
+			{/each}
+		</Tabs.Root>
+	</div>
+
+	<!-- Mobile -->
+	<div class=" items-center justify-center text-center md:hidden">
+		<Tabs.Root value={featureForMobile[0].value} class="">
+			<!-- Tabs -->
+			<Tabs.List class="mt-5 drop-shadow-lg hover:drop-shadow-md">
+				{#each featureForMobile as eachFeature}
+					<Tabs.Trigger value={eachFeature.value}>{eachFeature.label}</Tabs.Trigger>
+				{/each}
+			</Tabs.List>
+
+			<!-- Images -->
+			{#each featureForMobile as eachFeature}
+				<Tabs.Content value={eachFeature.value}>
+					<img
+						src={eachFeature.image}
+						alt=" "
+						class="h-full w-full rounded-lg pt-2 drop-shadow-lg"
+					/>
+				</Tabs.Content>
+			{/each}
+
+			<!-- Descriptions -->
+			{#each featureForMobile as eachFeature}
+				<Tabs.Content value={eachFeature.value} class="mx-auto text-center text-sm"
+					>{eachFeature.description}</Tabs.Content
+				>
+			{/each}
+		</Tabs.Root>
+
+		<Tabs.Root value={featureForMobile2[0].value} class="pt-10">
+			<!-- Tabs -->
+			<Tabs.List class="mt-5 drop-shadow-lg hover:drop-shadow-md">
+				{#each featureForMobile2 as eachFeature}
+					<Tabs.Trigger value={eachFeature.value}>{eachFeature.label}</Tabs.Trigger>
+				{/each}
+			</Tabs.List>
+
+			<!-- Images -->
+			{#each featureForMobile2 as eachFeature}
+				<Tabs.Content value={eachFeature.value}>
+					<img
+						src={eachFeature.image}
+						alt=" "
+						class="h-full w-full rounded-lg pt-2 drop-shadow-lg"
+					/>
+				</Tabs.Content>
+			{/each}
+
+			<!-- Descriptions -->
+			{#each featureForMobile2 as eachFeature}
+				<Tabs.Content value={eachFeature.value} class="mx-auto text-center text-sm"
+					>{eachFeature.description}</Tabs.Content
+				>
 			{/each}
 		</Tabs.Root>
 	</div>

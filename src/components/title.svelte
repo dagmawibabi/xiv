@@ -11,6 +11,8 @@
 		{/if}
 	{/if}
 
+	<span class="md:inline lg:inline xl:inline 2xl:inline"> Research for Everyday and Everyone </span>
+
 	{#if showDescription == true}
 		<span>
 			{#if useAsHome == true}

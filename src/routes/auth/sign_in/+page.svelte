@@ -56,15 +56,16 @@
 </svelte:head>
 
 <div class="flex h-screen flex-col items-center justify-center">
-	<Card.Root class="-mt-56 w-full max-w-sm border-0">
+	<Card.Root class="-mt-20 w-full max-w-sm border-0">
 		<!-- Logo -->
 		<div class="flex justify-center">
 			<img src={logo} alt=" " class="h-56 w-56" />
 		</div>
 
 		<!-- Title -->
-		<Title useAsHome={false} showTitle={true} />
+		<Title useAsHome={false} showTitle={true} showDescription={false} />
 
+		<!-- Social Auth -->
 		<div class="mt-5 space-y-2">
 			<div class="flex space-x-2">
 				<!-- Google Login -->
@@ -184,8 +185,23 @@
 	<!-- Better Auth Remark -->
 	<!-- <BetterAuthRemark /> -->
 
+	<!-- Product Hunt -->
+	<div class="pt-20">
+		<a
+			href="https://www.producthunt.com/products/scholarxiv-2?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-scholarxiv&#0045;2"
+			target="_blank"
+			><img
+				src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=985666&theme=light&t=1751248793638"
+				alt="ScholarXIV - Open&#0045;source&#0032;and&#0032;AI&#0032;powered&#0032;Research | Product Hunt"
+				style="width: 200px; height: 40px;"
+				width="250"
+				height="54"
+			/></a
+		>
+	</div>
+
 	<!-- Demo -->
-	<div class="flex items-center gap-x-2 pb-2 pt-10">
+	<div class="flex items-center gap-x-2 pb-2 pt-2">
 		<img src={youtube} alt="" class="h-4" />
 		<a
 			href="https://youtu.be/-GlxZRCfxYA"
@@ -193,16 +209,4 @@
 			class="font-sm underline-offset-4 hover:text-blue-500 hover:underline">Demo Video</a
 		>
 	</div>
-
-	<a
-		href="https://www.producthunt.com/products/scholarxiv-2?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-scholarxiv&#0045;2"
-		target="_blank"
-		><img
-			src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=985666&theme=light&t=1751248793638"
-			alt="ScholarXIV - Open&#0045;source&#0032;and&#0032;AI&#0032;powered&#0032;Research | Product Hunt"
-			style="width: 200px; height: 40px;"
-			width="250"
-			height="54"
-		/></a
-	>
 </div>

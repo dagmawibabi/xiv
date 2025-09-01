@@ -163,16 +163,16 @@
 				<!-- Recommended Tag -->
 				{#if eachPackage.recommended}
 					<div
-						class="absolute -top-4 right-3 w-fit rounded-full border border-black bg-black px-4 py-2 text-sm font-semibold text-white"
+						class="absolute -top-4 right-3 w-fit rounded-full border border-black bg-black px-4 py-2 text-xs font-semibold text-white md:text-sm"
 					>
 						Recommended
 					</div>
 				{/if}
 				<!-- Package Header -->
 				<div class="p-5">
-					<div class="text-2xl font-semibold text-black">{eachPackage.name}</div>
+					<div class="text-xl font-semibold text-black md:text-2xl">{eachPackage.name}</div>
 					<div class="flex items-end">
-						<div class="text-5xl font-bold text-black">${eachPackage.monthlyPrice}</div>
+						<div class="text-4xl font-bold text-black md:text-5xl">${eachPackage.monthlyPrice}</div>
 						<div>/ month</div>
 					</div>
 					<div class="pt-2">{eachPackage.description}</div>
@@ -193,7 +193,7 @@
 					{/each}
 				</div>
 				<!-- Notice -->
-				<div class="border-t p-5 text-sm text-muted-foreground">
+				<div class="border-t p-5 text-xs text-muted-foreground md:text-sm">
 					Additional usage limits apply depending on the model and provider.
 				</div>
 			</div>

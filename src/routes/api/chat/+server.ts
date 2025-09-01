@@ -16,9 +16,9 @@ import { old_system_prompt } from '$lib/system_prompt';
 export async function GET() {
 	const availableModels = await gateway.getAvailableModels();
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	const textModels = availableModels.models.filter((m: any) => m.modelType === 'language');
+	// const textModels = availableModels.models.filter((m: any) => m.modelType === 'language');
 	// const embeddingModels = availableModels.filter((m) => m.modelType === 'embedding');
-	return new Response(JSON.stringify(textModels));
+	return new Response(JSON.stringify(availableModels));
 }
 
 type Metadata = {
