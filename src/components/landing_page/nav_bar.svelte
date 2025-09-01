@@ -4,6 +4,9 @@
 	import Header from '../../components/sidebar/header.svelte';
 	import { navigationMenuTriggerStyle } from '$lib/components/ui/navigation-menu/navigation-menu-trigger.svelte';
 	import { Mail, Twitter } from 'lucide-svelte';
+	import { goto } from '$app/navigation';
+
+	let { showDropdownOptions = true } = $props();
 
 	const navItems = [
 		{
@@ -17,6 +20,10 @@
 		{
 			label: 'Pricing',
 			link: '#pricing'
+		},
+		{
+			label: 'FAQ',
+			link: '#faq'
 		}
 	];
 
@@ -60,59 +67,63 @@
 				{/each}
 			</NavigationMenu.List>
 		</NavigationMenu.Root>
-		<!-- Developement Nav -->
-		<NavigationMenu.Root>
-			<NavigationMenu.List>
-				<NavigationMenu.Item>
-					<NavigationMenu.Trigger>Development</NavigationMenu.Trigger>
-					<NavigationMenu.Content>
-						<ul class="grid w-[250px] gap-4 p-2">
-							<li>
-								{#each devNavItems as item}
-									<NavigationMenu.Link href={item.link} target="_blank">
-										<div class="font-medium">{item.label}</div>
-										<div class="text-sm text-muted-foreground">{item.description}</div>
-									</NavigationMenu.Link>
-								{/each}
-							</li>
-						</ul>
-					</NavigationMenu.Content>
-				</NavigationMenu.Item>
-			</NavigationMenu.List>
-		</NavigationMenu.Root>
-		<!-- Basic Navs Continued -->
-		<NavigationMenu.Root>
-			<NavigationMenu.List>
-				<NavigationMenu.Item>
-					<NavigationMenu.Trigger>Contact</NavigationMenu.Trigger>
-					<NavigationMenu.Content>
-						<ul class="grid w-[120px] gap-4 p-2">
-							<li>
-								<NavigationMenu.Link
-									href="https://x.com/dagmawibabi"
-									target="_blank"
-									class="flex-row items-center gap-2"
-								>
-									<Twitter />
-									Twitter
-								</NavigationMenu.Link>
 
-								<NavigationMenu.Link
-									href="mailto:1babidagi@gmail.com"
-									target="_blank"
-									class="flex-row items-center gap-2"
-								>
-									<Mail />
-									Email
-								</NavigationMenu.Link>
-							</li>
-						</ul>
-					</NavigationMenu.Content>
-				</NavigationMenu.Item>
-			</NavigationMenu.List>
-		</NavigationMenu.Root>
+		{#if showDropdownOptions}
+			<!-- Developement Nav -->
+			<NavigationMenu.Root>
+				<NavigationMenu.List>
+					<NavigationMenu.Item>
+						<NavigationMenu.Trigger>Development</NavigationMenu.Trigger>
+						<NavigationMenu.Content>
+							<ul class="grid w-[250px] gap-4 p-2">
+								<li>
+									{#each devNavItems as item}
+										<NavigationMenu.Link href={item.link} target="_blank">
+											<div class="font-medium">{item.label}</div>
+											<div class="text-sm text-muted-foreground">{item.description}</div>
+										</NavigationMenu.Link>
+									{/each}
+								</li>
+							</ul>
+						</NavigationMenu.Content>
+					</NavigationMenu.Item>
+				</NavigationMenu.List>
+			</NavigationMenu.Root>
+
+			<!-- Contact Nav -->
+			<NavigationMenu.Root>
+				<NavigationMenu.List>
+					<NavigationMenu.Item>
+						<NavigationMenu.Trigger>Contact</NavigationMenu.Trigger>
+						<NavigationMenu.Content>
+							<ul class="grid w-[120px] gap-4 p-2">
+								<li>
+									<NavigationMenu.Link
+										href="https://x.com/dagmawibabi"
+										target="_blank"
+										class="flex-row items-center gap-2"
+									>
+										<Twitter />
+										Twitter
+									</NavigationMenu.Link>
+
+									<NavigationMenu.Link
+										href="mailto:1babidagi@gmail.com"
+										target="_blank"
+										class="flex-row items-center gap-2"
+									>
+										<Mail />
+										Email
+									</NavigationMenu.Link>
+								</li>
+							</ul>
+						</NavigationMenu.Content>
+					</NavigationMenu.Item>
+				</NavigationMenu.List>
+			</NavigationMenu.Root>
+		{/if}
 	</div>
 
 	<!-- Auth -->
-	<Button class=" font-semibold">Start Researching</Button>
+	<Button class="font-semibold" onclick={() => goto('/auth/sign_in')}>Start Researching</Button>
 </div>

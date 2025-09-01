@@ -44,7 +44,7 @@ export const handleSignOut = async () => {
 	await signOut({
 		fetchOptions: {
 			onSuccess() {
-				goto('/');
+				goto('/landing');
 			},
 			onError(context: any) {
 				alert(context.error.message);
