@@ -51,8 +51,10 @@ export async function handle({ event, resolve }) {
 	const publicRoutes = [
 		'/auth/sign_in',
 		'/auth/sign_up',
-		'/api/auth/sign-in/social',
+		'/auth/sign_out',
 		'/api/auth/get-session',
+		'/api/auth/sign-in/social',
+		'/api/auth/sign-in/anonymous',
 		'/landing'
 	];
 
