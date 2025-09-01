@@ -11,7 +11,7 @@
 	<title>ScholarXIV</title>
 </svelte:head>
 
-<div class="mx-auto w-[80%]">
+<div class="mx-auto w-[90%] md:w-[80%]">
 	<!-- Nav Bar -->
 	<NavBar />
 

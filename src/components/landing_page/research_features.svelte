@@ -40,8 +40,8 @@
 <div>
 	<!-- Research -->
 	<div id="research" class="pb-28 pt-10">
-		<div class="pb-5 text-center text-4xl font-semibold">AI Powered Research</div>
-		<div class="mx-auto w-3/4 pb-10 text-center text-lg">
+		<div class="pb-5 text-center text-2xl font-semibold md:text-4xl">AI Powered Research</div>
+		<div class="mx-auto w-full pb-10 text-center md:w-3/4 md:text-lg">
 			The research tab is your blank canvas to explore and dive deeper into your research and
 			queries. Responses are backed with research papers and powered by a 100+ AI models for you to
 			choose from.
@@ -49,33 +49,55 @@
 
 		<!-- AI Features -->
 		{#each researchFeatures as eachResearchFeature, index}
-			{#if index % 2 == 0}
-				<div class="mx-auto flex items-center justify-between gap-x-14 py-10">
+			<!-- PC -->
+			<div class="hidden md:flex">
+				{#if index % 2 == 0}
+					<div
+						class="mx-auto flex flex-col items-center justify-between gap-x-14 py-10 md:flex-row"
+					>
+						<div class="w-full overflow-clip rounded-lg border border-black drop-shadow-xl">
+							<img src={eachResearchFeature.image} alt=" " class="h-full w-full" />
+						</div>
+						<div class="flex w-full flex-col gap-y-2 pt-5 md:w-2/3 md:pt-0">
+							<eachResearchFeature.icon size={26} class="hidden md:flex" />
+							<div class="text-lg font-semibold md:text-2xl">{eachResearchFeature.title}</div>
+							<div class="md:text-lg">
+								{eachResearchFeature.description}
+							</div>
+						</div>
+					</div>
+				{:else}
+					<div class="mx-auto flex items-center justify-between gap-x-14 py-10">
+						<div class="flex w-2/3 flex-col gap-y-2">
+							<eachResearchFeature.icon size={26} />
+							<div class="text-2xl font-semibold">{eachResearchFeature.title}</div>
+							<div class="text-lg">
+								{eachResearchFeature.description}
+							</div>
+						</div>
+						<div class="w-full overflow-clip rounded-lg border border-black drop-shadow-xl">
+							<img src={eachResearchFeature.image} alt=" " class="h-full w-full" />
+						</div>
+					</div>
+				{/if}
+			</div>
+			<!-- Mobile -->
+			<div class="flex md:hidden">
+				<div class="mx-auto flex flex-col items-center justify-between gap-x-14 py-10 md:flex-row">
 					<div class="w-full overflow-clip rounded-lg border border-black drop-shadow-xl">
 						<img src={eachResearchFeature.image} alt=" " class="h-full w-full" />
 					</div>
-					<div class="flex w-2/3 flex-col gap-y-2">
-						<eachResearchFeature.icon size={26} />
-						<div class="text-2xl font-semibold">{eachResearchFeature.title}</div>
-						<div class="text-lg">
+					<div class="flex w-full flex-col gap-y-2 pt-5 md:w-2/3 md:pt-0">
+						<div class="flex items-center gap-x-2">
+							<eachResearchFeature.icon size={16} />
+							<div class="font-semibold md:text-2xl">{eachResearchFeature.title}</div>
+						</div>
+						<div class="text-sm md:text-lg">
 							{eachResearchFeature.description}
 						</div>
 					</div>
 				</div>
-			{:else}
-				<div class="mx-auto flex items-center justify-between gap-x-14 py-10">
-					<div class="flex w-2/3 flex-col gap-y-2">
-						<eachResearchFeature.icon size={26} />
-						<div class="text-2xl font-semibold">{eachResearchFeature.title}</div>
-						<div class="text-lg">
-							{eachResearchFeature.description}
-						</div>
-					</div>
-					<div class="w-full overflow-clip rounded-lg border border-black drop-shadow-xl">
-						<img src={eachResearchFeature.image} alt=" " class="h-full w-full" />
-					</div>
-				</div>
-			{/if}
+			</div>
 		{/each}
 	</div>
 </div>

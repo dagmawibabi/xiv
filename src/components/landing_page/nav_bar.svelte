@@ -46,12 +46,12 @@
 	];
 </script>
 
-<div class="flex items-center justify-between">
+<div class="flex flex-col items-center justify-between md:flex-row">
 	<!-- Logo -->
 	<Header />
 
 	<!-- Items -->
-	<div class="flex">
+	<div class="flex flex-col md:flex-row">
 		<!-- Basic Navs -->
 		<NavigationMenu.Root>
 			<NavigationMenu.List>
@@ -68,62 +68,66 @@
 			</NavigationMenu.List>
 		</NavigationMenu.Root>
 
-		{#if showDropdownOptions}
-			<!-- Developement Nav -->
-			<NavigationMenu.Root>
-				<NavigationMenu.List>
-					<NavigationMenu.Item>
-						<NavigationMenu.Trigger>Development</NavigationMenu.Trigger>
-						<NavigationMenu.Content>
-							<ul class="grid w-[250px] gap-4 p-2">
-								<li>
-									{#each devNavItems as item}
-										<NavigationMenu.Link href={item.link} target="_blank">
-											<div class="font-medium">{item.label}</div>
-											<div class="text-sm text-muted-foreground">{item.description}</div>
+		<div class="flex justify-center">
+			{#if showDropdownOptions}
+				<!-- Developement Nav -->
+				<NavigationMenu.Root>
+					<NavigationMenu.List>
+						<NavigationMenu.Item>
+							<NavigationMenu.Trigger>Development</NavigationMenu.Trigger>
+							<NavigationMenu.Content>
+								<ul class="grid w-[250px] gap-4 p-2">
+									<li>
+										{#each devNavItems as item}
+											<NavigationMenu.Link href={item.link} target="_blank">
+												<div class="font-medium">{item.label}</div>
+												<div class="text-sm text-muted-foreground">{item.description}</div>
+											</NavigationMenu.Link>
+										{/each}
+									</li>
+								</ul>
+							</NavigationMenu.Content>
+						</NavigationMenu.Item>
+					</NavigationMenu.List>
+				</NavigationMenu.Root>
+
+				<!-- Contact Nav -->
+				<NavigationMenu.Root>
+					<NavigationMenu.List>
+						<NavigationMenu.Item>
+							<NavigationMenu.Trigger>Contact</NavigationMenu.Trigger>
+							<NavigationMenu.Content>
+								<ul class="grid w-[120px] gap-4 p-2">
+									<li>
+										<NavigationMenu.Link
+											href="https://x.com/dagmawibabi"
+											target="_blank"
+											class="flex-row items-center gap-2"
+										>
+											<Twitter />
+											Twitter
 										</NavigationMenu.Link>
-									{/each}
-								</li>
-							</ul>
-						</NavigationMenu.Content>
-					</NavigationMenu.Item>
-				</NavigationMenu.List>
-			</NavigationMenu.Root>
 
-			<!-- Contact Nav -->
-			<NavigationMenu.Root>
-				<NavigationMenu.List>
-					<NavigationMenu.Item>
-						<NavigationMenu.Trigger>Contact</NavigationMenu.Trigger>
-						<NavigationMenu.Content>
-							<ul class="grid w-[120px] gap-4 p-2">
-								<li>
-									<NavigationMenu.Link
-										href="https://x.com/dagmawibabi"
-										target="_blank"
-										class="flex-row items-center gap-2"
-									>
-										<Twitter />
-										Twitter
-									</NavigationMenu.Link>
-
-									<NavigationMenu.Link
-										href="mailto:1babidagi@gmail.com"
-										target="_blank"
-										class="flex-row items-center gap-2"
-									>
-										<Mail />
-										Email
-									</NavigationMenu.Link>
-								</li>
-							</ul>
-						</NavigationMenu.Content>
-					</NavigationMenu.Item>
-				</NavigationMenu.List>
-			</NavigationMenu.Root>
-		{/if}
+										<NavigationMenu.Link
+											href="mailto:1babidagi@gmail.com"
+											target="_blank"
+											class="flex-row items-center gap-2"
+										>
+											<Mail />
+											Email
+										</NavigationMenu.Link>
+									</li>
+								</ul>
+							</NavigationMenu.Content>
+						</NavigationMenu.Item>
+					</NavigationMenu.List>
+				</NavigationMenu.Root>
+			{/if}
+		</div>
 	</div>
 
 	<!-- Auth -->
-	<Button class="font-semibold" onclick={() => goto('/auth/sign_in')}>Start Researching</Button>
+	<Button class="hidden font-semibold md:flex" onclick={() => goto('/auth/sign_in')}
+		>Start Researching</Button
+	>
 </div>

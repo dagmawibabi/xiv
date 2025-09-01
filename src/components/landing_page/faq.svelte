@@ -36,16 +36,16 @@
 </script>
 
 <div id="faq" class="pb-28 pt-10">
-	<div class="pb-5 text-center text-4xl font-semibold">FAQ</div>
-	<div class="mx-auto w-3/4 pb-10 text-center text-lg">
+	<div class="pb-5 text-center text-2xl font-semibold md:text-4xl">FAQ</div>
+	<div class="mx-auto w-full pb-10 text-center md:w-3/4 md:text-lg">
 		Everything you need to know about the product and billing
 	</div>
 
-	<div class="mx-auto w-2/3 gap-x-10 pt-12">
+	<div class="mx-auto w-full gap-x-10 pt-12 md:w-2/3">
 		<Accordion.Root type="multiple">
 			{#each faq as eachFaq, index}
 				<Accordion.Item value={index.toString()}>
-					<Accordion.Trigger class="font-semibold">
+					<Accordion.Trigger class="text-start font-semibold">
 						{eachFaq.question}
 					</Accordion.Trigger>
 					<Accordion.Content>

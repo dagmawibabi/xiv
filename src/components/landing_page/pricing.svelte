@@ -145,18 +145,18 @@
 </script>
 
 <div id="pricing" class="pb-28 pt-10">
-	<div class="pb-5 text-center text-4xl font-semibold">Pricing</div>
-	<div class="mx-auto w-3/4 pb-10 text-center text-lg">
+	<div class="pb-5 text-center text-2xl font-semibold md:text-4xl">Pricing</div>
+	<div class="mx-auto w-full pb-10 text-center md:w-3/4 md:text-lg">
 		We offer three packages: Free, Plus and Pro. Our free tier gives you unlimited access to the
 		basic features but limited to no access to research features. The Plus package is great for
 		everyday research with access to powerful research features. Our Pro plan is the best we offer
 		giving you unlimited and powerful features across the board.
 	</div>
 
-	<div class="flex items-center justify-center gap-x-10 pt-12">
+	<div class="flex flex-col items-center justify-center gap-x-10 gap-y-10 pt-12 md:flex-row">
 		{#each packages as eachPackage}
 			<div
-				class="prose relative w-[30%] rounded-2xl border-2 bg-white text-black drop-shadow-2xl hover:border-emerald-400"
+				class="prose relative w-full rounded-2xl border-2 bg-white text-black drop-shadow-2xl hover:border-emerald-400 md:w-[30%]"
 				class:border-black={eachPackage.recommended}
 				class:border-purple-500={eachPackage.name == 'Pro'}
 			>
@@ -201,61 +201,63 @@
 	</div>
 
 	<!-- Notice -->
-	<div class="pb-5 pt-20 text-center">Detailed Comparison of Plans</div>
+	<div class="hidden md:block">
+		<div class="hidden pb-5 pt-20 text-center md:block">Detailed Comparison of Plans</div>
 
-	<Table.Root class="mx-auto">
-		<Table.Header class="border-t bg-neutral-50">
-			<Table.Row>
-				<Table.Head class="w-1/5 text-left">Features</Table.Head>
-				<Table.Head class="text-center font-semibold">Free</Table.Head>
-				<Table.Head class="text-center font-semibold text-black">Plus</Table.Head>
-				<Table.Head class="text-center font-semibold text-purple-700">Pro</Table.Head>
-			</Table.Row>
-		</Table.Header>
-		<Table.Body>
-			{#each features as eachFeature (eachFeature)}
-				<Table.Row class="text-center hover:bg-emerald-50 hover:bg-opacity-50 ">
-					<Table.Cell class="text-left font-semibold">{eachFeature.criteria}</Table.Cell>
+		<Table.Root class="mx-auto">
+			<Table.Header class="border-t bg-neutral-50">
+				<Table.Row>
+					<Table.Head class="w-1/5 text-left">Features</Table.Head>
+					<Table.Head class="text-center font-semibold">Free</Table.Head>
+					<Table.Head class="text-center font-semibold text-black">Plus</Table.Head>
+					<Table.Head class="text-center font-semibold text-purple-700">Pro</Table.Head>
+				</Table.Row>
+			</Table.Header>
+			<Table.Body>
+				{#each features as eachFeature (eachFeature)}
+					<Table.Row class="text-center hover:bg-emerald-50 hover:bg-opacity-50 ">
+						<Table.Cell class="text-left font-semibold">{eachFeature.criteria}</Table.Cell>
+						<Table.Cell>
+							{#if eachFeature.free == 'Check'}
+								<Check size={16} class="mx-auto" />
+							{:else}
+								{eachFeature.free}
+							{/if}
+						</Table.Cell>
+						<Table.Cell>
+							{#if eachFeature.plus == 'Check'}
+								<Check size={16} class="mx-auto" />
+							{:else}
+								{eachFeature.plus}
+							{/if}
+						</Table.Cell>
+						<Table.Cell>
+							{#if eachFeature.pro == 'Check'}
+								<Check size={16} class="mx-auto" />
+							{:else}
+								{eachFeature.pro}
+							{/if}
+						</Table.Cell>
+					</Table.Row>
+				{/each}
+				<Table.Row class="text-center hover:bg-emerald-50 hover:bg-opacity-50">
+					<Table.Cell class="text-left font-semibold">Price</Table.Cell>
 					<Table.Cell>
-						{#if eachFeature.free == 'Check'}
-							<Check size={16} class="mx-auto" />
-						{:else}
-							{eachFeature.free}
-						{/if}
+						<Button variant="secondary" class="border">Free for Everyone</Button>
 					</Table.Cell>
 					<Table.Cell>
-						{#if eachFeature.plus == 'Check'}
-							<Check size={16} class="mx-auto" />
-						{:else}
-							{eachFeature.plus}
-						{/if}
+						<Button>Get Plus Now</Button>
 					</Table.Cell>
 					<Table.Cell>
-						{#if eachFeature.pro == 'Check'}
-							<Check size={16} class="mx-auto" />
-						{:else}
-							{eachFeature.pro}
-						{/if}
+						<Button class="rounded-lg ">Get Pro Now</Button>
 					</Table.Cell>
 				</Table.Row>
-			{/each}
-			<Table.Row class="text-center hover:bg-emerald-50 hover:bg-opacity-50">
-				<Table.Cell class="text-left font-semibold">Price</Table.Cell>
-				<Table.Cell>
-					<Button variant="secondary" class="border">Free for Everyone</Button>
-				</Table.Cell>
-				<Table.Cell>
-					<Button>Get Plus Now</Button>
-				</Table.Cell>
-				<Table.Cell>
-					<Button class="rounded-lg ">Get Pro Now</Button>
-				</Table.Cell>
-			</Table.Row>
-		</Table.Body>
-		<Table.Footer>
-			<Table.Row>
-				<Table.Cell colspan={4} class="py-5 text-center text-muted-foreground"></Table.Cell>
-			</Table.Row>
-		</Table.Footer>
-	</Table.Root>
+			</Table.Body>
+			<Table.Footer>
+				<Table.Row>
+					<Table.Cell colspan={4} class="py-5 text-center text-muted-foreground"></Table.Cell>
+				</Table.Row>
+			</Table.Footer>
+		</Table.Root>
+	</div>
 </div>

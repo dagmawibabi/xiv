@@ -5,7 +5,7 @@
 	import { goto } from '$app/navigation';
 </script>
 
-<div class="flex flex-col items-center justify-center gap-y-10 pb-28 pt-40">
+<div class="flex flex-col items-center justify-center gap-y-10 pb-20 pt-20 md:pb-28 md:pt-40">
 	<!-- Header Text -->
 	<div class="flex flex-col items-center justify-center gap-y-5">
 		<div
@@ -15,8 +15,8 @@
 			<!-- <img src={logo} alt=" " class="h-6 w-6" /> -->
 			Research for everyday & everyone
 		</div>
-		<div class="text-5xl font-semibold">Next-gen Research Platform</div>
-		<div class="w-3/5 text-center text-xl">
+		<div class="text-2xl font-semibold md:text-5xl">Next-gen Research Platform</div>
+		<div class="w-full text-center text-lg md:w-3/5 md:text-xl">
 			<div>
 				Get research backed responses to your queries, like and bookmark papers for later, discuss
 				about papers, start your own research — and so much more
