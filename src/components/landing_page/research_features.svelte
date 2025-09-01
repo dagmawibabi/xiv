@@ -39,7 +39,7 @@
 
 <div>
 	<!-- Research -->
-	<div id="research" class="pb-28 pt-10">
+	<div id="research" class="pt-10 md:pb-28">
 		<div class="pb-5 text-center text-2xl font-semibold md:text-4xl">AI Powered Research</div>
 		<div class="mx-auto w-full pb-10 text-center md:w-3/4 md:text-lg">
 			The research tab is your blank canvas to explore and dive deeper into your research and
@@ -81,10 +81,13 @@
 					</div>
 				{/if}
 			</div>
+
 			<!-- Mobile -->
 			<div class="flex md:hidden">
-				<div class="mx-auto flex flex-col items-center justify-between gap-x-14 py-10 md:flex-row">
-					<div class="w-full overflow-clip rounded-lg border border-black drop-shadow-xl">
+				<div
+					class="mx-auto flex flex-col items-center justify-between gap-x-14 py-6 md:flex-row md:py-10"
+				>
+					<div class="w-full overflow-clip drop-shadow-xl">
 						<img src={eachResearchFeature.image} alt=" " class="h-full w-full" />
 					</div>
 					<div class="flex w-full flex-col gap-y-2 pt-5 md:w-2/3 md:pt-0">

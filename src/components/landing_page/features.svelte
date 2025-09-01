@@ -65,7 +65,7 @@
 	const featureForMobile2 = features.slice(4, features.length);
 </script>
 
-<div id="features" class="pb-40 pt-8">
+<div id="features" class="pb-14 pt-8 md:pb-40">
 	<div class="text-center text-2xl font-semibold">
 		Expore all the powerful features of ScholarXIV
 	</div>
@@ -109,11 +109,7 @@
 			<!-- Images -->
 			{#each featureForMobile as eachFeature}
 				<Tabs.Content value={eachFeature.value}>
-					<img
-						src={eachFeature.image}
-						alt=" "
-						class="h-full w-full rounded-lg pt-2 drop-shadow-lg"
-					/>
+					<img src={eachFeature.image} alt=" " class="h-full w-full pt-2 drop-shadow-lg" />
 				</Tabs.Content>
 			{/each}
 
@@ -136,11 +132,7 @@
 			<!-- Images -->
 			{#each featureForMobile2 as eachFeature}
 				<Tabs.Content value={eachFeature.value}>
-					<img
-						src={eachFeature.image}
-						alt=" "
-						class="h-full w-full rounded-lg pt-2 drop-shadow-lg"
-					/>
+					<img src={eachFeature.image} alt=" " class="h-full w-full pt-2 drop-shadow-lg" />
 				</Tabs.Content>
 			{/each}
 

@@ -153,7 +153,9 @@
 		giving you unlimited and powerful features across the board.
 	</div>
 
-	<div class="flex flex-col items-center justify-center gap-x-10 gap-y-10 pt-12 md:flex-row">
+	<div
+		class="flex flex-col items-center justify-center gap-x-10 gap-y-10 pt-0 md:flex-row md:pt-12"
+	>
 		{#each packages as eachPackage}
 			<div
 				class="prose relative w-full rounded-2xl border-2 bg-white text-black drop-shadow-2xl hover:border-emerald-400 md:w-[30%]"
