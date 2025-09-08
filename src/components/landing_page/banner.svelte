@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { Atom, Microscope } from 'lucide-svelte';
-	import logo from '$lib/assets/logo/logo.png';
+	import { Atom } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 </script>
 
@@ -27,7 +26,9 @@
 
 	<!-- CTA -->
 	<div class="flex w-full items-center justify-start gap-x-2 md:justify-center">
-		<Button class="px-10 font-semibold" onclick={() => goto('#pricing')}>Start Exploring</Button>
+		<Button class="px-10 font-semibold" onclick={() => goto('/auth/sign_in')}
+			>Start Exploring</Button
+		>
 		<Button variant="secondary" class="border">View Demo</Button>
 	</div>
 </div>

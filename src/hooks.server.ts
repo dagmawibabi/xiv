@@ -1,30 +1,9 @@
-// import { svelteKitHandler } from 'better-auth/svelte-kit';
-// import { mongoClient } from '$db/db';
-// import { auth } from '$lib/auth';
-
-// mongoClient
-// 	.connect()
-// 	.then(() => {
-// 		console.log('Connected to MongoDB');
-// 	})
-// 	.catch((e) => {
-// 		console.error('MongoDB connection error:', e);
-// 	});
-
-// export async function handle({ event, resolve }) {
-// 	return svelteKitHandler({ event, resolve, auth });
-// }
-
 import { svelteKitHandler } from 'better-auth/svelte-kit';
 import { auth } from '$lib/auth';
-// import { authClient } from '$lib/auth_client';
 import { redirect } from '@sveltejs/kit';
+
 // Initialize auth when the server starts
 const authInstance = await auth;
-
-// export async function handle({ event, resolve }) {
-//   return svelteKitHandler({ event, resolve, auth: authInstance });
-// }
 
 export async function handle({ event, resolve }) {
 	// Run better-auth first so it attaches session info to event.locals
@@ -55,7 +34,9 @@ export async function handle({ event, resolve }) {
 		'/api/auth/get-session',
 		'/api/auth/sign-in/social',
 		'/api/auth/sign-in/anonymous',
-		'/landing'
+		'/api/checkout',
+		'/landing',
+		'/'
 	];
 
 	if (
@@ -63,7 +44,7 @@ export async function handle({ event, resolve }) {
 		!publicRoutes.includes(event.url.pathname) &&
 		!event.url.pathname.startsWith('/api/auth/callback/')
 	) {
-		throw redirect(303, '/landing');
+		throw redirect(303, '/');
 	}
 
 	return response;

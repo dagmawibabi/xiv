@@ -6,6 +6,8 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { Circle } from 'svelte-loading-spinners';
 	import { authClient } from '$lib/auth_client';
+	import { getUserSubscription } from '$lib/utils/get_user_subscription';
+	import { subscriptionBasedRouting } from '$lib/utils/subscription_based_routing';
 	const session = authClient.useSession();
 
 	let isLogingInWithGithub = $state(false);
@@ -61,13 +63,9 @@
 		}
 	];
 
-	onMount(() => {
-		if ($session.data) {
-			goto('/homepage');
-		} else {
-			goto('/auth/sign_in');
-		}
-	});
+	// onMount(async () => {
+	// 	await subscriptionBasedRouting();
+	// });
 </script>
 
 <svelte:head>
@@ -113,13 +111,15 @@
 								{#each socials.slice(0, 3) as eachSocial}
 									<Button
 										variant="secondary"
-										class="group/github w-full border"
+										class="w-full border"
 										onclick={async () => {
-											eachSocial.toggle();
-											await authClient.signIn.social({
-												provider: eachSocial.provider,
-												callbackURL: '/homepage'
-											});
+											if (eachSocial.state === false) {
+												eachSocial.toggle();
+												await authClient.signIn.social({
+													provider: eachSocial.provider,
+													callbackURL: '/checkout'
+												});
+											}
 										}}
 									>
 										{#if eachSocial.state === true}
@@ -149,7 +149,7 @@
 										socials[3].toggle();
 										await authClient.signIn.social({
 											provider: socials[3].provider,
-											callbackURL: '/homepage'
+											callbackURL: '/checkout'
 										});
 									}}
 								>

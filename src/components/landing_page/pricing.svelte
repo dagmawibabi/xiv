@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
+	import { authClient } from '$lib/auth_client';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Table from '$lib/components/ui/table/index';
 	import { Check } from 'lucide-svelte';
@@ -90,8 +91,12 @@
 		}
 	];
 
+	let { sessionExists = false } = $props();
+
 	const packages = [
 		{
+			polarId: 'f44fbcbe-b2cc-48f4-acc8-ef6d888533a9',
+			slug: 'free',
 			name: 'Free',
 			monthlyPrice: 0,
 			yearlyPrice: 0,
@@ -108,6 +113,8 @@
 			recommended: false
 		},
 		{
+			polarId: 'fff68be3-0d9e-4013-b446-24f68bb3f6b3',
+			slug: 'plus',
 			name: 'Plus',
 			monthlyPrice: 15,
 			yearlyPrice: 180,
@@ -127,6 +134,8 @@
 			recommended: true
 		},
 		{
+			polarId: '134b3384-7ecf-4d15-b774-f2e16e2aecc2',
+			slug: 'pro',
 			name: 'Pro',
 			monthlyPrice: 30,
 			yearlyPrice: 360,
@@ -143,6 +152,20 @@
 			recommended: false
 		}
 	];
+
+	let session = authClient.useSession();
+
+	const handleCheckout = async (slug: any) => {
+		if ($session.data || sessionExists) {
+			// Checkout
+			await authClient.checkout({
+				slug: slug
+			});
+		} else {
+			// Sign In
+			goto('/auth/sign_in');
+		}
+	};
 </script>
 
 <div id="pricing" class="pb-28 pt-10">
@@ -182,8 +205,9 @@
 					<Button
 						class="mt-6 w-full rounded-lg border "
 						variant={eachPackage.name == 'Free' ? 'secondary' : 'default'}
-						onclick={() => goto('/auth/sign_in')}>{eachPackage.buttonText}</Button
+						onclick={() => handleCheckout(eachPackage.slug)}>{eachPackage.buttonText}</Button
 					>
+					<!-- goto('/auth/sign_in') -->
 				</div>
 				<!-- Package Features -->
 				<div class="border-t p-5">
@@ -252,7 +276,7 @@
 						<Button>Get Plus Now</Button>
 					</Table.Cell>
 					<Table.Cell>
-						<Button class="rounded-lg ">Get Pro Now</Button>
+						<Button class="border-2 border-purple-500">Get Pro Now</Button>
 					</Table.Cell>
 				</Table.Row>
 			</Table.Body>

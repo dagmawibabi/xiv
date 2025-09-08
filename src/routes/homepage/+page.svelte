@@ -106,15 +106,17 @@
 	// aiConversationState.selectedPapersList = [];
 	// aiConversationState.selectedPapersIDList = [];
 
-	onMount(() => {
+	onMount(async () => {
+		await subscriptionBasedRouting();
 		try {
-			randomSearch();
+			setTimeout(() => randomSearch(), 0);
 		} catch (error) {}
 	});
 
 	const session = authClient.getSession();
 
 	import { page } from '$app/state';
+	import { subscriptionBasedRouting } from '$lib/utils/subscription_based_routing';
 	const path = page.url.pathname.split('/').pop();
 </script>
 

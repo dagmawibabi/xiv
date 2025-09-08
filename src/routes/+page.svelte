@@ -1,15 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { goto } from '$app/navigation';
-	import { authClient } from '$lib/auth_client';
-	const session = authClient.useSession();
+	import { subscriptionBasedRouting } from '$lib/utils/subscription_based_routing';
+	import { BarLoader } from 'svelte-loading-spinners';
+	import logo from '$lib/assets/logo/logo.png';
 
-	onMount(() => {
-		if ($session.data) {
-			goto('/homepage');
-		} else {
-			goto('/auth/sign_in');
-		}
+	onMount(async () => {
+		await subscriptionBasedRouting();
 	});
 </script>
 
@@ -34,3 +30,11 @@
 	<meta property="twitter:title" content="ScholarXIV" />
 	<meta property="twitter:description" content="Open-source & AI powered research paper explorer" />
 </svelte:head>
+
+<div class="flex h-[90%] flex-col items-center justify-center">
+	<div class="flex flex-col items-center">
+		<img src={logo} alt="placeholder" class="m-auto h-40 w-40" />
+		<!-- <div class="text-2xl font-semibold">ScholarXIV</div> -->
+		<BarLoader size="52" color="#000" duration="1s" />
+	</div>
+</div>

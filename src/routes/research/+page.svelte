@@ -31,19 +31,16 @@
 <script lang="ts">
 	import { Toaster } from 'svelte-sonner';
 	import { researchState } from '../../state/research_state.svelte';
-	import { toast } from 'svelte-sonner';
-
-	// Sample Prompts shuffled and 10
-	let samplePrompts: any[] = [];
-	onMount(() => {
-		samplePrompts = [...promptSuggestions].sort(() => Math.random() - 0.5).slice(0, 10);
-		// .sort((a, b) => a.title.length - b.title.length);
-	});
-
 	import { authClient } from '$lib/auth_client';
 	import { onMount } from 'svelte';
 	import { promptSuggestions } from '$lib/sample_prompts';
 	import ChatListUi from '../../components/chat_list/chat_list_ui.svelte';
+
+	// Sample Prompts shuffled and 10
+	let samplePrompts: any[] = [];
+	onMount(async () => {
+		samplePrompts = [...promptSuggestions].sort(() => Math.random() - 0.5).slice(0, 10);
+	});
 </script>
 
 <svelte:head>

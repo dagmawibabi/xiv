@@ -14,7 +14,9 @@
 		MessageCirclePlus,
 		Map,
 		Logs,
-		ScrollText
+		ScrollText,
+		CircleFadingArrowUp,
+		WalletCards
 	} from 'lucide-svelte';
 
 	// Navigation Items.
@@ -83,6 +85,8 @@
 	import { paperListState } from '../../state/papers_list.svelte';
 	import { useSidebar } from '$lib/components/ui/sidebar/index.js';
 	import { onMount } from 'svelte';
+	import Button from '$lib/components/ui/button/button.svelte';
+	import CurrentPlan from './current_plan.svelte';
 	const sidebar = useSidebar();
 
 	// check if we're on mobile
@@ -172,17 +176,51 @@
 		</Sidebar.Group>
 	</Sidebar.Content>
 
-	<Sidebar.Footer class="rounded-bl-lg rounded-br-lg border-t bg-neutral-100">
+	<Sidebar.Footer class="rounded-bl-lg rounded-br-lg  bg-neutral-100 p-0">
+		<!-- Upgrade Plan -->
+		<Sidebar.Group class="border-b">
+			<Sidebar.GroupLabel>
+				<CurrentPlan />
+			</Sidebar.GroupLabel>
+			<Sidebar.GroupContent>
+				<Sidebar.MenuItem class="flex rounded-full hover:bg-white">
+					<Sidebar.MenuButton onclick={() => (isMobile ? sidebar.toggle() : null)}>
+						{#snippet child({ props })}
+							<a href="/landing#pricing" {...props}>
+								<CircleFadingArrowUp size={16} />
+								<span>Upgrade Plan</span>
+							</a>
+						{/snippet}
+					</Sidebar.MenuButton>
+				</Sidebar.MenuItem>
+				<Sidebar.MenuItem
+					class="flex w-full cursor-pointer items-center justify-start rounded-full hover:bg-white "
+				>
+					<Sidebar.MenuButton onclick={async () => await authClient.customer.portal()}>
+						{#snippet child({ props })}
+							<!-- svelte-ignore a11y_click_events_have_key_events -->
+							<!-- svelte-ignore a11y_no_static_element_interactions -->
+							<div {...props}>
+								<WalletCards size={16} />
+								<span>Customer Portal</span>
+							</div>
+						{/snippet}
+					</Sidebar.MenuButton>
+				</Sidebar.MenuItem>
+			</Sidebar.GroupContent>
+		</Sidebar.Group>
+
+		<!-- Profile -->
 		<Sidebar.Menu>
-			<Sidebar.MenuItem>
+			<Sidebar.MenuItem class="px-2 pb-2">
 				<Sidebar.MenuButton
 					class={sidebar.state == 'expanded'
-						? 'h-full rounded-full border bg-white hover:border-zinc-400'
+						? 'flex h-full justify-between rounded-full border bg-white hover:border-zinc-400'
 						: 'rounded-full '}
 				>
 					{#if sidebar.state == 'expanded'}
 						<ProfileAvatar showLogoutBtn={false} />
-						<div class="pl-6">
+						<div class="">
 							<LogoutButton />
 						</div>
 					{:else}

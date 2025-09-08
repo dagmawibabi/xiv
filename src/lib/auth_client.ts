@@ -1,9 +1,10 @@
 import { createAuthClient } from 'better-auth/svelte';
 import { anonymousClient } from 'better-auth/client/plugins';
+import { polarClient } from '@polar-sh/better-auth';
 
 export const authClient = createAuthClient({
 	baseURL: import.meta.env.BETTER_AUTH_URL!,
-	plugins: [anonymousClient()]
+	plugins: [anonymousClient(), polarClient()]
 });
 
 export const {

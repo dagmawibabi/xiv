@@ -13,7 +13,7 @@ export const handleSignIn = async (email: string, password: string) => {
 				console.log(context);
 			},
 			onSuccess() {
-				goto('/homepage');
+				goto('/checkout');
 			}
 		}
 	);
@@ -34,7 +34,7 @@ export const handleSignUp = async (
 				alert(context.error.message);
 			},
 			onSuccess() {
-				goto('/homepage');
+				goto('/checkout');
 			}
 		}
 	});
