@@ -47,7 +47,7 @@ const createAuth = async () => {
 				anonymous(),
 				polar({
 					client: polarClient,
-					// createCustomerOnSignUp: true,
+					createCustomerOnSignUp: true,
 					use: [
 						portal(),
 						checkout({
