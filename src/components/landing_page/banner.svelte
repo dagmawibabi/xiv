@@ -1,12 +1,28 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { Atom } from 'lucide-svelte';
+	import { Atom, CircleDot, Dot, User } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
+	import { DoubleBounce, Jumper, Pulse, ScaleOut } from 'svelte-loading-spinners';
+
+	let { userCount } = $props();
+	const formatter = new Intl.NumberFormat('en-US');
 </script>
 
-<div class="flex flex-col items-center justify-center gap-y-10 pb-20 pt-20 md:pb-28 md:pt-40">
+<div class="flex flex-col items-center justify-center gap-y-10 pb-20 pt-20 md:pb-28 md:pt-36">
 	<!-- Header Text -->
 	<div class="flex flex-col justify-center gap-y-5 md:items-center">
+		<!-- Researchers Count -->
+		<div class="flex items-center gap-x-2">
+			<div class="flex items-center gap-x-2 rounded-full px-3 py-1 text-sm">
+				<DoubleBounce size={10} color="lime" />
+				<div>
+					<span class="font-semibold"> {formatter.format(userCount)} </span>
+					<span class="text-zinc-500"> Researchers </span>
+				</div>
+			</div>
+		</div>
+
+		<!-- Tagline -->
 		<div
 			class="flex w-fit items-center gap-x-1 rounded-full bg-neutral-100 px-3 py-1 text-sm md:justify-center"
 		>

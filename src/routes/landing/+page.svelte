@@ -7,6 +7,8 @@
 	import Faq from '../../components/landing_page/faq.svelte';
 	import Footer from '../../components/landing_page/footer.svelte';
 	import NavBarMobile from '../../components/landing_page/nav_bar_mobile.svelte';
+
+	export let data;
 </script>
 
 <svelte:head>
@@ -19,7 +21,7 @@
 	<NavBarMobile />
 
 	<!-- Banner -->
-	<Banner />
+	<Banner userCount={data.data.userCount} />
 
 	<!-- Features -->
 	<Features />

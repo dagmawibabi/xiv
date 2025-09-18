@@ -35,6 +35,7 @@ export async function handle({ event, resolve }) {
 		'/api/auth/sign-in/social',
 		'/api/auth/sign-in/anonymous',
 		'/api/checkout',
+		'/api/stats',
 		'/landing',
 		'/'
 	];
