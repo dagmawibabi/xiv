@@ -9,6 +9,6 @@
 	});
 </script>
 
-<div>
-	Current Plan: {customerPlan}
+<div class="">
+	{customerPlan}
 </div>

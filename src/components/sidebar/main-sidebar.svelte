@@ -13,7 +13,6 @@
 		Plus,
 		MessageCirclePlus,
 		Map,
-		Logs,
 		ScrollText,
 		CircleFadingArrowUp,
 		WalletCards
@@ -34,17 +33,18 @@
 			badge: 0
 		},
 		{
-			title: 'Liked Papers',
-			url: '/liked_papers_page',
-			icon: Heart,
-			badge: paperListState.likedPapersList.length
-		},
-		{
 			title: 'Bookmarks',
 			url: '/bookmarks_page',
 			icon: Bookmark,
 			badge: paperListState.bookmarkList.length
+		},
+		{
+			title: 'Liked Papers',
+			url: '/liked_papers_page',
+			icon: Heart,
+			badge: paperListState.likedPapersList.length
 		}
+
 		// {
 		// 	title: 'Search',
 		// 	url: '#',
@@ -128,7 +128,6 @@
 	<Sidebar.Content class="bg-neutral-100 pt-4">
 		<Sidebar.Group>
 			<Sidebar.GroupLabel>Navigation</Sidebar.GroupLabel>
-
 			<Sidebar.GroupContent>
 				{#each navigationItems as eachNavigationItem (eachNavigationItem.title)}
 					<Sidebar.MenuItem
@@ -152,11 +151,9 @@
 			</Sidebar.GroupContent>
 		</Sidebar.Group>
 
+		<!-- developmentItems -->
 		<Sidebar.Group>
 			<Sidebar.GroupLabel>Development</Sidebar.GroupLabel>
-
-			<!-- developmentItems -->
-
 			<Sidebar.GroupContent>
 				{#each developmentItems as eachDevelopmentItem (eachDevelopmentItem.title)}
 					<Sidebar.MenuItem
@@ -174,13 +171,11 @@
 				{/each}
 			</Sidebar.GroupContent>
 		</Sidebar.Group>
-	</Sidebar.Content>
 
-	<Sidebar.Footer class="rounded-bl-lg rounded-br-lg  bg-neutral-100 p-0">
 		<!-- Upgrade Plan -->
-		<Sidebar.Group class="border-b">
+		<Sidebar.Group>
 			<Sidebar.GroupLabel>
-				<CurrentPlan />
+				Subscription: &nbsp; <CurrentPlan />
 			</Sidebar.GroupLabel>
 			<Sidebar.GroupContent>
 				<Sidebar.MenuItem class="flex rounded-full hover:bg-white">
@@ -209,24 +204,27 @@
 				</Sidebar.MenuItem>
 			</Sidebar.GroupContent>
 		</Sidebar.Group>
+	</Sidebar.Content>
 
+	<Sidebar.Footer class="rounded-bl-lg rounded-br-lg  border-t bg-neutral-100 p-0">
 		<!-- Profile -->
 		<Sidebar.Menu>
-			<Sidebar.MenuItem class="px-2 pb-2">
-				<Sidebar.MenuButton
-					class={sidebar.state == 'expanded'
-						? 'flex h-full justify-between rounded-full border bg-white hover:border-zinc-400'
-						: 'rounded-full '}
-				>
+			<Sidebar.MenuItem class="py-2">
+				<Sidebar.MenuButton class="h-full">
+					<!-- class={sidebar.state == 'expanded'
+						? 'flex h-full justify-between overflow-clip rounded-full border bg-white hover:border-zinc-400'
+						: 'rounded-full '} -->
 					{#if sidebar.state == 'expanded'}
-						<ProfileAvatar showLogoutBtn={false} />
-						<div class="">
+						<ProfileAvatar />
+						<!-- <ProfileAvatar showLogoutBtn={false} /> -->
+						<!-- <div class="">
+							<LogoutButton />
+						</div> -->
+					{:else}
+						<div class="px-2">
 							<LogoutButton />
 						</div>
-					{:else}
-						<LogoutButton />
 					{/if}
-					<Sidebar.MenuSkeleton />
 				</Sidebar.MenuButton>
 			</Sidebar.MenuItem>
 		</Sidebar.Menu>
