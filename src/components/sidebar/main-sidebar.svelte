@@ -24,25 +24,25 @@
 			title: 'Home',
 			url: '/homepage',
 			icon: HouseIcon,
-			badge: 0
+			badge: false
 		},
 		{
 			title: 'Research',
 			url: '/research',
 			icon: CircleDot,
-			badge: 0
+			badge: false
 		},
 		{
 			title: 'Bookmarks',
 			url: '/bookmarks_page',
 			icon: Bookmark,
-			badge: paperListState.bookmarkList.length
+			badge: true
 		},
 		{
 			title: 'Liked Papers',
 			url: '/liked_papers_page',
 			icon: Heart,
-			badge: paperListState.likedPapersList.length
+			badge: true
 		}
 
 		// {
@@ -87,6 +87,8 @@
 	import { onMount } from 'svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import CurrentPlan from './current_plan.svelte';
+	import BookmarkBadge from './bookmark_badge.svelte';
+	import LikedPapersBadge from './liked_papers_badge.svelte';
 	const sidebar = useSidebar();
 
 	// check if we're on mobile
@@ -99,10 +101,6 @@
 			currentWindowWidth = window.innerWidth;
 			isMobile = window.innerWidth < 768;
 		});
-		setTimeout(() => {
-			navigationItems[2].badge = paperListState.likedPapersList.length;
-			navigationItems[3].badge = paperListState.bookmarkList.length;
-		}, 0);
 	});
 </script>
 
@@ -141,10 +139,14 @@
 								</a>
 							{/snippet}
 						</Sidebar.MenuButton>
-						{#if eachNavigationItem.badge > 0}
-							<Sidebar.MenuBadge class="rounded-full bg-neutral-200 text-zinc-500"
-								>{eachNavigationItem.badge}</Sidebar.MenuBadge
-							>
+						{#if eachNavigationItem.badge}
+							<Sidebar.MenuBadge>
+								{#if eachNavigationItem.title == 'Bookmarks'}
+									<BookmarkBadge />
+								{:else if eachNavigationItem.title == 'Liked Papers'}
+									<LikedPapersBadge />
+								{/if}
+							</Sidebar.MenuBadge>
 						{/if}
 					</Sidebar.MenuItem>
 				{/each}
@@ -211,15 +213,8 @@
 		<Sidebar.Menu>
 			<Sidebar.MenuItem class="py-2">
 				<Sidebar.MenuButton class="h-full">
-					<!-- class={sidebar.state == 'expanded'
-						? 'flex h-full justify-between overflow-clip rounded-full border bg-white hover:border-zinc-400'
-						: 'rounded-full '} -->
 					{#if sidebar.state == 'expanded'}
 						<ProfileAvatar />
-						<!-- <ProfileAvatar showLogoutBtn={false} /> -->
-						<!-- <div class="">
-							<LogoutButton />
-						</div> -->
 					{:else}
 						<div class="px-2">
 							<LogoutButton />

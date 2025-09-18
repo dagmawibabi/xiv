@@ -62,11 +62,15 @@
 			</div>
 
 			<!-- Upgrade Button -->
-			<a href="/landing#pricing">
-				<div class="rounded-full border bg-stone-100 px-3 py-1 hover:border-zinc-400">
-					<span class="text-sm">Upgrade</span>
-				</div>
-			</a>
+			{#if isLoggingOut}
+				<Circle size="18" color="#f00" duration="1s" />
+			{:else}
+				<a href="/landing#pricing">
+					<div class="rounded-full border bg-stone-100 px-3 py-1 hover:border-zinc-400">
+						<span class="text-sm">Upgrade</span>
+					</div>
+				</a>
+			{/if}
 		</div>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content class="w-[200px]">
