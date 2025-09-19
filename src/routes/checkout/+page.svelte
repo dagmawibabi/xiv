@@ -4,7 +4,12 @@
 	import { BarLoader } from 'svelte-loading-spinners';
 	import logo from '$lib/assets/logo/logo.png';
 
+	function delay(ms: number | undefined) {
+		return new Promise((resolve) => setTimeout(resolve, ms));
+	}
+
 	onMount(async () => {
+		await delay(2000);
 		await subscriptionBasedRouting();
 	});
 </script>

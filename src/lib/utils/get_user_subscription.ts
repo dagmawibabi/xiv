@@ -13,7 +13,8 @@ const packages: Record<PackageId, string> = {
 
 export async function getUserSubscription() {
 	try {
-		const fullCustomerState = await authClient.customer.state();
+		let fullCustomerState = await authClient.customer.state();
+		fullCustomerState = await authClient.customer.state();
 		if (fullCustomerState.error) {
 			return '';
 		}

@@ -36,9 +36,13 @@ export async function handle({ event, resolve }) {
 		'/api/auth/sign-in/anonymous',
 		'/api/checkout',
 		'/api/stats',
+		'/api/auth/customer/state',
+		'/api/auth/error',
 		'/landing',
 		'/'
 	];
+
+	console.log(event.url.pathname);
 
 	if (
 		session == null &&

@@ -66,7 +66,7 @@ const createAuth = async () => {
 								}
 							],
 							successUrl: process.env.POLAR_SUCCESS_URL,
-							authenticatedUsersOnly: true
+							authenticatedUsersOnly: false
 						})
 					]
 				})
