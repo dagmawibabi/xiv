@@ -13,8 +13,8 @@ const packages: Record<PackageId, string> = {
 
 export async function getUserSubscription() {
 	try {
-		let fullCustomerState = await authClient.customer.state();
-		fullCustomerState = await authClient.customer.state();
+		const fullCustomerState = await authClient.customer.state();
+		console.log('CLIENTTT', fullCustomerState);
 		if (fullCustomerState.error) {
 			return '';
 		}
@@ -22,7 +22,11 @@ export async function getUserSubscription() {
 			return '';
 		}
 		const customerPlan = fullCustomerState.data?.activeSubscriptions[0].productId;
+		console.log('customerPlan', customerPlan);
+
 		const planName = packages[customerPlan as keyof typeof packages];
+		console.log('planName', planName);
+
 		return planName;
 	} catch (error) {
 		console.error('Error getting user subscription:', error);
