@@ -63,9 +63,22 @@
 		}
 	];
 
-	// onMount(async () => {
-	// 	await subscriptionBasedRouting();
-	// });
+	onMount(async () => {
+		const result = await fetch('/api/get_subscription');
+		const data = await result.json();
+
+		if (!data.error && data.planName != null) {
+			goto('/homepage');
+		}
+
+		// if (data.error === 'User not authenticated') {
+		// 	goto('/landing');
+		// } else if (data.planName === null) {
+		// 	goto('/pricing');
+		// } else if (data.planName) {
+		// 	goto('/homepage');
+		// }
+	});
 </script>
 
 <svelte:head>
