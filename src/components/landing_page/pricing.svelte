@@ -157,10 +157,22 @@
 
 	const handleCheckout = async (slug: any) => {
 		if ($session.data || sessionExists) {
-			// Checkout
-			await authClient.checkout({
-				slug: slug
-			});
+			const result = await fetch('/api/get_subscription');
+			const data = await result.json();
+
+			if (data.planName !== null && data.planName.toString().toLowerCase() === slug) {
+				goto('/pricing');
+			} else {
+				// Checkout
+				const abc = await authClient.checkout({
+					slug: slug,
+					fetchOptions: {
+						onError: (error) => {
+							console.log('abc', error);
+						}
+					}
+				});
+			}
 		} else {
 			// Sign In
 			goto('/auth/sign_in');
@@ -205,7 +217,8 @@
 					<Button
 						class="mt-6 w-full rounded-lg border "
 						variant={eachPackage.name == 'Free' ? 'secondary' : 'default'}
-						onclick={() => handleCheckout(eachPackage.slug)}>{eachPackage.buttonText}</Button
+						onclick={async () => await handleCheckout(eachPackage.slug)}
+						>{eachPackage.buttonText}</Button
 					>
 					<!-- goto('/auth/sign_in') -->
 				</div>

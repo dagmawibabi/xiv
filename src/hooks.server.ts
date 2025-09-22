@@ -21,10 +21,10 @@ export async function handle({ event, resolve }) {
 	});
 
 	// Make session and user available on server
-	if (session) {
-		event.locals.session = session.session;
-		event.locals.user = session.user;
-	}
+	// if (session) {
+	// 	event.locals.session = session.session;
+	// 	event.locals.user = session.user;
+	// }
 
 	// Define public routes that don't need auth
 	const publicRoutes = [

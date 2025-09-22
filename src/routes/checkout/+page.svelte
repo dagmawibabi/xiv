@@ -3,6 +3,7 @@
 	import { subscriptionBasedRouting } from '$lib/utils/subscription_based_routing';
 	import { BarLoader } from 'svelte-loading-spinners';
 	import logo from '$lib/assets/logo/logo.png';
+	import { goto } from '$app/navigation';
 
 	// function delay(ms: number | undefined) {
 	// 	return new Promise((resolve) => setTimeout(resolve, ms));
@@ -14,8 +15,18 @@
 	// }
 
 	onMount(async () => {
+		const result = await fetch('/api/get_subscription');
+		const data = await result.json();
+
+		if (data.error === 'User not authenticated') {
+			goto('/landing');
+		} else if (data.planName === null) {
+			goto('/pricing');
+		} else if (data.planName) {
+			goto('/homepage');
+		}
 		// await delay(2000);
-		await subscriptionBasedRouting();
+		// await subscriptionBasedRouting();
 		// await fetchSubscription();
 	});
 </script>
