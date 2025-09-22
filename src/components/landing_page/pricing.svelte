@@ -4,6 +4,7 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Table from '$lib/components/ui/table/index';
 	import { Check } from 'lucide-svelte';
+	import { onMount } from 'svelte';
 	const features = [
 		{
 			criteria: 'Price',
@@ -155,14 +156,25 @@
 
 	let session = authClient.useSession();
 
-	const handleCheckout = async (slug: any) => {
+	let currentPlan: any = $state(null);
+	async function getCustomerPlan() {
 		if ($session.data || sessionExists) {
 			const result = await fetch('/api/get_subscription');
 			const data = await result.json();
+			currentPlan = data.planName;
+		}
+	}
 
-			if (data.planName !== null && data.planName.toString().toLowerCase() === slug) {
-				goto('/pricing');
-			} else {
+	onMount(async () => {
+		await getCustomerPlan();
+	});
+
+	const handleCheckout = async (slug: any) => {
+		if ($session.data || sessionExists) {
+			// const result = await fetch('/api/get_subscription');
+			// const data = await result.json();
+
+			if (currentPlan == null || currentPlan.toString().toLowerCase() !== slug) {
 				// Checkout
 				const abc = await authClient.checkout({
 					slug: slug,
@@ -218,7 +230,7 @@
 						class="mt-6 w-full rounded-lg border "
 						variant={eachPackage.name == 'Free' ? 'secondary' : 'default'}
 						onclick={async () => await handleCheckout(eachPackage.slug)}
-						>{eachPackage.buttonText}</Button
+						>{currentPlan === eachPackage.name ? 'Current Plan' : eachPackage.buttonText}</Button
 					>
 					<!-- goto('/auth/sign_in') -->
 				</div>
