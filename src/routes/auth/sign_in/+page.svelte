@@ -4,7 +4,7 @@
 	import { goto } from '$app/navigation';
 	import * as Card from '$lib/components/ui/card';
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { Circle } from 'svelte-loading-spinners';
+	import { BarLoader, Circle } from 'svelte-loading-spinners';
 	import { authClient } from '$lib/auth_client';
 	import { getUserSubscription } from '$lib/utils/get_user_subscription';
 	import { subscriptionBasedRouting } from '$lib/utils/subscription_based_routing';
@@ -63,12 +63,16 @@
 		}
 	];
 
+	let isLoading = $state(true);
+
 	onMount(async () => {
 		const result = await fetch('/api/get_subscription');
 		const data = await result.json();
 
 		if (!data.error && data.planName != null) {
 			goto('/homepage');
+		} else {
+			isLoading = false;
 		}
 
 		// if (data.error === 'User not authenticated') {
@@ -103,80 +107,89 @@
 	<meta property="twitter:description" content="Open-source & AI powered research paper explorer" />
 </svelte:head>
 
-<div class="flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
-	<div class="w-full max-w-sm drop-shadow-md md:max-w-3xl">
-		<div class="flex flex-col gap-6">
-			<Card.Root class="overflow-hidden p-0">
-				<Card.Content class="grid p-0 md:grid-cols-2">
-					<div class="relative hidden items-center justify-center border-r md:flex md:flex-col">
-						<div class="-mt-10 flex flex-col items-center justify-center">
-							<img src={logo} alt="placeholder" class="m-auto h-40 w-40" />
-							<div class="text-2xl font-semibold">ScholarXIV</div>
-						</div>
-					</div>
-					<form class="p-6 md:p-8">
-						<div class="flex flex-col gap-6">
-							<div class="flex flex-col items-center text-center">
-								<h1 class="text-2xl font-bold">Welcome back</h1>
-								<p class="text-balance text-muted-foreground">Login to your ScholarXIV account</p>
+{#if isLoading}
+	<div class="flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
+		<div class="flex flex-col items-center">
+			<img src={logo} alt="placeholder" class="m-auto h-40 w-40" />
+			<!-- <div class="text-2xl font-semibold">ScholarXIV</div> -->
+			<BarLoader size="52" color="#000" duration="1s" />
+		</div>
+	</div>
+{:else}
+	<div class="flex min-h-svh flex-col items-center justify-center p-6 md:p-10">
+		<div class="w-full max-w-sm drop-shadow-md md:max-w-3xl">
+			<div class="flex flex-col gap-6">
+				<Card.Root class="overflow-hidden p-0">
+					<Card.Content class="grid p-0 md:grid-cols-2">
+						<div class="relative hidden items-center justify-center border-r md:flex md:flex-col">
+							<div class="-mt-10 flex flex-col items-center justify-center">
+								<img src={logo} alt="placeholder" class="m-auto h-40 w-40" />
+								<div class="text-2xl font-semibold">ScholarXIV</div>
 							</div>
-							<div class="flex flex-col gap-4">
-								{#each socials.slice(0, 3) as eachSocial}
+						</div>
+						<form class="p-6 md:p-8">
+							<div class="flex flex-col gap-6">
+								<div class="flex flex-col items-center text-center">
+									<h1 class="text-2xl font-bold">Welcome back</h1>
+									<p class="text-balance text-muted-foreground">Login to your ScholarXIV account</p>
+								</div>
+								<div class="flex flex-col gap-4">
+									{#each socials.slice(0, 3) as eachSocial}
+										<Button
+											variant="secondary"
+											class="w-full border"
+											onclick={async () => {
+												if (eachSocial.state === false) {
+													eachSocial.toggle();
+													await authClient.signIn.social({
+														provider: eachSocial.provider,
+														callbackURL: '/checkout'
+													});
+												}
+											}}
+										>
+											{#if eachSocial.state === true}
+												<Circle size="22" color="#000" duration="1s" />
+											{:else}
+												<div class="flex items-center gap-x-2">
+													{@html eachSocial.svg}
+													<span class="font-semibold"> {eachSocial.social} </span>
+												</div>
+											{/if}
+										</Button>
+									{/each}
+								</div>
+
+								<div
+									class="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border"
+								>
+									<span class="relative z-10 bg-card px-2 text-muted-foreground">
+										Or continue with
+									</span>
+								</div>
+								<div class="flex">
 									<Button
 										variant="secondary"
 										class="w-full border"
 										onclick={async () => {
-											if (eachSocial.state === false) {
-												eachSocial.toggle();
-												await authClient.signIn.social({
-													provider: eachSocial.provider,
-													callbackURL: '/checkout'
-												});
-											}
+											socials[3].toggle();
+											await authClient.signIn.social({
+												provider: socials[3].provider,
+												callbackURL: '/checkout'
+											});
 										}}
 									>
-										{#if eachSocial.state === true}
+										{#if socials[3].state === true}
 											<Circle size="22" color="#000" duration="1s" />
 										{:else}
 											<div class="flex items-center gap-x-2">
-												{@html eachSocial.svg}
-												<span class="font-semibold"> {eachSocial.social} </span>
+												{@html socials[3].svg}
+												<span class="font-semibold"> {socials[3].social} </span>
 											</div>
 										{/if}
 									</Button>
-								{/each}
-							</div>
-
-							<div
-								class="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border"
-							>
-								<span class="relative z-10 bg-card px-2 text-muted-foreground">
-									Or continue with
-								</span>
-							</div>
-							<div class="flex">
-								<Button
-									variant="secondary"
-									class="w-full border"
-									onclick={async () => {
-										socials[3].toggle();
-										await authClient.signIn.social({
-											provider: socials[3].provider,
-											callbackURL: '/checkout'
-										});
-									}}
-								>
-									{#if socials[3].state === true}
-										<Circle size="22" color="#000" duration="1s" />
-									{:else}
-										<div class="flex items-center gap-x-2">
-											{@html socials[3].svg}
-											<span class="font-semibold"> {socials[3].social} </span>
-										</div>
-									{/if}
-								</Button>
-								<!-- Product Hunt -->
-								<!-- <div class="pt-20">
+									<!-- Product Hunt -->
+									<!-- <div class="pt-20">
 									<a
 										href="https://www.producthunt.com/products/scholarxiv-2?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-scholarxiv&#0045;2"
 										target="_blank"
@@ -189,8 +202,8 @@
 										/></a
 									>
 								</div> -->
-								<!-- Anonymous Login -->
-								<!-- <Button
+									<!-- Anonymous Login -->
+									<!-- <Button
 									variant="secondary"
 									class="group/anonymous w-full border"
 									onclick={async () => {
@@ -207,27 +220,28 @@
 										</div>
 									{/if}
 								</Button> -->
+								</div>
+								<div class="text-center text-sm text-muted-foreground">
+									Research for everyone, everyday.
+								</div>
 							</div>
-							<div class="text-center text-sm text-muted-foreground">
-								Research for everyone, everyday.
-							</div>
-						</div>
-					</form>
-				</Card.Content>
-			</Card.Root>
-			<div
-				class="*:[a]:hover:text-primary *:[a]:underline *:[a]:underline-offset-4 text-balance text-center text-xs text-muted-foreground"
-			>
-				Checkout the demo video <a href="##" target="_blank" class="underline underline-offset-4"
-					>here</a
+						</form>
+					</Card.Content>
+				</Card.Root>
+				<div
+					class="*:[a]:hover:text-primary *:[a]:underline *:[a]:underline-offset-4 text-balance text-center text-xs text-muted-foreground"
 				>
-				or upvote the ProductHunt launch
-				<a
-					href="https://www.producthunt.com/products/scholarxiv-2?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-scholarxiv&#0045;2"
-					target="_blank"
-					class="underline underline-offset-4">here</a
-				>.
+					Checkout the demo video <a href="##" target="_blank" class="underline underline-offset-4"
+						>here</a
+					>
+					or upvote the ProductHunt launch
+					<a
+						href="https://www.producthunt.com/products/scholarxiv-2?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-scholarxiv&#0045;2"
+						target="_blank"
+						class="underline underline-offset-4">here</a
+					>.
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+{/if}
