@@ -4,13 +4,19 @@
 	import { BarLoader } from 'svelte-loading-spinners';
 	import logo from '$lib/assets/logo/logo.png';
 
-	function delay(ms: number | undefined) {
-		return new Promise((resolve) => setTimeout(resolve, ms));
-	}
+	// function delay(ms: number | undefined) {
+	// 	return new Promise((resolve) => setTimeout(resolve, ms));
+	// }
+
+	// async function fetchSubscription() {
+	// 	var result = await fetch('/api/get_subscription');
+	// 	console.log('boii', result);
+	// }
 
 	onMount(async () => {
-		await delay(2000);
+		// await delay(2000);
 		await subscriptionBasedRouting();
+		// await fetchSubscription();
 	});
 </script>
 

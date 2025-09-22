@@ -40,6 +40,8 @@ export async function handle({ event, resolve }) {
 		'/api/auth/customer/state',
 		'/api/auth/error',
 		'/landing',
+		'/api/customer',
+		'/api/get_subscription',
 		'/'
 	];
 

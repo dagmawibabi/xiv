@@ -33,3 +33,49 @@ export async function getUserSubscription() {
 		return '';
 	}
 }
+
+// export async function getUserSubscription() {
+// 	try {
+// 		// const fullCustomerState = await authClient.customer.state();
+// 		const { data: subscriptions } = await authClient.customer.subscriptions.list({
+// 			query: {
+// 				page: 1,
+// 				limit: 10,
+// 				active: true
+// 			}
+// 		});
+// 		console.log('CLIENTTT', subscriptions);
+// 		// if (subscriptions.error) {
+// 		// 	return '';
+// 		// }
+// 		// if (fullCustomerState.data?.activeSubscriptions == undefined) {
+// 		// 	return '';
+// 		// }
+// 		// const customerPlan = fullCustomerState.data?.activeSubscriptions[0].productId;
+// 		// console.log('customerPlan', customerPlan);
+
+// 		// const planName = packages[customerPlan as keyof typeof packages];
+// 		// console.log('planName', planName);
+
+// 		// return planName;
+// 	} catch (error) {
+// 		console.error('Error getting user subscription:', error);
+// 		return '';
+// 	}
+// }
+
+// export async function getUserSubscription() {
+// 	try {
+// 		// Make a simple fetch request to /api/customer
+// 		const response = await fetch('/api/customer');
+// 		const result = await response.json();
+
+// 		console.log('FETCH RESULT:', result);
+
+// 		// The endpoint currently returns API key data, not customer state
+// 		// For now, return empty string since this isn't customer state data
+// 		return '';
+// 	} catch (error) {
+// 		console.error('Error fetching from /api/customer:', error);
+// 		return '';
+// 	}

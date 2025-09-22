@@ -3,9 +3,15 @@
 	import { subscriptionBasedRouting } from '$lib/utils/subscription_based_routing';
 	import { BarLoader } from 'svelte-loading-spinners';
 	import logo from '$lib/assets/logo/logo.png';
+	import { goto } from '$app/navigation';
+
+	// onMount(async () => {
+	// 	await subscriptionBasedRouting();
+	// });
 
 	onMount(async () => {
 		await subscriptionBasedRouting();
+		// await fetchSubscription();
 	});
 </script>
 
