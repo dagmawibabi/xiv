@@ -34,6 +34,7 @@ export async function handle({ event, resolve }) {
 		'/api/auth/get-session',
 		'/api/auth/sign-in/social',
 		'/api/auth/sign-in/anonymous',
+		'/api/auth/callback/google',
 		'/api/checkout',
 		'/api/stats',
 		'/api/auth/customer/state',
@@ -42,7 +43,11 @@ export async function handle({ event, resolve }) {
 		'/'
 	];
 
-	console.log(event.url.pathname);
+	console.log(
+		event.url.pathname,
+		typeof event.url.pathname,
+		publicRoutes.includes(event.url.pathname)
+	);
 
 	if (
 		session == null &&
