@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { researchState } from '../../state/research_state.svelte';
-	import { AlignLeft, MousePointer, Search } from 'lucide-svelte';
+	import { AlignLeft, Copy, MousePointer, Search } from 'lucide-svelte';
 	import MarkdownRender from '../markdown_render.svelte';
 	import References from '../tool_ui/tool_search_research_papers.svelte';
 	import { toast } from 'svelte-sonner';
+	import * as Tooltip from '$lib/components/ui/tooltip/index';
 
 	import { authClient } from '$lib/auth_client';
 	import { onMount } from 'svelte';
@@ -12,6 +13,12 @@
 	import Thinking from './thinking.svelte';
 	import ChatActions from './chat_actions.svelte';
 	import ToolSearchResearchPapers from '../tool_ui/tool_search_research_papers.svelte';
+
+	// Function to copy to clipboard
+	function copyToClipboard(content: string) {
+		navigator.clipboard.writeText(content);
+		toast.success(`Copied Successfully!`);
+	}
 
 	// Sample Prompts shuffled and 10
 	let samplePrompts: any[] = [];
@@ -25,7 +32,7 @@
 	<ul class="no-scrollbar space-y-2">
 		{#each researchState.chat.messages as message, messageIndex (messageIndex)}
 			{#if message.role === 'user'}
-				<div class="flex justify-end">
+				<div class="group/userInput flex flex-col items-end justify-end">
 					{#each message.parts as part, partIndex (partIndex)}
 						{#if part.type === 'text'}
 							<div class="w-fit max-w-2xl rounded-xl bg-zinc-100 px-4 py-1 text-sm">
@@ -33,15 +40,36 @@
 									<MarkdownRender content={part.text} />
 								{/key}
 							</div>
+							<!-- Copy -->
+							<Tooltip.Provider>
+								<Tooltip.Root>
+									<Tooltip.Trigger>
+										<!-- svelte-ignore a11y_click_events_have_key_events -->
+										<!-- svelte-ignore a11y_no_static_element_interactions -->
+										<div
+											class="mt-1 w-fit cursor-pointer rounded-md p-2 opacity-0 hover:bg-neutral-100 group-hover/userInput:opacity-100"
+											onclick={(event) => {
+												event.stopPropagation();
+												copyToClipboard(part.text);
+											}}
+										>
+											<Copy size={16} />
+										</div>
+									</Tooltip.Trigger>
+									<Tooltip.Content>Copy</Tooltip.Content>
+								</Tooltip.Root>
+							</Tooltip.Provider>
 						{/if}
 					{/each}
 				</div>
 			{:else}
 				<div class="flex flex-col justify-start">
+					<!-- {JSON.stringify(message)} -->
 					{#each message.parts as part, partIndex (partIndex)}
 						<!-- {JSON.stringify(part)} -->
-
-						{#if part.type === 'text'}
+						{#if part.type === 'reasoning'}
+							<Thinking thinkingContent={part.text} addPadding={true} />
+						{:else if part.type === 'text'}
 							<div
 								class="group/aiResponse no-scrollbar prose max-w-[45rem] overflow-scroll rounded-lg text-sm prose-h1:font-semibold prose-h2:mb-2 prose-h2:mt-4 prose-h2:font-medium prose-strong:font-semibold prose-hr:m-5"
 							>
@@ -70,7 +98,6 @@
 											: part.text}
 
 									{#if cleanedText}
-										<div class="h-4"></div>
 										<MarkdownRender content={cleanedText} />
 										<ChatActions content={cleanedText} messageID={message.id} />
 									{/if}

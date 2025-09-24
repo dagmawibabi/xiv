@@ -11,6 +11,8 @@
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index';
 	import katex from 'katex';
 	import 'katex/dist/katex.min.css';
+	import { authClient } from '$lib/auth_client';
+	import { subscriptionState } from '../../state/subscription_state.svelte';
 
 	let { content, messageID } = $props();
 
@@ -58,7 +60,9 @@
 		});
 
 		const element = document.createElement('div');
-		element.innerHTML = `
+		element.innerHTML =
+			subscriptionState.currentPlan === 'Free'
+				? `
 			<style>
 				p, h1, h2, h3, h4, h5, h6, ul, ol, li, pre, blockquote {
 					page-break-inside: avoid;
@@ -81,6 +85,23 @@
 						</p>
 					</div>
 				</div>
+				<div class="prose text-sm" style="max-width: 700px; margin: 0 auto;">
+					${htmlContent}
+				</div>
+			</div>
+		`
+				: `
+			<style>
+				p, h1, h2, h3, h4, h5, h6, ul, ol, li, pre, blockquote {
+					page-break-inside: avoid;
+				}
+				img {
+					page-break-inside: avoid;
+					page-break-before: auto;
+					page-break-after: auto;
+				}
+			</style>
+			<div class="p-6">
 				<div class="prose text-sm" style="max-width: 700px; margin: 0 auto;">
 					${htmlContent}
 				</div>
@@ -142,8 +163,15 @@
 							<DropdownMenu.Separator /> -->
 							<DropdownMenu.Item
 								class="cursor-pointer"
-								onclick={(event) => {
+								onclick={async (event) => {
 									event.stopPropagation();
+									// Track Usage
+									await authClient.usage.ingest({
+										event: 'download_research_pdf',
+										metadata: {
+											datetime: new Date().toISOString()
+										}
+									});
 									downloadAsPDF();
 								}}
 							>

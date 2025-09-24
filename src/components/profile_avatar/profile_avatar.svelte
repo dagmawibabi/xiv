@@ -65,7 +65,7 @@
 			{#if isLoggingOut}
 				<Circle size="18" color="#f00" duration="1s" />
 			{:else}
-				<a href="/landing#pricing">
+				<a href="/pricing">
 					<div class="rounded-full border bg-stone-100 px-3 py-1 hover:border-zinc-400">
 						<span class="text-sm">Upgrade</span>
 					</div>

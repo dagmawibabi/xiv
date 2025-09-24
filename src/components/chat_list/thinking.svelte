@@ -2,7 +2,7 @@
 	import * as Accordion from '$lib/components/ui/accordion/index';
 	import { Brain, ChevronDown, ChevronUp } from 'lucide-svelte';
 	import MarkdownRender from '../markdown_render.svelte';
-	let { thinkingContent } = $props();
+	let { thinkingContent, addPadding = false } = $props();
 
 	let isOpen = $state(true);
 </script>
@@ -26,6 +26,7 @@
 	{#if isOpen}
 		<div
 			class="ml-3 h-fit border-l pl-3 text-xs text-zinc-500 group-hover/thinking:border-dashed group-hover/thinking:border-black group-hover/thinking:text-neutral-600"
+			class:my-3={addPadding}
 		>
 			<MarkdownRender content={thinkingContent} />
 		</div>

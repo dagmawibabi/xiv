@@ -10,7 +10,7 @@ import {
 } from 'ai';
 import { gateway } from '@ai-sdk/gateway';
 import { arxivAPICall } from '../utils/search_and_clean_papers';
-import { old_system_prompt } from '$lib/system_prompt';
+import { old_system_prompt, system_prompt_2 } from '$lib/system_prompt';
 import { trackAIChat } from '$lib/polar_utils/track_ai_chat';
 // import type { searchStringOBJI } from '../types/types';
 
@@ -70,7 +70,7 @@ export async function POST({ request }) {
 	try {
 		const result = streamText({
 			model: currentModel,
-			system: old_system_prompt + `You are using ${currentModel}`,
+			system: system_prompt_2 + `You are using ${currentModel}`,
 			messages: convertToModelMessages(messages),
 			stopWhen: stepCountIs(5),
 			tools: availableTools,
@@ -101,6 +101,19 @@ export async function POST({ request }) {
 			}
 		});
 
+		// Send usage data back to client
+		// const usage = await result.usage;
+		// console.log((await result.usage).inputTokens);
+
+		// return new Response(result.toUIMessageStreamResponse().body, {
+		// 	...result.toUIMessageStreamResponse(),
+		// 	headers: {
+		// 		...result.toUIMessageStreamResponse().headers,
+		// 		'X-Usage-InputTokens': (usage.inputTokens ?? 0).toString(),
+		// 		'X-Usage-OutputTokens': (usage.outputTokens ?? 0).toString(),
+		// 		'X-Usage-TotalTokens': (usage.totalTokens ?? 0).toString(),
+		// 	},
+		// });
 		return result.toUIMessageStreamResponse();
 	} catch (error) {
 		console.log(error);
@@ -114,6 +127,17 @@ export async function POST({ request }) {
 				await trackAIChat(request, currentModel);
 			}
 		});
-		return result.toUIMessageStreamResponse();
+
+		// Send usage data even for fallback model
+		const usage = await result.usage;
+		return new Response(result.toUIMessageStreamResponse().body, {
+			...result.toUIMessageStreamResponse(),
+			headers: {
+				...result.toUIMessageStreamResponse().headers,
+				'X-Usage-InputTokens': (usage.inputTokens ?? 0).toString(),
+				'X-Usage-OutputTokens': (usage.outputTokens ?? 0).toString(),
+				'X-Usage-TotalTokens': (usage.totalTokens ?? 0).toString()
+			}
+		});
 	}
 }
