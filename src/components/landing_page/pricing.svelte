@@ -293,15 +293,27 @@
 					</Table.Row>
 				{/each}
 				<Table.Row class="text-center hover:bg-emerald-50 hover:bg-opacity-50">
-					<Table.Cell class="text-left font-semibold">Price</Table.Cell>
+					<Table.Cell class="text-left font-semibold"></Table.Cell>
 					<Table.Cell>
-						<Button variant="secondary" class="border">Free for Everyone</Button>
+						<Button
+							variant="secondary"
+							class="border"
+							onclick={async () => await handleCheckout('free')}
+						>
+							{currentPlan === 'Free' ? 'Current Plan' : 'Free for Everyone'}</Button
+						>
 					</Table.Cell>
 					<Table.Cell>
-						<Button>Get Plus Now</Button>
+						<Button onclick={async () => await handleCheckout('plus')}
+							>{currentPlan === 'Plus' ? 'Current Plan' : 'Get Plus Now'}</Button
+						>
 					</Table.Cell>
 					<Table.Cell>
-						<Button class="border-2 border-purple-500">Get Pro Now</Button>
+						<Button
+							class="border-2 border-purple-500"
+							onclick={async () => await handleCheckout('pro')}
+							>{currentPlan === 'Pro' ? 'Current Plan' : 'Get Pro Now'}</Button
+						>
 					</Table.Cell>
 				</Table.Row>
 			</Table.Body>

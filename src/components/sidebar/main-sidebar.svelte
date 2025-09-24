@@ -183,7 +183,7 @@
 				<Sidebar.MenuItem class="flex rounded-full hover:bg-white">
 					<Sidebar.MenuButton onclick={() => (isMobile ? sidebar.toggle() : null)}>
 						{#snippet child({ props })}
-							<a href="/landing#pricing" {...props}>
+							<a href="/pricing" {...props}>
 								<CircleFadingArrowUp size={16} />
 								<span>Upgrade Plan</span>
 							</a>

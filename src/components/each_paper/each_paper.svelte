@@ -8,6 +8,7 @@
 	import { EachPaper } from '../../state/each_paper_state.svelte';
 	import { paperListState } from '../../state/papers_list.svelte';
 	import { page } from '$app/state';
+	import { subscriptionState } from '../../state/subscription_state.svelte';
 
 	// Props
 	let { paper } = $props();
@@ -15,8 +16,22 @@
 	// Select or Deselect Paper
 	function selectPaper() {
 		if (aiConversationState.selectedPapersIDList.indexOf(paper.extractedID) == -1) {
-			aiConversationState.selectedPapersList.push(paper);
-			aiConversationState.selectedPapersIDList.push(paper.extractedID);
+			// Get the current plan limit with fallback
+			const planLimit =
+				subscriptionState.limits[
+					subscriptionState.currentPlan as keyof typeof subscriptionState.limits
+				];
+			const currentLimit = planLimit?.selectPaperLimits ?? 0;
+
+			if (aiConversationState.selectedPapersIDList.length < currentLimit) {
+				aiConversationState.selectedPapersList.push(paper);
+				aiConversationState.selectedPapersIDList.push(paper.extractedID);
+			} else if (currentLimit > 0) {
+				// User has reached their plan limit - could add user feedback here
+				console.warn(
+					`Plan limit reached: ${subscriptionState.currentPlan} allows ${currentLimit} papers`
+				);
+			}
 		} else {
 			aiConversationState.selectedPapersList = aiConversationState.selectedPapersList.filter(
 				(eachPaper) => eachPaper.extractedID != paper.extractedID

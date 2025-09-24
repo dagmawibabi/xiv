@@ -4,6 +4,7 @@
 	import { BarLoader } from 'svelte-loading-spinners';
 	import logo from '$lib/assets/logo/logo.png';
 	import { goto } from '$app/navigation';
+	import { subscriptionState } from '../../state/subscription_state.svelte';
 
 	// function delay(ms: number | undefined) {
 	// 	return new Promise((resolve) => setTimeout(resolve, ms));
@@ -23,6 +24,7 @@
 		} else if (data.planName === null) {
 			goto('/pricing');
 		} else if (data.planName) {
+			subscriptionState.currentPlan = data.planName;
 			goto('/homepage');
 		}
 		// await delay(2000);

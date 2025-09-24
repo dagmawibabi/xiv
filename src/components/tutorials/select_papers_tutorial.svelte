@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { goto } from '$app/navigation';
 	import { aiConversationState } from '../../state/ai_conversation_state.svelte';
 	import { researchState } from '../../state/research_state.svelte';
@@ -12,7 +12,15 @@
 
 	import { useSidebar } from '$lib/components/ui/sidebar/index';
 	import { MessageCircleWarning } from 'lucide-svelte';
+	import { subscriptionState } from '../../state/subscription_state.svelte';
 	const sidebar = useSidebar();
+
+	// Get the current plan limit with fallback
+	const planLimit =
+		subscriptionState.limits[
+			subscriptionState.currentPlan as keyof typeof subscriptionState.limits
+		];
+	const currentLimit = planLimit?.selectPaperLimits ?? 0;
 </script>
 
 {#if sidebar.state == 'collapsed'}
@@ -63,6 +71,25 @@
 					</span>
 				</div>
 			</div>
+		</div>
+	{/if}
+	{#if aiConversationState.selectedPapersList.length == currentLimit}
+		<div class="h-fit w-full px-0 py-0">
+			<!-- svelte-ignore a11y_no_static_element_interactions -->
+			<!-- svelte-ignore a11y_click_events_have_key_events -->
+			<a href="/pricing">
+				<div
+					class="flex w-full cursor-pointer items-center overflow-clip rounded-lg border border-t border-neutral-300 bg-neutral-200 hover:border-black"
+					onclick={() => sampleComparison()}
+				>
+					<div class="line-clamp-3 w-full px-2 py-1 text-xs">
+						<span>
+							You have reached your limit for your {subscriptionState.currentPlan} plan.
+							<span class="text-blue-700"> Upgrade now</span>
+						</span>
+					</div>
+				</div>
+			</a>
 		</div>
 	{/if}
 {/if}

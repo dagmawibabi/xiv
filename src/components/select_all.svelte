@@ -1,20 +1,34 @@
 <script lang="ts">
 	import { CircleCheckBig } from 'lucide-svelte';
 	import { aiConversationState } from '../state/ai_conversation_state.svelte';
+	import { subscriptionState } from '../state/subscription_state.svelte';
 
 	const { paperList, loadingState } = $props();
 
 	function selectAll() {
-		if (aiConversationState.selectedPapersList.length == length && loadingState == false) {
+		if (loadingState) return;
+
+		// Get the current plan limit
+		const planLimit =
+			subscriptionState.limits[
+				subscriptionState.currentPlan as keyof typeof subscriptionState.limits
+			];
+		const currentLimit = planLimit?.selectPaperLimits ?? 0;
+
+		// If already at limit or all papers selected, deselect all
+		if (
+			aiConversationState.selectedPapersList.length >= currentLimit ||
+			aiConversationState.selectedPapersList.length === paperList.length
+		) {
 			aiConversationState.selectedPapersList = [];
 			aiConversationState.selectedPapersIDList = [];
-			paperList.forEach((eachPaper: any) => {
-				aiConversationState.selectedPapersList.push(eachPaper);
-				aiConversationState.selectedPapersIDList.push(eachPaper['extractedID']);
-			});
 		} else {
-			aiConversationState.selectedPapersList = [];
-			aiConversationState.selectedPapersIDList = [];
+			// Select papers up to the plan limit
+			const papersToSelect = Math.min(currentLimit, paperList.length);
+			aiConversationState.selectedPapersList = paperList.slice(0, papersToSelect);
+			aiConversationState.selectedPapersIDList = paperList
+				.slice(0, papersToSelect)
+				.map((paper: any) => paper.extractedID);
 		}
 	}
 </script>
@@ -36,10 +50,19 @@
 	</div>
 	<CircleCheckBig
 		size={18}
-		class={aiConversationState.selectedPapersList.length == paperList.length &&
-		loadingState == false &&
-		paperList.length > 0
-			? 'cursor-pointer text-emerald-500'
-			: 'cursor-pointer'}
+		class={(() => {
+			const maxSelectable = Math.min(
+				subscriptionState.limits[
+					subscriptionState.currentPlan as keyof typeof subscriptionState.limits
+				]?.selectPaperLimits ?? 0,
+				paperList.length
+			);
+			return aiConversationState.selectedPapersList.length === maxSelectable &&
+				maxSelectable > 0 &&
+				!loadingState &&
+				paperList.length > 0
+				? 'cursor-pointer text-emerald-500'
+				: 'cursor-pointer';
+		})()}
 	/>
 </div>

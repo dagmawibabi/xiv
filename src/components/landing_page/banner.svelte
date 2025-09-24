@@ -28,14 +28,14 @@
 		</div>
 	</div>
 
-	<!-- Researchers Count -->
+	<!-- Stats -->
 	<div class="flex flex-col items-center gap-x-2 pt-3">
 		<div class="flex items-center gap-x-2 rounded-full px-3 py-1 text-sm">
 			<DoubleBounce size={10} color="lime" />
 			<div>
 				<span class="font-semibold"> {formatter.format(userCount)} </span>
-				<span class="text-zinc-500"> Researchers , </span>
-				<span class="font-semibold"> {formatter.format(paperCount)} </span>
+				<span class="text-zinc-500"> Researchers </span>
+				<span class="font-semibold"> • {formatter.format(paperCount)} </span>
 				<span class="text-zinc-500"> Papers Indexed </span>
 			</div>
 		</div>
