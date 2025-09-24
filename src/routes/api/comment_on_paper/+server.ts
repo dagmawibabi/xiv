@@ -2,6 +2,7 @@ import { getDb } from '$db/db';
 import { json } from '@sveltejs/kit';
 import { getSession } from '../utils/session_manager';
 import { ObjectId } from 'mongodb';
+import { trackComments } from '$lib/polar_utils/track_comments';
 
 // const papers = mongoDB.collection('papers');
 const db = await getDb();
@@ -45,6 +46,9 @@ export async function POST({ request }) {
 			};
 		})
 	);
+
+	// Track Usage
+	await trackComments(request, extractedID, comment);
 
 	// Response
 	return json(commentsWithUserInfo);

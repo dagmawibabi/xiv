@@ -125,6 +125,14 @@
 				onclick={async () => {
 					if (isLoggingOut == false) {
 						isLoggingOut = !isLoggingOut;
+						// Track Usage
+						await authClient.usage.ingest({
+							event: 'logouts',
+							metadata: {
+								datetime: new Date().toISOString()
+							}
+						});
+						// Logout
 						await handleSignOut();
 					}
 				}}

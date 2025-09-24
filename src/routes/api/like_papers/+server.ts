@@ -1,6 +1,7 @@
 import { getDb } from '$db/db';
 import { json } from '@sveltejs/kit';
 import { getSession } from '../utils/session_manager';
+import { trackLikes } from '$lib/polar_utils/track_likes';
 
 const db = await getDb();
 const likedPapers = db.collection('likedpapers');
@@ -28,6 +29,9 @@ export async function POST({ request }) {
 	} else {
 		await likedPapers.insertOne(newLike);
 	}
+
+	// Track Usage
+	await trackLikes(request, paperID);
 
 	// Send back updated paper
 	// const likedPaper = [await papers.findOne({ id: paperID })];

@@ -1,6 +1,7 @@
 import { getDb } from '$db/db';
 import { json } from '@sveltejs/kit';
 import { getSession } from '../utils/session_manager';
+import { trackBookmarks } from '$lib/polar_utils/track_bookmarks';
 
 const db = await getDb();
 const papers = db.collection('papers');
@@ -31,6 +32,9 @@ export async function POST({ request }) {
 
 	// Send back all bookmarks
 	const bookmarkedPapers = await getBookmarkedPapers(userID!);
+
+	// Track Usage
+	await trackBookmarks(request, paperID);
 
 	// Response
 	return json(bookmarkedPapers);

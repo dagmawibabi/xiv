@@ -2,7 +2,7 @@ import { betterAuth } from 'better-auth';
 import { anonymous } from 'better-auth/plugins';
 import { mongodbAdapter } from 'better-auth/adapters/mongodb';
 import { getDb } from '$db/db';
-import { polar, checkout, portal } from '@polar-sh/better-auth';
+import { polar, checkout, portal, usage } from '@polar-sh/better-auth';
 import { Polar } from '@polar-sh/sdk';
 // import { authClient } from './auth_client';
 
@@ -50,6 +50,7 @@ const createAuth = async () => {
 					createCustomerOnSignUp: true,
 					use: [
 						portal(),
+						usage(),
 						checkout({
 							products: [
 								{

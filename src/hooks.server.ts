@@ -21,10 +21,10 @@ export async function handle({ event, resolve }) {
 	});
 
 	// Make session and user available on server
-	// if (session) {
-	// 	event.locals.session = session.session;
-	// 	event.locals.user = session.user;
-	// }
+	if (session) {
+		event.locals.session = session.session;
+		event.locals.user = session.user;
+	}
 
 	// Define public routes that don't need auth
 	const publicRoutes = [
@@ -42,14 +42,16 @@ export async function handle({ event, resolve }) {
 		'/landing',
 		'/api/customer',
 		'/api/get_subscription',
+		// '/api/chat',
+		'/usage/ingest',
 		'/'
 	];
 
-	console.log(
-		event.url.pathname,
-		typeof event.url.pathname,
-		publicRoutes.includes(event.url.pathname)
-	);
+	// console.log(
+	// 	event.url.pathname,
+	// 	typeof event.url.pathname,
+	// 	publicRoutes.includes(event.url.pathname)
+	// );
 
 	if (
 		session == null &&

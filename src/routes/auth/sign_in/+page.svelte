@@ -6,8 +6,6 @@
 	import Button from '$lib/components/ui/button/button.svelte';
 	import { BarLoader, Circle } from 'svelte-loading-spinners';
 	import { authClient } from '$lib/auth_client';
-	import { getUserSubscription } from '$lib/utils/get_user_subscription';
-	import { subscriptionBasedRouting } from '$lib/utils/subscription_based_routing';
 	const session = authClient.useSession();
 
 	let isLogingInWithGithub = $state(false);
@@ -141,6 +139,7 @@
 											onclick={async () => {
 												if (eachSocial.state === false) {
 													eachSocial.toggle();
+
 													await authClient.signIn.social({
 														provider: eachSocial.provider,
 														callbackURL: '/checkout'

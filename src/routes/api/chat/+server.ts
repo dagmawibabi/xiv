@@ -11,6 +11,7 @@ import {
 import { gateway } from '@ai-sdk/gateway';
 import { arxivAPICall } from '../utils/search_and_clean_papers';
 import { old_system_prompt } from '$lib/system_prompt';
+import { trackAIChat } from '$lib/polar_utils/track_ai_chat';
 // import type { searchStringOBJI } from '../types/types';
 
 export async function GET() {
@@ -94,8 +95,12 @@ export async function POST({ request }) {
 				});
 
 				return { ...toolCall, input: JSON.stringify(repairedArgs) };
+			},
+			onFinish: async () => {
+				await trackAIChat(request, currentModel);
 			}
 		});
+
 		return result.toUIMessageStreamResponse();
 	} catch (error) {
 		console.log(error);
@@ -104,7 +109,10 @@ export async function POST({ request }) {
 			system: old_system_prompt + `You are using ${currentModel}`,
 			messages: convertToModelMessages(messages),
 			stopWhen: stepCountIs(5),
-			tools: availableTools
+			tools: availableTools,
+			onFinish: async () => {
+				await trackAIChat(request, currentModel);
+			}
 		});
 		return result.toUIMessageStreamResponse();
 	}
