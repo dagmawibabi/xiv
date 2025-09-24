@@ -1,33 +1,21 @@
 <script lang="ts">
 	import Button from '$lib/components/ui/button/button.svelte';
-	import { Atom, CircleDot, Dot, User } from 'lucide-svelte';
+	import { Atom, CircleDot, Dot, LibraryBig, User } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
 	import { DoubleBounce, Jumper, Pulse, ScaleOut } from 'svelte-loading-spinners';
 
-	let { userCount } = $props();
+	let { userCount, paperCount } = $props();
 	const formatter = new Intl.NumberFormat('en-US');
 </script>
 
-<div class="flex flex-col items-center justify-center gap-y-10 pb-20 pt-20 md:pb-28 md:pt-36">
+<div class="flex flex-col items-center justify-center pb-20 pt-20 md:pb-24 md:pt-36">
 	<!-- Header Text -->
 	<div class="flex flex-col justify-center gap-y-5 md:items-center">
-		<!-- Researchers Count -->
-		<div class="flex items-center gap-x-2">
-			<div class="flex items-center gap-x-2 rounded-full px-3 py-1 text-sm">
-				<DoubleBounce size={10} color="lime" />
-				<div>
-					<span class="font-semibold"> {formatter.format(userCount)} </span>
-					<span class="text-zinc-500"> Researchers </span>
-				</div>
-			</div>
-		</div>
-
 		<!-- Tagline -->
 		<div
 			class="flex w-fit items-center gap-x-1 rounded-full bg-neutral-100 px-3 py-1 text-sm md:justify-center"
 		>
 			<Atom size={14} />
-			<!-- <img src={logo} alt=" " class="h-6 w-6" /> -->
 			Research for everyday & everyone
 		</div>
 		<div class="text-2xl font-semibold md:text-5xl">Next-gen Research Platform</div>
@@ -40,8 +28,21 @@
 		</div>
 	</div>
 
+	<!-- Researchers Count -->
+	<div class="flex flex-col items-center gap-x-2 pt-3">
+		<div class="flex items-center gap-x-2 rounded-full px-3 py-1 text-sm">
+			<DoubleBounce size={10} color="lime" />
+			<div>
+				<span class="font-semibold"> {formatter.format(userCount)} </span>
+				<span class="text-zinc-500"> Researchers , </span>
+				<span class="font-semibold"> {formatter.format(paperCount)} </span>
+				<span class="text-zinc-500"> Papers Indexed </span>
+			</div>
+		</div>
+	</div>
+
 	<!-- CTA -->
-	<div class="flex w-full items-center justify-start gap-x-2 md:justify-center">
+	<div class="flex w-full items-center justify-start gap-x-2 pt-14 md:justify-center">
 		<Button class="px-10 font-semibold" onclick={() => goto('/auth/sign_in')}
 			>Start Exploring</Button
 		>

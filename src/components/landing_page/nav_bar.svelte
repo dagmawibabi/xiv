@@ -46,7 +46,9 @@
 	];
 </script>
 
-<div class="hidden flex-col items-start justify-between md:flex md:flex-row">
+<div
+	class="sticky top-0 z-50 hidden flex-col items-start justify-between rounded-bl-lg rounded-br-lg bg-white px-3 py-3 md:flex md:flex-row"
+>
 	<!-- Logo -->
 	{#if showHeader}
 		<Header />

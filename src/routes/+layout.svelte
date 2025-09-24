@@ -40,7 +40,7 @@
 	</Sidebar.Provider>
 {:else}
 	<!-- Sign In/Up Page -->
-	<div class="no-scrollbar m-auto h-screen w-full overflow-scroll pt-6">
+	<div class="no-scrollbar m-auto h-screen w-full overflow-scroll">
 		{@render children()}
 	</div>
 {/if}

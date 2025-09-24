@@ -21,7 +21,7 @@
 	<NavBarMobile />
 
 	<!-- Banner -->
-	<Banner userCount={data.data.userCount} />
+	<Banner userCount={data.data.userCount} paperCount={data.data.paperCount} />
 
 	<!-- Features -->
 	<Features />
