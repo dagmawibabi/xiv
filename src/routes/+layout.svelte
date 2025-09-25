@@ -12,8 +12,15 @@
 	import 'katex/dist/katex.min.css';
 
 	import { authClient } from '$lib/auth_client';
+	import { onMount } from 'svelte';
 	const session = authClient.useSession();
 	const noSideBarPages = ['/', '/auth/sign_in', '/pricing', '/landing', '/checkout'];
+
+	onMount(() => {
+		if ('serviceWorker' in navigator) {
+			navigator.serviceWorker.register('/service-worker.ts');
+		}
+	});
 </script>
 
 {#if !noSideBarPages.includes(page.url.pathname) && $session.data}
