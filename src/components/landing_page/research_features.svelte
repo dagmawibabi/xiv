@@ -39,7 +39,7 @@
 
 <div>
 	<!-- Research -->
-	<div id="research" class="pt-10 md:pb-28">
+	<div id="research" class="pt-20 md:pb-28">
 		<div class="pb-5 text-start text-2xl font-semibold md:text-center md:text-4xl">
 			AI Powered Research
 		</div>

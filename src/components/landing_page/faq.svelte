@@ -35,7 +35,7 @@
 	];
 </script>
 
-<div id="faq" class="pb-28 md:pt-10">
+<div id="faq" class="pb-28 md:pt-20">
 	<div class="pb-5 text-start text-2xl font-semibold md:text-center md:text-4xl">FAQ</div>
 	<div class="mx-auto w-full pb-10 text-start md:w-3/4 md:text-center md:text-lg">
 		Everything you need to know about the product and billing

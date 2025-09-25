@@ -65,7 +65,7 @@
 	const featureForMobile2 = features.slice(4, features.length);
 </script>
 
-<div id="features" class="pb-14 pt-8 md:pb-40">
+<div id="features" class="pb-14 pt-20 md:pb-40">
 	<div class="text-start text-lg font-semibold md:text-center md:text-2xl">
 		Expore all the powerful features of ScholarXIV
 	</div>

@@ -192,7 +192,7 @@
 	};
 </script>
 
-<div id="pricing" class="pb-28 pt-10">
+<div id="pricing" class="pb-28 pt-20">
 	<div class="pb-5 text-start text-2xl font-semibold md:text-center md:text-4xl">Pricing</div>
 	<div class="mx-auto w-full pb-10 text-start md:w-3/4 md:text-center md:text-lg">
 		We offer three packages: Free, Plus and Pro. Our free tier gives you unlimited access to the
