@@ -29,8 +29,8 @@
 	</div>
 
 	<!-- Stats -->
-	<div class="flex flex-col items-center gap-x-2 pt-3">
-		<div class="flex items-center gap-x-2 rounded-full px-3 py-1 text-sm">
+	<div class="flex w-full flex-col items-start gap-x-2 pt-3 md:items-center">
+		<div class="flex items-center gap-x-2 rounded-full py-1 text-sm md:px-3">
 			<DoubleBounce size={10} color="lime" />
 			<div>
 				<span class="font-semibold"> {formatter.format(userCount)} </span>
