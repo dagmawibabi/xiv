@@ -2,6 +2,7 @@
 	import * as Tabs from '$lib/components/ui/tabs/index';
 
 	import discover from '$lib/assets/landing/discover.png';
+	import read from '$lib/assets/landing/read.png';
 	import research from '$lib/assets/landing/research.png';
 	import search from '$lib/assets/landing/search.png';
 	import like from '$lib/assets/landing/like.png';
@@ -16,6 +17,13 @@
 			description:
 				'Explore and discover collections of research papers tailored to trending topics and themes. Find fresh insights every time you visit.',
 			image: discover
+		},
+		{
+			value: 'read',
+			label: 'Read',
+			description:
+				'Read research papers with ease and comfort as you explore them. The papers open to the side of the page helping you glance inside quickly.',
+			image: read
 		},
 		{
 			value: 'research',
@@ -33,10 +41,10 @@
 		},
 		{
 			value: 'like',
-			label: 'Like Papers',
+			label: 'Like & Bookmark',
 			description:
-				'Show appreciation for valuable research by liking papers you find useful. Help highlight impactful work for the community.',
-			image: like
+				'Show appreciation for valuable research by liking papers you find useful and bookmark papers to your personal library for easy access later.',
+			image: bookmark
 		},
 		{
 			value: 'comment',
@@ -45,13 +53,13 @@
 				'Join the conversation by leaving comments on papers. Share feedback, ask questions, and exchange ideas with peers.',
 			image: comment
 		},
-		{
-			value: 'bookmark',
-			label: 'Bookmark',
-			description:
-				'Save papers to your personal library for easy access later. Keep your most important reads organized in one place.',
-			image: bookmark
-		},
+		// {
+		// 	value: 'bookmark',
+		// 	label: 'Bookmark',
+		// 	description:
+		// 		'Save papers to your personal library for easy access later. Keep your most important reads organized in one place.',
+		// 	image: bookmark
+		// },
 		{
 			value: 'select',
 			label: 'Select Papers',

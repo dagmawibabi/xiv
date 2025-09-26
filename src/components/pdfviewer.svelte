@@ -14,7 +14,7 @@
 
 	let canvases: HTMLCanvasElement[] = [];
 	let container: HTMLDivElement;
-	let scaleButtons = [0.5, 1.0, 1.5];
+	let scaleButtons = [0.5, 0.9, 1.0, 1.5];
 
 	onMount(async () => {
 		const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf');
@@ -52,7 +52,7 @@
 
 <div class="no-scrollbar relative h-screen overflow-scroll">
 	<!-- PDF Controls  -->
-	<div class="sticky top-0 z-50 px-2 pt-2 backdrop-blur-lg">
+	<div class="sticky left-0 right-0 top-0 z-50 px-2 pt-2 backdrop-blur-lg">
 		<div
 			class="flex items-center justify-between gap-x-2 rounded-lg border-b bg-neutral-100 text-black"
 		>
