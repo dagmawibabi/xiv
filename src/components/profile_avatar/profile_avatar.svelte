@@ -63,7 +63,9 @@
 
 			<!-- Upgrade Button -->
 			{#if isLoggingOut}
-				<Circle size="18" color="#f00" duration="1s" />
+				<div class:pr-1={isLoggingOut}>
+					<Circle size="20" color="#f00" duration="1s" />
+				</div>
 			{:else}
 				<a href="/pricing">
 					<div class="rounded-full border bg-stone-100 px-3 py-1 hover:border-zinc-400">
@@ -137,7 +139,7 @@
 					}
 				}}
 			>
-				<div class="flex items-center gap-x-2">
+				<div class="flex items-center gap-x-2" class:pr-2={isLoggingOut}>
 					{#if isLoggingOut}
 						<Circle size="18" color="#f00" duration="1s" />
 					{:else}

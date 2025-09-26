@@ -19,11 +19,11 @@
 	const session = authClient.useSession();
 	const noSideBarPages = ['/', '/auth/sign_in', '/pricing', '/landing', '/checkout'];
 
-	onMount(() => {
-		if ('serviceWorker' in navigator) {
-			navigator.serviceWorker.register('/service-worker.ts');
-		}
-	});
+	// onMount(() => {
+	// 	if ('serviceWorker' in navigator) {
+	// 		navigator.serviceWorker.register('/service-worker.js');
+	// 	}
+	// });
 </script>
 
 {#if !noSideBarPages.includes(page.url.pathname) && $session.data}
