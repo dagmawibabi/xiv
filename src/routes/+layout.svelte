@@ -29,9 +29,9 @@
 {#if !noSideBarPages.includes(page.url.pathname) && $session.data}
 	<Sidebar.Provider>
 		<!-- Left Sidebar -->
-		{#if !pdfPreviewState.isOpen}
-			<AppSidebar />
-		{/if}
+		<!-- {#if !pdfPreviewState.isOpen} -->
+		<AppSidebar />
+		<!-- {/if} -->
 
 		<!-- Main Content -->
 		<Resizable.PaneGroup direction="horizontal">
@@ -41,10 +41,17 @@
 					class="no-scrollbar relative flex max-h-screen min-h-screen w-full flex-col overflow-scroll"
 				>
 					<div class="pt-4">
-						{#if !pdfPreviewState.isOpen}
+						<!-- {#if !pdfPreviewState.isOpen}
 							<Sidebar.Trigger />
-						{/if}
+						{/if} -->
 					</div>
+					{#if !pdfPreviewState.isOpen}
+						<div
+							class="sticky left-0 top-0 z-50 w-fit rounded-br-lg border-b border-r bg-white md:top-4 md:border-none"
+						>
+							<Sidebar.Trigger />
+						</div>
+					{/if}
 
 					<div class="mx-auto w-11/12 flex-1 pt-0 md:w-3/4">
 						{@render children?.()}

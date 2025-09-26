@@ -11,6 +11,9 @@
 	import EachPaper from './each_paper/each_paper.svelte';
 	import MarkdownRender from './markdown_render.svelte';
 	import { aiConversationState } from '../state/ai_conversation_state.svelte';
+	import { useSidebar } from '$lib/components/ui/sidebar/index.js';
+
+	const sidebar = useSidebar();
 
 	let canvases: HTMLCanvasElement[] = [];
 	let container: HTMLDivElement;
@@ -99,7 +102,13 @@
 					{/each}
 				</div>
 				<!-- Close Button -->
-				<button onclick={() => pdfPreviewState.closePDF()}>
+				<button
+					onclick={(e) => {
+						e.stopPropagation();
+						sidebar.setOpen(true);
+						pdfPreviewState.closePDF();
+					}}
+				>
 					<CircleX size={20} />
 				</button>
 			</div>

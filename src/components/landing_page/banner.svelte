@@ -8,7 +8,7 @@
 	const formatter = new Intl.NumberFormat('en-US');
 </script>
 
-<div class="flex flex-col items-center justify-center pb-20 pt-20 md:pb-24 md:pt-36">
+<div class="flex flex-col items-center justify-center pb-10 pt-20 md:pb-12 md:pt-36">
 	<!-- Header Text -->
 	<div class="flex flex-col justify-center gap-y-5 md:items-center">
 		<!-- Tagline -->
