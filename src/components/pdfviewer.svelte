@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount, tick } from 'svelte';
-	import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
+	// import * as pdfjsLib from 'pdfjs-dist/legacy/build/pdf';
+	// import { browser } from '$app/environment';
 	import { pdfPreviewState } from '../state/pdf_preview_state.svelte';
 	import { CircleX } from 'lucide-svelte';
 	import { BarLoader } from 'svelte-loading-spinners';
@@ -16,6 +17,8 @@
 	let scaleButtons = [0.5, 1.0, 1.5];
 
 	onMount(async () => {
+		const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf');
+
 		pdfjsLib.GlobalWorkerOptions.workerSrc =
 			'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/5.4.149/pdf.worker.min.mjs';
 
