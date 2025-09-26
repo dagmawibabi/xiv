@@ -64,5 +64,6 @@ export const suggestedPaperTitles: any[] = [
 	'transport',
 	'virtual reality',
 	'volcano',
-	'vision'
+	'vision',
+	'Visualizing the loss landscape of neural nets'
 ];
