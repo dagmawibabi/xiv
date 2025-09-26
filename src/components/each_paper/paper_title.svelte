@@ -4,7 +4,9 @@
 	import { page } from '$app/state';
 	import MarkdownRender from '../markdown_render.svelte';
 	import { pdfPreviewState } from '../../state/pdf_preview_state.svelte';
-	import { tick } from 'svelte';
+	import { useSidebar } from '$lib/components/ui/sidebar/index.js';
+
+	const sidebar = useSidebar();
 
 	// Props
 	let { paperState } = $props();
@@ -47,6 +49,7 @@
 	class="hidden md:flex"
 	onclick={async (e) => {
 		e.stopPropagation();
+		sidebar.setOpen(false);
 		pdfPreviewState.openPaper(paperState.paper);
 	}}
 >

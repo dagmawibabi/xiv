@@ -11,12 +11,17 @@
 	import EachPaper from './each_paper/each_paper.svelte';
 	import MarkdownRender from './markdown_render.svelte';
 	import { aiConversationState } from '../state/ai_conversation_state.svelte';
+	import { useSidebar } from '$lib/components/ui/sidebar/index.js';
+
+	const sidebar = useSidebar();
 
 	let canvases: HTMLCanvasElement[] = [];
 	let container: HTMLDivElement;
 	let scaleButtons = [0.5, 0.9, 1.0, 1.5];
+	let isLoading = true;
 
 	onMount(async () => {
+		isLoading = true;
 		const pdfjsLib = await import('pdfjs-dist/legacy/build/pdf');
 
 		pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -47,6 +52,9 @@
 				await page.render({ canvasContext: context, viewport: scaledViewport }).promise;
 			}
 		}
+		await tick();
+
+		isLoading = false;
 	});
 </script>
 
@@ -99,7 +107,13 @@
 					{/each}
 				</div>
 				<!-- Close Button -->
-				<button onclick={() => pdfPreviewState.closePDF()}>
+				<button
+					onclick={(e) => {
+						e.stopPropagation();
+						sidebar.setOpen(true);
+						pdfPreviewState.closePDF();
+					}}
+				>
 					<CircleX size={20} />
 				</button>
 			</div>
@@ -115,9 +129,21 @@
 			<!-- <BarLoader size="52" color="#000" duration="1s" /> -->
 		</div>
 
-		<!-- PDF Pages -->
-		{#each canvases as _, i}
-			<canvas bind:this={canvases[i]}></canvas>
-		{/each}
+		<div>
+			<!-- PDF Pages -->
+			{#each canvases as _, i}
+				<canvas bind:this={canvases[i]}></canvas>
+			{/each}
+			<!-- {#if isLoading}
+				<div class="flex flex-col items-center justify-center pt-96">
+					<img src={logo} alt="placeholder" class="h-24 w-24" />
+					<BarLoader size="40" color="#000" duration="1s" />
+				</div>
+			{:else}
+				{#each canvases as _, i}
+					<canvas bind:this={canvases[i]}></canvas>
+				{/each}
+			{/if} -->
+		</div>
 	</div>
 </div>

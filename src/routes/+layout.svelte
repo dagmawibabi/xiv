@@ -29,9 +29,9 @@
 {#if !noSideBarPages.includes(page.url.pathname) && $session.data}
 	<Sidebar.Provider>
 		<!-- Left Sidebar -->
-		{#if !pdfPreviewState.isOpen}
-			<AppSidebar />
-		{/if}
+		<!-- {#if !pdfPreviewState.isOpen} -->
+		<AppSidebar />
+		<!-- {/if} -->
 
 		<!-- Main Content -->
 		<Resizable.PaneGroup direction="horizontal">
@@ -40,16 +40,30 @@
 				<main
 					class="no-scrollbar relative flex max-h-screen min-h-screen w-full flex-col overflow-scroll"
 				>
-					<div class="pt-4">
-						{#if !pdfPreviewState.isOpen}
+					{#if !pdfPreviewState.isOpen}
+						<div
+							class="sticky left-0 top-0 z-50 w-fit rounded-br-lg border-b border-r bg-white md:top-4 md:border-none"
+						>
 							<Sidebar.Trigger />
-						{/if}
+						</div>
+					{/if}
+
+					<div class="pt-4">
+						<!-- {#if !pdfPreviewState.isOpen}
+							<Sidebar.Trigger />
+						{/if} -->
 					</div>
 
-					<div class="mx-auto w-11/12 flex-1 pt-0 md:w-3/4">
+					<div
+						class="mx-auto w-11/12 flex-1 pt-0 md:w-3/4"
+						class:md:w-[85%]={pdfPreviewState.isOpen}
+					>
 						{@render children?.()}
 					</div>
-					<div class="sticky bottom-0 left-0 right-0 mx-auto w-full md:w-4/5">
+					<div
+						class="sticky bottom-0 left-0 right-0 mx-auto w-full md:w-4/5"
+						class:md:w-[85%]={pdfPreviewState.isOpen}
+					>
 						{#if page.url.pathname == '/research'}
 							<ChatBox />
 						{:else if page.url.pathname == '/bookmarks_page' || page.url.pathname == '/liked_papers_page' || page.url.pathname == '/homepage'}
