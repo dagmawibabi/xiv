@@ -17,6 +17,10 @@
 		CircleFadingArrowUp,
 		WalletCards
 	} from 'lucide-svelte';
+	import SunIcon from '@lucide/svelte/icons/sun';
+	import MoonIcon from '@lucide/svelte/icons/moon';
+
+	import { toggleMode } from 'mode-watcher';
 
 	// Navigation Items.
 	const navigationItems = [
@@ -104,32 +108,68 @@
 	});
 </script>
 
-<Sidebar.Root variant="floating" collapsible="icon">
+<Sidebar.Root variant={isMobile ? 'sidebar' : 'floating'} collapsible="icon">
 	<Sidebar.Header
 		class={sidebar.state == 'expanded'
-			? 'rounded-tl-lg rounded-tr-lg border-b bg-neutral-100'
-			: 'rounded-tl-lg rounded-tr-lg border-b bg-neutral-100 px-0'}
+			? 'rounded-tl-lg rounded-tr-lg border-b bg-neutral-100 dark:bg-neutral-800'
+			: 'rounded-tl-lg rounded-tr-lg border-b bg-neutral-100 px-0 dark:bg-neutral-800'}
 	>
 		<!-- <Header /> -->
 		{#if sidebar.state == 'expanded'}
-			<div class="flex w-full items-center justify-center">
-				<img src={logo} alt=" " class="-ml-6 h-10 w-11" />
-				<div class="text-lg font-semibold">ScholarXIV</div>
+			<div class="flex w-full items-center justify-between">
+				<div class="flex items-center">
+					<img src={logo} alt=" " class="h-10 w-11" />
+					<div class="text-lg font-semibold">ScholarXIV</div>
+				</div>
+				<!-- <Sidebar.Trigger class="hover:bg-neutral-200 dark:hover:bg-neutral-700" /> -->
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
+				<div
+					class="flex w-fit cursor-pointer items-center justify-center rounded-lg p-1 hover:bg-neutral-200 dark:hover:bg-neutral-700"
+					onclick={async () => {
+						toggleMode();
+					}}
+				>
+					<SunIcon
+						class="h-[1.2rem] w-[1.2rem] rotate-90 scale-0 !transition-all dark:-rotate-90 dark:scale-90"
+					/>
+					<MoonIcon
+						class="absolute h-[1.2rem] w-[1.2rem] rotate-0 scale-90 !transition-all dark:rotate-0 dark:scale-0"
+					/>
+				</div>
 			</div>
 		{:else}
-			<div class="mx-auto">
-				<img src={logo} alt=" " class="h-10 w-11" />
+			<div class="group/logo mx-auto">
+				<img src={logo} alt=" " class="flex h-10 w-11 group-hover/logo:hidden" />
+				<!-- <Sidebar.Trigger
+					class="hidden p-5 hover:bg-neutral-200 group-hover/logo:flex dark:hover:bg-neutral-700"
+				/> -->
+				<!-- svelte-ignore a11y_click_events_have_key_events -->
+				<!-- svelte-ignore a11y_no_static_element_interactions -->
+				<div
+					class="hidden w-fit cursor-pointer items-center justify-center rounded-lg p-2 hover:bg-neutral-200 group-hover/logo:flex dark:hover:bg-neutral-700"
+					onclick={async () => {
+						toggleMode();
+					}}
+				>
+					<SunIcon
+						class="h-[1.5rem] w-[1.5rem] rotate-90 scale-0 !transition-all dark:-rotate-90 dark:scale-90"
+					/>
+					<MoonIcon
+						class="absolute h-[1.5rem] w-[1.5rem] rotate-0 scale-100 !transition-all dark:rotate-0 dark:scale-0"
+					/>
+				</div>
 			</div>
 		{/if}
 	</Sidebar.Header>
 
-	<Sidebar.Content class="bg-neutral-100 pt-4">
+	<Sidebar.Content class="bg-neutral-100 pt-4 dark:bg-neutral-800">
 		<Sidebar.Group>
 			<Sidebar.GroupLabel>Navigation</Sidebar.GroupLabel>
 			<Sidebar.GroupContent>
 				{#each navigationItems as eachNavigationItem (eachNavigationItem.title)}
 					<Sidebar.MenuItem
-						class="flex w-full items-center justify-start rounded-full hover:bg-white"
+						class="flex w-full items-center justify-start rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-700"
 					>
 						<Sidebar.MenuButton onclick={() => (isMobile ? sidebar.toggle() : null)}>
 							{#snippet child({ props })}
@@ -159,7 +199,7 @@
 			<Sidebar.GroupContent>
 				{#each developmentItems as eachDevelopmentItem (eachDevelopmentItem.title)}
 					<Sidebar.MenuItem
-						class="flex w-full items-center justify-start rounded-full hover:bg-white"
+						class="flex w-full items-center justify-start rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-700"
 					>
 						<Sidebar.MenuButton onclick={() => (isMobile ? sidebar.toggle() : null)}>
 							{#snippet child({ props })}
@@ -180,7 +220,7 @@
 				Subscription: &nbsp; <CurrentPlan />
 			</Sidebar.GroupLabel>
 			<Sidebar.GroupContent>
-				<Sidebar.MenuItem class="flex rounded-full hover:bg-white">
+				<Sidebar.MenuItem class="flex rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-700">
 					<Sidebar.MenuButton onclick={() => (isMobile ? sidebar.toggle() : null)}>
 						{#snippet child({ props })}
 							<a href="/pricing" {...props}>
@@ -191,7 +231,7 @@
 					</Sidebar.MenuButton>
 				</Sidebar.MenuItem>
 				<Sidebar.MenuItem
-					class="flex w-full cursor-pointer items-center justify-start rounded-full hover:bg-white "
+					class="flex w-full cursor-pointer items-center justify-start rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-700"
 				>
 					<Sidebar.MenuButton onclick={async () => await authClient.customer.portal()}>
 						{#snippet child({ props })}
@@ -208,7 +248,9 @@
 		</Sidebar.Group>
 	</Sidebar.Content>
 
-	<Sidebar.Footer class="rounded-bl-lg rounded-br-lg  border-t bg-neutral-100 p-0">
+	<Sidebar.Footer
+		class="rounded-bl-lg rounded-br-lg border-t bg-neutral-100 p-0 dark:bg-neutral-800"
+	>
 		<!-- Profile -->
 		<Sidebar.Menu>
 			<Sidebar.MenuItem class="py-2">

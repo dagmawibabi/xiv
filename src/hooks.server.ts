@@ -2,10 +2,10 @@ import { svelteKitHandler } from 'better-auth/svelte-kit';
 import { auth } from '$lib/auth';
 import { redirect } from '@sveltejs/kit';
 
-// Initialize auth when the server starts
-const authInstance = await auth;
-
 export async function handle({ event, resolve }) {
+	// Initialize auth when the server starts
+	const authInstance = await auth;
+
 	// Run better-auth first so it attaches session info to event.locals
 	const response = await svelteKitHandler({
 		event,
@@ -14,9 +14,7 @@ export async function handle({ event, resolve }) {
 		building: false
 	});
 
-	const session = await (
-		await auth
-	).api.getSession({
+	const session = await authInstance.api.getSession({
 		headers: event.request.headers
 	});
 
@@ -60,6 +58,22 @@ export async function handle({ event, resolve }) {
 	) {
 		throw redirect(303, '/');
 	}
+
+	// const pathname = event.url.pathname.replace(/\/$/, '');
+	// if (session == null && !publicRoutes.some((r) => pathname.startsWith(r))) {
+	// 	throw redirect(303, '/');
+	// }
+
+	// theme injection
+	// return resolve(event, {
+	// 	transformPageChunk: ({ html }) => {
+	// 		const theme = event.cookies.get('theme');
+	// 		if (theme === 'dark') {
+	// 			return html.replace('<html', '<html class="dark"');
+	// 		}
+	// 		return html;
+	// 	}
+	// });
 
 	return response;
 }

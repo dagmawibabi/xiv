@@ -20,13 +20,13 @@
 	>
 		<div class="text-sm transition-all duration-300 ease-in-out">
 			<div
-				class="rounded-lg rounded-bl-md rounded-br-md border border-zinc-300 px-3 pb-3 pt-2 shadow-lg drop-shadow-xl transition-all duration-300 ease-in-out hover:shadow-xl"
+				class="rounded-lg rounded-bl-md rounded-br-md border border-zinc-300 px-3 pb-3 pt-2 shadow-lg drop-shadow-xl transition-all duration-300 ease-in-out hover:shadow-xl dark:border-neutral-700"
 			>
 				<div class="flex items-center gap-x-1 pb-1 text-xs text-zinc-600">
 					<Scroll size={12} />
 					<span class="pb-[2.5px]"> Summary </span>
 				</div>
-				<span class="text-zinc-800">
+				<span class="text-zinc-800 dark:text-zinc-200">
 					<MarkdownRender content={paperState.paper['summary']} />
 				</span>
 			</div>

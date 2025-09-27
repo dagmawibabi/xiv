@@ -25,10 +25,10 @@
 		true
 			? 'group/title font-semibold text-emerald-600 transition-all duration-300 ease-in-out'
 			: paperState.isFirstInList == true && page.url.pathname != '/bookmarks_page'
-				? 'group/title font-semibold text-black'
+				? 'group/title font-semibold text-black dark:text-white'
 				: paperState.isReadingSummary
-					? 'group/title font-semibold text-black'
-					: 'group/title font-semibold text-zinc-500 transition-all duration-300 ease-in-out group-hover:text-black'}
+					? 'group/title font-semibold text-black dark:text-white'
+					: 'group/title font-semibold text-zinc-500 transition-all duration-300 ease-in-out group-hover:text-black dark:text-white'}
 	>
 		<div
 			class="inline-flex items-center gap-x-2 text-sm decoration-zinc-400 decoration-1 underline-offset-4 hover:underline"
@@ -58,9 +58,9 @@
 		true
 			? 'group/title font-semibold text-emerald-600 transition-all duration-300 ease-in-out'
 			: paperState.isFirstInList == true && page.url.pathname != '/bookmarks_page'
-				? 'group/title font-semibold text-black'
+				? 'group/title font-semibold text-black dark:text-white'
 				: paperState.isReadingSummary
-					? 'group/title font-semibold text-black'
+					? 'group/title font-semibold text-black dark:text-white'
 					: 'group/title font-semibold text-zinc-500 transition-all duration-300 ease-in-out group-hover:text-black'}
 	>
 		<div

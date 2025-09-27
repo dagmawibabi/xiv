@@ -51,12 +51,12 @@
 <div class="no-scrollbar group" onclick={() => selectPaper()}>
 	<div
 		class={aiConversationState.selectedPapersIDList.includes(paper.extractedID) == true
-			? 'no-scrollbar relative flex cursor-pointer flex-col overflow-scroll rounded-xl border border-emerald-500 bg-white py-3 text-black shadow-emerald-500 drop-shadow-xl transition-all duration-300 ease-in-out'
+			? 'no-scrollbar relative flex cursor-pointer flex-col overflow-scroll rounded-xl border border-emerald-500 bg-white py-3 text-black shadow-emerald-500 drop-shadow-xl transition-all duration-300 ease-in-out dark:border-emerald-700 dark:bg-neutral-800 dark:text-white'
 			: paperState.isFirstInList == true && page.url.pathname != '/bookmarks_page'
-				? 'no-scrollbar relative flex cursor-pointer flex-col overflow-scroll rounded-xl border border-black bg-white py-3 text-black drop-shadow-xl transition-all duration-300 ease-in-out'
+				? 'no-scrollbar relative flex cursor-pointer flex-col overflow-scroll rounded-xl border border-black bg-white py-3 text-black drop-shadow-xl transition-all duration-300 ease-in-out dark:border-neutral-500 dark:bg-neutral-800 dark:text-white'
 				: paperState.isReadingSummary == true
-					? 'no-scrollbar relative flex cursor-pointer flex-col overflow-scroll rounded-xl border border-black bg-white py-3 text-black drop-shadow-xl transition-all duration-300 ease-in-out'
-					: 'no-scrollbar relative flex cursor-pointer flex-col overflow-scroll rounded-xl border border-zinc-300 bg-white py-3 text-zinc-600 drop-shadow-xl transition-all duration-300 ease-in-out group-hover:border-black group-hover:text-black'}
+					? 'no-scrollbar relative flex cursor-pointer flex-col overflow-scroll rounded-xl border border-black bg-white py-3 text-black drop-shadow-xl transition-all duration-300 ease-in-out dark:border-neutral-700 dark:bg-neutral-800 dark:text-white'
+					: 'no-scrollbar relative flex cursor-pointer flex-col overflow-scroll rounded-xl border border-zinc-300 bg-white py-3 text-zinc-600 drop-shadow-xl transition-all duration-300 ease-in-out group-hover:border-neutral-600 group-hover:text-black dark:border-neutral-800 dark:bg-neutral-800'}
 	>
 		<div class="px-4">
 			<!-- Published Date and ID -->

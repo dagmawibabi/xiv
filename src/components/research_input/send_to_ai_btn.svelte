@@ -40,7 +40,10 @@
 {:else}
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<div class="group/send group-hover:bg-zinc-200" onclick={() => researchState.sendToAI()}>
+	<div
+		class="group/send group-hover:bg-zinc-200 dark:group-hover:bg-neutral-700"
+		onclick={() => researchState.sendToAI()}
+	>
 		<div
 			class="flex h-full w-24 cursor-pointer items-center justify-center border-l group-hover/send:bg-black group-hover/send:text-white"
 		>

@@ -13,7 +13,7 @@
 	<div class="flex flex-col justify-center gap-y-5 md:items-center">
 		<!-- Tagline -->
 		<div
-			class="flex w-fit items-center gap-x-1 rounded-full bg-neutral-100 px-3 py-1 text-sm md:justify-center"
+			class="flex w-fit items-center gap-x-1 rounded-full bg-neutral-100 px-3 py-1 text-sm dark:bg-neutral-800 md:justify-center"
 		>
 			<Atom size={14} />
 			Research for everyday & everyone

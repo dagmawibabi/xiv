@@ -69,6 +69,15 @@
 
 	// async function bookmarkPaper() {}
 	const session = authClient.useSession();
+
+	import { browser } from '$app/environment';
+	import { onMount } from 'svelte';
+	let currentTheme = $state('white');
+	onMount(() => {
+		if (!browser) return;
+		const savedTheme = localStorage.getItem('theme') ?? 'light';
+		currentTheme = savedTheme == 'light' ? 'white' : 'black';
+	});
 </script>
 
 <!-- Interactions -->
@@ -83,7 +92,7 @@
 		<!-- LIKE -->
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div
-			class="flex w-fit items-center gap-x-2 rounded-2xl border border-transparent px-2 py-1 transition-all duration-200 ease-in-out hover:bg-zinc-100 hover:text-black"
+			class="flex w-fit items-center gap-x-2 rounded-2xl border border-transparent px-2 py-1 transition-all duration-200 ease-in-out hover:bg-zinc-100 hover:text-black dark:hover:bg-neutral-700 dark:hover:text-white"
 			onclick={(e) => {
 				paperState.toggleLike($session.data?.user.id, paperState.paper.extractedID);
 				e.stopPropagation();
@@ -92,14 +101,14 @@
 			<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
 				<Heart
 					size={15}
-					fill={paperState.isLiked == true ? 'red' : 'white'}
+					fill={paperState.isLiked == true ? 'red' : currentTheme}
 					class={paperState.isLiked == true ? 'text-red-500' : ''}
 				/>
 			</div>
 			<div class="flex md:hidden lg:hidden xl:hidden 2xl:hidden">
 				<Heart
 					size={18}
-					fill={paperState.isLiked == true ? 'red' : 'white'}
+					fill={paperState.isLiked == true ? 'red' : currentTheme}
 					class={paperState.isLiked == true ? 'text-red-500' : ''}
 				/>
 			</div>
@@ -112,7 +121,7 @@
 		<!-- COMMENT -->
 		<a href="/comments/papers/{paperState.paper['extractedID']}">
 			<div
-				class="flex w-fit items-center gap-x-1 rounded-xl border border-transparent px-2 py-1 transition-all duration-200 ease-in-out hover:bg-zinc-100 hover:text-black"
+				class="flex w-fit items-center gap-x-1 rounded-xl border border-transparent px-2 py-1 transition-all duration-200 ease-in-out hover:bg-zinc-100 hover:text-black dark:hover:bg-neutral-700 dark:hover:text-white"
 			>
 				<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
 					<MessageCircle size={15} />
@@ -127,7 +136,7 @@
 	<!-- SUMMARY -->
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<div
-		class="flex w-fit items-center gap-x-1 rounded-xl border border-transparent px-2 py-1 transition-all duration-200 ease-in-out hover:bg-zinc-100 hover:text-black"
+		class="flex w-fit items-center gap-x-1 rounded-xl border border-transparent px-2 py-1 transition-all duration-200 ease-in-out hover:bg-zinc-100 hover:text-black dark:hover:bg-neutral-700 dark:hover:text-white"
 		onclick={(e) => {
 			paperState.toggleSummary();
 			e.stopPropagation();
@@ -146,7 +155,7 @@
 	<!-- DOWNLOAD -->
 	<!-- svelte-ignore a11y_click_events_have_key_events -->
 	<div
-		class="flex w-fit items-center gap-x-1 rounded-xl border border-transparent px-2 py-1 transition-all duration-200 ease-in-out hover:bg-zinc-100 hover:text-black"
+		class="flex w-fit items-center gap-x-1 rounded-xl border border-transparent px-2 py-1 transition-all duration-200 ease-in-out hover:bg-zinc-100 hover:text-black dark:hover:bg-neutral-700 dark:hover:text-white"
 		onclick={() => handleDownload(paperState.paper)}
 	>
 		<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
@@ -163,7 +172,7 @@
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
 		<div
-			class="flex w-fit items-center gap-x-1 rounded-xl border border-transparent px-2 py-1 transition-all duration-200 ease-in-out hover:bg-zinc-100 hover:text-black"
+			class="flex w-fit items-center gap-x-1 rounded-xl border border-transparent px-2 py-1 transition-all duration-200 ease-in-out hover:bg-zinc-100 hover:text-black dark:hover:bg-neutral-700 dark:hover:text-white"
 			onclick={(e) => {
 				paperState.toggleBookmark($session.data?.user.id, paperState.paper.extractedID);
 				e.stopPropagation();
@@ -195,7 +204,7 @@
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger>
 				<div
-					class="flex w-fit items-center gap-x-1 rounded-xl border border-transparent px-2 py-1 transition-all duration-200 ease-in-out hover:bg-zinc-100 hover:text-black"
+					class="flex w-fit items-center gap-x-1 rounded-xl border border-transparent px-2 py-1 transition-all duration-200 ease-in-out hover:bg-zinc-100 hover:text-black dark:hover:bg-neutral-700 dark:hover:text-white"
 				>
 					<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
 						<Link2 size={15} />

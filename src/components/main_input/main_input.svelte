@@ -111,8 +111,8 @@
 	backdrop-blur-lg md:w-2/3 lg:w-2/4 xl:w-2/5 2xl:w-2/5"
 > -->
 <div
-	class="no-scrollbar h-fit w-full rounded-tl-xl rounded-tr-xl border-zinc-200 pb-4
-backdrop-blur-lg"
+	class="no-scrollbar h-fit w-full rounded-tl-xl rounded-tr-xl border-zinc-200 pb-4 backdrop-blur-lg
+dark:border-neutral-700"
 	class:border-t={settingsState.minimizeAIConversation || !settingsState.minimizeAIConversation}
 	class:border={!settingsState.minimizeAIConversation && researchState.chat.messages.length > 0}
 >
@@ -123,14 +123,16 @@ backdrop-blur-lg"
 	<!-- Main Input Box -->
 	<div class="no-scrollbar flex flex-col bg-transparent px-2 pt-2">
 		<!-- svelte-ignore a11y_click_events_have_key_events -->
-		<div class="group flex overflow-clip rounded-3xl border border-zinc-400 bg-white">
+		<div
+			class="group flex overflow-clip rounded-3xl border border-zinc-400 bg-white dark:border-neutral-700 dark:bg-neutral-800"
+		>
 			<!-- Input Box -->
 			<div class="flex w-full items-center gap-x-2 px-3 py-2">
 				{#if isAIMode == true}
 					<Sparkles size={18} class="text-zinc-400" />
 					<input
 						type="text"
-						class="w-full items-center bg-white pb-0 outline-none md:pb-1 lg:pb-1 xl:pb-1 2xl:pb-1"
+						class="w-full items-center bg-white pb-0 outline-none dark:bg-neutral-800 md:pb-1 lg:pb-1 xl:pb-1 2xl:pb-1"
 						placeholder={`ask any question ...`}
 						bind:value={researchState.userInput}
 						onkeydown={handleEnter}
@@ -139,7 +141,7 @@ backdrop-blur-lg"
 					<MessageCircle size={18} class="text-zinc-400" />
 					<input
 						type="text"
-						class="w-full items-center bg-white pb-0 outline-none md:pb-1 lg:pb-1 xl:pb-1 2xl:pb-1"
+						class="w-full items-center bg-white pb-0 outline-none dark:bg-neutral-800 md:pb-1 lg:pb-1 xl:pb-1 2xl:pb-1"
 						placeholder="Comment ..."
 						bind:value={commentState.comment}
 						onkeydown={handleEnter}
@@ -148,7 +150,7 @@ backdrop-blur-lg"
 					<Search size={18} class="text-zinc-400" />
 					<input
 						type="text"
-						class="w-full items-center bg-white pb-0 outline-none md:pb-1 lg:pb-1 xl:pb-1 2xl:pb-1"
+						class="w-full items-center bg-white pb-0 outline-none dark:bg-neutral-800 md:pb-1 lg:pb-1 xl:pb-1 2xl:pb-1"
 						placeholder="Search ..."
 						bind:value={inputState.searchContent}
 						onkeydown={handleEnter}
@@ -183,7 +185,7 @@ backdrop-blur-lg"
 					</div>
 				{:else if $session.data}
 					<div
-						class="cursor-pointer rounded-full p-2 text-zinc-600 hover:bg-zinc-100 hover:text-black"
+						class="cursor-pointer rounded-full p-2 text-zinc-600 hover:bg-zinc-100 hover:text-black dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-white"
 						onclick={() => (isAIMode = !isAIMode)}
 					>
 						<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
@@ -209,7 +211,7 @@ backdrop-blur-lg"
 				{:else}
 					<!-- svelte-ignore a11y_no_static_element_interactions -->
 					<div
-						class="group/search group-hover:bg-zinc-200"
+						class="group/search group-hover:bg-zinc-200 dark:group-hover:bg-neutral-700"
 						onclick={async () => {
 							if (isAIMode == true) {
 								await chatWithAI();

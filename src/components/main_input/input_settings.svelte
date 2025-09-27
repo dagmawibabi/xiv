@@ -8,7 +8,9 @@
 
 <Dialog.Root>
 	<Dialog.Trigger class="outline-none">
-		<div class="cursor-pointer rounded-full p-2 text-zinc-600 hover:bg-zinc-100 hover:text-black">
+		<div
+			class="cursor-pointer rounded-full p-2 text-zinc-600 hover:bg-zinc-100 hover:text-black dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-white"
+		>
 			{#if isAIMode}
 				<div class="hidden md:flex lg:flex xl:flex 2xl:flex">
 					<SlidersHorizontal size={17} />

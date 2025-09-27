@@ -64,7 +64,7 @@
 		side="right"
 		class="hidden"
 	>
-		<Sidebar.Content class="no-scrollbar rounded-lg bg-neutral-100">
+		<Sidebar.Content class="no-scrollbar rounded-lg bg-neutral-100 dark:bg-neutral-800">
 			<!-- References -->
 			<Collapsible.Root open class="group/collapsible">
 				<Sidebar.Group>
@@ -198,7 +198,7 @@
 											<Popover.Root>
 												<Popover.Trigger class="w-full">
 													<div
-														class="flex w-full cursor-default items-center overflow-clip rounded-lg border border-t border-emerald-400 bg-emerald-50 text-start hover:border-black"
+														class="flex w-full cursor-pointer items-center overflow-clip rounded-lg border border-t border-emerald-400 bg-emerald-50 text-start hover:border-neutral-500 dark:border-emerald-900 dark:bg-emerald-950 dark:hover:border-emerald-700"
 													>
 														<div class="line-clamp-2 w-full px-2 py-1 text-xs">
 															<span> {eachSelectedPaper['title']} </span>
@@ -206,7 +206,7 @@
 														<!-- svelte-ignore a11y_click_events_have_key_events -->
 														<!-- svelte-ignore a11y_no_static_element_interactions -->
 														<div
-															class="flex w-10 cursor-pointer items-center border-l px-3 py-3 text-zinc-500 hover:bg-zinc-100 hover:text-red-500"
+															class="flex w-10 cursor-pointer items-center border-l px-3 py-3 text-zinc-500 hover:bg-zinc-100 hover:text-red-500 dark:hover:bg-neutral-900"
 															onclick={() => unselectPaper(eachSelectedPaper)}
 														>
 															<CircleX size={15} />

@@ -34,16 +34,42 @@
 		}
 	];
 
+	//
+	import { browser } from '$app/environment';
+	import { toggleMode } from 'mode-watcher';
+	let theme: 'light' | 'dark' = $state('light');
+	import SunIcon from '@lucide/svelte/icons/sun';
+	import MoonIcon from '@lucide/svelte/icons/moon';
+	import Button from '$lib/components/ui/button/button.svelte';
+	function applyTheme(t: 'light' | 'dark') {
+		if (!browser) return;
+		document.documentElement.classList.toggle('dark', t === 'dark');
+		theme = t;
+	}
+	function toggleTheme() {
+		const next = theme === 'dark' ? 'light' : 'dark';
+		applyTheme(next);
+		if (browser) {
+			localStorage.setItem('theme', next);
+			document.cookie = `theme=${next}; Path=/;`;
+		}
+	}
+	//
+
 	let isLoggingOut = $state(false);
 	const session = authClient.useSession();
 </script>
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger class="w-full">
-		<div class="flex w-full items-center justify-between rounded-full bg-white p-2">
+		<div
+			class="flex w-full items-center justify-between rounded-full bg-neutral-200 p-2 dark:bg-neutral-800"
+		>
 			<div class="flex items-center justify-start gap-x-1 text-xs">
 				<!-- Profile Pic -->
-				<Avatar.Root class="h-8 w-8 border border-zinc-300 drop-shadow-md hover:shadow-lg">
+				<Avatar.Root
+					class="h-8 w-8 border border-zinc-300 drop-shadow-md hover:shadow-lg dark:border-neutral-700"
+				>
 					<Avatar.Image src={$session.data?.user.image} />
 					<Avatar.Fallback>
 						{$session.data?.user.name[0].toString().toUpperCase()}
@@ -68,7 +94,9 @@
 				</div>
 			{:else}
 				<a href="/pricing">
-					<div class="rounded-full border bg-stone-100 px-3 py-1 hover:border-zinc-400">
+					<div
+						class="rounded-full border bg-stone-100 px-3 py-1 hover:border-zinc-400 dark:bg-neutral-700"
+					>
 						<span class="text-sm">Upgrade</span>
 					</div>
 				</a>
@@ -119,6 +147,25 @@
 					</DropdownMenu.Item>
 				</a>
 			{/each}
+			<DropdownMenu.Separator />
+
+			<!-- Theme -->
+			<DropdownMenu.Item
+				class="group/logout cursor-pointer"
+				onclick={async () => {
+					toggleMode();
+				}}
+			>
+				<div class="flex items-center gap-x-2">
+					<SunIcon
+						class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 !transition-all dark:-rotate-90 dark:scale-0"
+					/>
+					<MoonIcon
+						class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 !transition-all dark:rotate-0 dark:scale-100"
+					/>
+					<span>Toggle theme</span>
+				</div>
+			</DropdownMenu.Item>
 			<DropdownMenu.Separator />
 
 			<!-- Logout -->

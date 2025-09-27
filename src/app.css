@@ -46,25 +46,28 @@
 	}
 
 	.dark {
-		--background: 240 10% 3.9%;
+		--background: theme(colors.neutral.900); /* 240 10% 3.9% */
 		--foreground: 0 0% 98%;
 
 		--muted: 240 3.7% 15.9%;
 		--muted-foreground: 240 5% 64.9%;
 
-		--popover: 240 10% 3.9%;
+		--popover: 0 0% 14%;
 		--popover-foreground: 0 0% 98%;
 
-		--card: 240 10% 3.9%;
+		--card: 0 0% 14.9%;
+		/* 240 10% 3.9%; */
 		--card-foreground: 0 0% 98%;
 
-		--border: 240 3.7% 15.9%;
+		--border: 0 0% 9%;
+		/* 240 3.7% 15.9%; */
 		--input: 240 3.7% 15.9%;
 
-		--primary: 0 0% 98%;
+		--primary: 0 0% 98%; /* theme(colors.neutral.900); */
 		--primary-foreground: 240 5.9% 10%;
 
-		--secondary: 240 3.7% 15.9%;
+		--secondary: 0 0% 9%;
+		/* 240 3.7% 15.9%; */
 		--secondary-foreground: 0 0% 98%;
 
 		--accent: 240 3.7% 15.9%;
@@ -91,7 +94,7 @@
 		@apply border-border;
 	}
 	body {
-		@apply bg-background text-foreground;
+		@apply bg-background text-foreground dark:bg-neutral-900;
 	}
 
 	body::-webkit-scrollbar {
